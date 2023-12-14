@@ -1,0 +1,509 @@
+<template>
+  <div
+    v-if="ready"
+    :id="componentContainerId"
+    class="kong-ui-public-markdown-ui"
+  >
+    <MarkdownToolbar
+      @format-selection="formatSelection"
+      @insert-template="insertTemplate"
+      @save="saveChanges"
+      @toggle-editing="toggleEditing"
+      @toggle-html-preview="toggleHtmlPreview"
+    />
+    <div
+      class="markdown-panes"
+      :class="[`mode-${currentMode}`]"
+    >
+      <div
+        v-if="editable && currentMode === 'edit'"
+        class="markdown-editor"
+        data-testid="markdown-editor"
+      >
+        <textarea
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          class="markdown-editor-textarea"
+          data-testid="markdown-editor-textarea"
+          placeholder="Begin editing..."
+          spellcheck="false"
+          :value="rawMarkdown"
+          @input="onContentEdit"
+          @keydown.shift.tab.exact.prevent="onShiftTab"
+          @keydown.tab.exact.prevent="onTab"
+        />
+      </div>
+      <div
+        class="markdown-preview"
+        data-testid="markdown-preview"
+      >
+        <!-- eslint-disable vue/no-v-html -->
+        <div
+          v-if="!htmlPreview"
+          class="markdown-rendered-content preview-output"
+          data-testid="markdown-rendered-content"
+          v-html="markdownHtml"
+        />
+        <div
+          v-else
+          class="markdown-html-preview preview-output"
+          data-testid="markdown-html-preview"
+          v-html="markdownPreviewHtml"
+        />
+        <!-- eslint-enable vue/no-v-html -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onBeforeMount, onMounted, computed, ref, nextTick, provide, watch, watchEffect } from 'vue'
+import type { PropType } from 'vue'
+import MarkdownToolbar from './MarkdownToolbar.vue'
+import composables from '../composables'
+import { COMPONENT_CONTAINER_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { v4 as uuidv4 } from 'uuid'
+import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
+import formatHtml from 'html-format'
+import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE } from '@kong/design-tokens'
+// markdown-it
+import MarkdownIt from 'markdown-it'
+import abbreviation from 'markdown-it-abbr'
+import anchor from 'markdown-it-anchor'
+import attrs from 'markdown-it-attrs'
+import deflist from 'markdown-it-deflist'
+// @ts-ignore - export does exist
+import { full as emoji } from 'markdown-it-emoji'
+import footnote from 'markdown-it-footnote'
+import insert from 'markdown-it-ins'
+import mark from 'markdown-it-mark'
+import subscript from 'markdown-it-sub'
+import superscript from 'markdown-it-sup'
+import tasklists from 'markdown-it-task-lists'
+import markdownItTextualUml from 'markdown-it-textual-uml'
+import slugify from '@sindresorhus/slugify'
+import MermaidJs from 'mermaid'
+
+const props = defineProps({
+  /** The markdown content */
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  /** The mode used when the component initializes */
+  mode: {
+    type: String as PropType<MarkdownMode>,
+    default: 'view',
+    validator: (mode: string):boolean => ['view', 'edit'].includes(mode),
+  },
+  /** Optionally show the markdown editor */
+  editable: {
+    type: Boolean,
+    default: false,
+  },
+  /** The number of spaces to insert on tab. Defaults to 2, max of 10 */
+  tabSize: {
+    type: Number,
+    default: 2,
+    validator: (size: number): boolean => size >= 2 && size <= 10,
+  },
+  /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
+  mermaid: {
+    type: Boolean,
+    default: true,
+  },
+  /** The theme used when the component initializes, one of 'light' or 'dark'. Defaults to 'light' */
+  theme: {
+    type: String as PropType<'light' | 'dark'>,
+    default: 'light',
+    validator: (theme: string):boolean => ['light', 'dark'].includes(theme),
+  },
+})
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', rawMarkdown: string): void
+  (e: 'save', rawMarkdown: string): void
+}>()
+
+// Generate a unique id to handle mutiple components on the same page
+const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
+
+// Provide the id to child components
+provide(COMPONENT_CONTAINER_ID_INJECTION_KEY, computed((): string => componentContainerId.value))
+// Provide prop values to child components
+provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
+provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
+
+const { debounce } = composables.useDebounce()
+const md = ref()
+const ready = ref<boolean>(false)
+// Set the currentMode when the component mounts.
+// props.editable will override the `props.mode`
+const currentMode = ref<'view' | 'edit'>(props.mode === 'edit' && props.editable ? props.mode : 'view')
+
+// Get rendered markdown
+const getHtmlFromMarkdown = (content: string): string => {
+  return md.value?.render(content)
+}
+
+// Initialize a ref to store the KTextArea value with prop content
+const rawMarkdown = ref<string>('')
+
+// Initialize rawMarkdown.value with the props.modelValue content
+watch(() => props.modelValue, (input: string) => {
+  rawMarkdown.value = input
+}, { immediate: true })
+
+// The processed markdown output
+const markdownHtml = ref<string>('')
+// The preview HTML (if user enables it in the toolbar)
+const markdownPreviewHtml = ref<string>('')
+
+const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(componentContainerId.value)
+
+const formatSelection = (format: InlineFormat): void => {
+  toggleInlineFormatting(rawMarkdown, format)
+  // Emulate an `input` event to trigger an update
+  emulateInputEvent()
+}
+
+const insertTemplate = (template: MarkdownTemplate): void => {
+  insertMarkdownTemplate(rawMarkdown, template)
+  // Emulate an `input` event to trigger an update
+  emulateInputEvent()
+}
+
+const onTab = (): void => {
+  toggleTab(rawMarkdown, 'add', props.tabSize)
+}
+
+const onShiftTab = (): void => {
+  toggleTab(rawMarkdown, 'remove', props.tabSize)
+}
+
+const toggleEditing = (isEditing: boolean): void => {
+  currentMode.value = isEditing ? 'edit' : 'view'
+}
+
+/** When true, show the HTML preview instead of the rendered markdown preview */
+const htmlPreview = ref<boolean>(false)
+
+// If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
+watchEffect(() => {
+  if (htmlPreview.value) {
+    markdownPreviewHtml.value = md.value?.render('```html\n' + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + '```')
+  }
+})
+
+const toggleHtmlPreview = (): void => {
+  htmlPreview.value = !htmlPreview.value
+}
+
+const onContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => {
+  // Update the ref
+  rawMarkdown.value = event.target.value
+
+  // Update the output
+  markdownHtml.value = getHtmlFromMarkdown(rawMarkdown.value)
+
+  // Emit the updated content
+  emit('update:modelValue', rawMarkdown.value)
+
+  // Re-render any `.mermaid` containers
+  await nextTick()
+  await updateMermaid()
+}, 500)
+
+/** Emulate an `input` event when injecting content into the textarea */
+const emulateInputEvent = (): void => {
+  const event: TextAreaInputEvent = {
+    target: {
+      value: rawMarkdown.value,
+    },
+  }
+
+  onContentEdit(event)
+}
+
+const saveChanges = async (): Promise<void> => {
+  emit('save', rawMarkdown.value)
+}
+
+onBeforeMount(async () => {
+  const { MarkdownItShikiji } = composables.useShikiji({ theme: props.theme })
+
+  md.value = MarkdownIt({
+    html: false, // Keep disabled to prevent XSS
+    xhtmlOut: true, // Use '/' to close single tags (<br />)
+    linkify: true, // Autoconvert URL-like text to links
+    breaks: true, // Convert '\n' in paragraphs into <br>
+    typographer: true, // Enable some language-neutral replacement + quotes beautification
+    quotes: '“”‘’',
+  })
+    // Syntax highlighting
+    .use(await MarkdownItShikiji())
+    .use(anchor, {
+      level: 2,
+      slugify: s => slugify(s),
+      permalink: anchor.permalink.ariaHidden({
+        placement: 'before',
+      }),
+    })
+    .use(abbreviation)
+    .use(attrs, {
+      // optional, these are default options
+      leftDelimiter: '{',
+      rightDelimiter: '}',
+      allowedAttributes: ['id', 'class', 'style', 'target', 'rel', /^data.*$/], // allow-list
+    })
+    .use(markdownItTextualUml)
+    .use(deflist)
+    .use(emoji)
+    .use(footnote)
+    .use(insert)
+    .use(mark)
+    .use(subscript)
+    .use(superscript)
+    .use(tasklists, {
+      label: true,
+    })
+
+  // disable converting email to link
+  md.value.linkify.set({ fuzzyLink: false })
+
+  // Customize table element
+  md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">\n'
+
+  const defaultLinkRenderer = md.value.renderer.rules.link_open ||
+      function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
+        return self.renderToken(tokens, idx, options)
+      }
+
+  const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
+
+  md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+    Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
+      const aIndex = tokens[idx].attrIndex(attribute)
+      const value = externalAnchorAttributes[attribute]
+      if (tokens[idx].attrs?.length && String(tokens[idx].attrs[0] || '').includes('http')) {
+        if (aIndex < 0) {
+          tokens[idx].attrPush([attribute, value]) // add new attribute
+        } else {
+          tokens[idx].attrs[aIndex][1] = value
+        }
+      }
+    })
+    return defaultLinkRenderer(tokens, idx, options, env, self)
+  }
+
+  // Render the markdown
+  markdownHtml.value = getHtmlFromMarkdown(props.modelValue)
+
+  await nextTick()
+
+  await updateMermaid()
+})
+
+const updateMermaid = async () => {
+  if (props.mermaid) {
+    // Scope the query selector to this rendered component (unique id)
+    const mermaidNodes = `#${componentContainerId.value} .markdown-rendered-content .mermaid`
+    if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
+      await MermaidJs.run({
+        querySelector: `#${componentContainerId.value} .markdown-rendered-content .mermaid`,
+        suppressErrors: true,
+      })
+    }
+  }
+}
+
+onMounted(async () => {
+  ready.value = true
+
+  if (props.mermaid && typeof MermaidJs !== 'undefined' && typeof MermaidJs?.initialize === 'function') {
+    MermaidJs?.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      fontFamily: KUI_FONT_FAMILY_TEXT,
+      altFontFamily: KUI_FONT_FAMILY_CODE,
+      theme: props.theme === 'light' ? 'default' : 'dark',
+    })
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+$minHeightMobile: 300px;
+$minHeightDesktop: 120px;
+
+.kong-ui-public-markdown-ui {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (min-width: $kui-breakpoint-phablet) {
+    gap: $kui-space-0;
+  }
+
+  .markdown-panes {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: $kui-space-70;
+    padding: $kui-space-30;
+    width: 100%;
+
+    @media (min-width: $kui-breakpoint-phablet) {
+      flex-direction: row;
+    }
+
+    &.mode-edit {
+      .markdown-preview {
+        // Hide the preview in edit mode on small screens
+        display: none;
+
+        @media (min-width: $kui-breakpoint-phablet) {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .markdown-editor,
+  .markdown-preview {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+
+    @media (min-width: $kui-breakpoint-phablet) {
+      width: 50%;
+    }
+  }
+
+  .preview-output {
+    background-color: var(--kui-color-background, $kui-color-background);
+    border: $kui-border-width-10 solid $kui-color-border;
+    border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
+    box-sizing: border-box; // Ensure the padding is calculated in the element's width
+    color: var(--kui-color-text, $kui-color-text);
+    flex: 1;
+    font-family: var(--kui-font-family-text, $kui-font-family-text);
+    font-size: var(--kui-font-size-30, $kui-font-size-30);
+    font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
+    line-height: var(--kui-line-height-40, $kui-line-height-40);
+    max-height: calc(100vh - 50px);
+    min-height: $minHeightDesktop;
+    overflow: auto;
+    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
+    width: 100%;
+  }
+
+  .markdown-html-preview {
+    :deep(pre) {
+      font-family: $kui-font-family-code;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
+  }
+
+  .markdown-editor {
+    flex-direction: column;
+  }
+
+  textarea.markdown-editor-textarea {
+    -webkit-appearance: none; // need this to allow box-shadow to apply on mobile
+    appearance: none;
+    background-color: var(--kui-color-background, $kui-color-background);
+    border: 0;
+    border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
+    box-shadow: var(--kui-shadow-border, $kui-shadow-border); // Ensure the padding is calculated in the element's width
+    box-sizing: border-box; // Ensure the padding is calculated in the element's width
+    color: var(--kui-color-text, $kui-color-text);
+    cursor: text;
+    display: block;
+    flex: 1;
+    font-family: var(--kui-font-family-code, $kui-font-family-code);
+    font-size: var(--kui-font-size-40, $kui-font-size-40); // needs to be at least 16px to prevent automatic zoom in on focus on mobile
+    font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
+    line-height: var(--kui-line-height-40, $kui-line-height-40);
+    max-height: calc(100vh - (#{$kui-space-70} * 2));
+    max-width: 100%;
+    min-height: $minHeightMobile;
+    outline: none;
+    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
+    resize: vertical;
+    text-wrap: wrap;
+    transition: box-shadow 0.2s ease-in-out;
+    width: 100%;
+
+    @media (min-width: $kui-breakpoint-phablet) {
+      font-size: var(--kui-font-size-30, $kui-font-size-30);
+      min-height: $minHeightDesktop;
+    }
+
+    &::placeholder {
+      color: var(--kui-color-text-neutral, $kui-color-text-neutral);
+    }
+
+    &:hover {
+      box-shadow: var(--kui-shadow-border-primary-weak, $kui-shadow-border-primary-weak);
+    }
+
+    &:focus {
+      box-shadow: var(--kui-shadow-border-primary, $kui-shadow-border-primary), var(--kui-shadow-focus, $kui-shadow-focus);
+    }
+
+    &.error {
+      box-shadow: var(--kui-shadow-border-danger, $kui-shadow-border-danger);
+
+      &:hover {
+        box-shadow: var(--kui-shadow-border-danger-strong, $kui-shadow-border-danger-strong);
+      }
+
+      &:focus {
+        box-shadow: var(--kui-shadow-border-danger, $kui-shadow-border-danger), var(--kui-shadow-focus, $kui-shadow-focus);
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+// Markdown Preview styles
+:deep(.markdown-rendered-content) {
+  font-size: $kui-font-size-40;
+  line-height: $kui-line-height-40;
+
+  // task list
+  .contains-task-list {
+    list-style-type: none;
+    padding-left: $kui-space-0;
+  }
+
+  // inline code
+  code {
+    font-family: $kui-font-family-code;
+  }
+
+  // code blocks
+  pre {
+    font-family: $kui-font-family-code;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  // mermaid charts
+  .mermaid {
+    svg {
+      max-width: 100%;
+    }
+  }
+}
+</style>
