@@ -5,8 +5,8 @@ import { mount } from '@vue/test-utils'
 import MarkdownUi from './MarkdownUi.vue'
 
 describe('<MarkdownUi />', () => {
-  it('renders', () => {
-    const wrapper = mount(MarkdownUi)
+  it('renders', async () => {
+    const wrapper = await mount(MarkdownUi)
 
     expect(wrapper.isVisible()).toBe(true)
   })
