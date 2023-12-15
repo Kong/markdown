@@ -2,8 +2,8 @@ import { fromHighlighter } from 'markdown-it-shikiji'
 import { getHighlighterCore } from 'shikiji/core'
 import { getWasmInlined } from 'shikiji/wasm'
 
-export default function useShikiji({ theme }: { theme: 'light' | 'dark' }) {
-  const MarkdownItShikiji = async () => {
+export default function useShikiji() {
+  const MarkdownItShikiji = async (theme: 'light' | 'dark' = 'light') => {
     // TODO: Remove `any` type
     const highlighter: any = await getHighlighterCore({
       themes: [

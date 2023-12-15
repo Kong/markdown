@@ -67,22 +67,6 @@ import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE } from '@kong/design-tokens'
-// markdown-it
-import MarkdownIt from 'markdown-it'
-import abbreviation from 'markdown-it-abbr'
-import anchor from 'markdown-it-anchor'
-import attrs from 'markdown-it-attrs'
-import deflist from 'markdown-it-deflist'
-// @ts-ignore - export does exist
-import { full as emoji } from 'markdown-it-emoji'
-import footnote from 'markdown-it-footnote'
-import insert from 'markdown-it-ins'
-import mark from 'markdown-it-mark'
-import subscript from 'markdown-it-sub'
-import superscript from 'markdown-it-sup'
-import tasklists from 'markdown-it-task-lists'
-import markdownItTextualUml from 'markdown-it-textual-uml'
-import slugify from '@sindresorhus/slugify'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
@@ -126,6 +110,8 @@ const emit = defineEmits<{
   (e: 'save', rawMarkdown: string): void
 }>()
 
+const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
+
 // Generate a unique id to handle mutiple components on the same page
 const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
 
@@ -136,7 +122,6 @@ provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
 
 const { debounce } = composables.useDebounce()
-const md = ref()
 const ready = ref<boolean>(false)
 // Set the currentMode when the component mounts.
 // props.editable will override the `props.mode`
@@ -231,77 +216,13 @@ const saveChanges = async (): Promise<void> => {
 }
 
 onBeforeMount(async () => {
-  const { MarkdownItShikiji } = composables.useShikiji({ theme: props.theme })
-
-  md.value = MarkdownIt({
-    html: false, // Keep disabled to prevent XSS
-    xhtmlOut: true, // Use '/' to close single tags (<br />)
-    linkify: true, // Autoconvert URL-like text to links
-    breaks: true, // Convert '\n' in paragraphs into <br>
-    typographer: true, // Enable some language-neutral replacement + quotes beautification
-    quotes: '“”‘’',
-  })
-    // Syntax highlighting
-    .use(await MarkdownItShikiji())
-    .use(anchor, {
-      level: 2,
-      slugify: s => slugify(s),
-      permalink: anchor.permalink.ariaHidden({
-        placement: 'before',
-      }),
-    })
-    .use(abbreviation)
-    .use(attrs, {
-      // optional, these are default options
-      leftDelimiter: '{',
-      rightDelimiter: '}',
-      allowedAttributes: ['id', 'class', 'style', 'target', 'rel', /^data.*$/], // allow-list
-    })
-    .use(markdownItTextualUml)
-    .use(deflist)
-    .use(emoji)
-    .use(footnote)
-    .use(insert)
-    .use(mark)
-    .use(subscript)
-    .use(superscript)
-    .use(tasklists, {
-      label: true,
-    })
-
-  // disable converting email to link
-  md.value.linkify.set({ fuzzyLink: false })
-
-  // Customize table element
-  md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">\n'
-
-  const defaultLinkRenderer = md.value.renderer.rules.link_open ||
-      function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
-        return self.renderToken(tokens, idx, options)
-      }
-
-  const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
-
-  md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
-    Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
-      const aIndex = tokens[idx].attrIndex(attribute)
-      const value = externalAnchorAttributes[attribute]
-      if (tokens[idx].attrs?.length && String(tokens[idx].attrs[0] || '').includes('http')) {
-        if (aIndex < 0) {
-          tokens[idx].attrPush([attribute, value]) // add new attribute
-        } else {
-          tokens[idx].attrs[aIndex][1] = value
-        }
-      }
-    })
-    return defaultLinkRenderer(tokens, idx, options, env, self)
-  }
+  // Initialize markdown-it
+  await initMarkdownIt()
 
   // Render the markdown
   markdownHtml.value = getHtmlFromMarkdown(props.modelValue)
 
   await nextTick()
-
   await updateMermaid()
 })
 
