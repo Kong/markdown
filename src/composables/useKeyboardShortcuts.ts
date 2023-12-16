@@ -20,6 +20,7 @@ export default function useKeyboardShortcuts(textareaId: string, rawMarkdown: Re
 
   // TODO: Skip debounce
   // TODO: Control messes with text selection
+  // TODO: Only enable in EDIT mode
   whenever(logicAnd(logicOr(keys.command_b, keys.control_b), textareaIsActive), () => {
     toggleInlineFormatting('bold')
     onEditCallback()
