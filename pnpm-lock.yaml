@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@sindresorhus/slugify':
     specifier: ^2.2.1
@@ -158,8 +154,8 @@ devDependencies:
     specifier: ^22.1.0
     version: 22.1.0
   markdown-it-shikiji:
-    specifier: ^0.9.3
-    version: 0.9.3
+    specifier: ^0.9.5
+    version: 0.9.5
   postcss:
     specifier: ^8.4.32
     version: 8.4.32
@@ -179,8 +175,8 @@ devDependencies:
     specifier: ^22.0.12
     version: 22.0.12(typescript@5.3.3)
   shikiji:
-    specifier: ^0.9.3
-    version: 0.9.3
+    specifier: ^0.9.5
+    version: 0.9.5
   stylelint:
     specifier: ^15.11.0
     version: 15.11.0(typescript@5.3.3)
@@ -5041,11 +5037,11 @@ packages:
     resolution: {integrity: sha512-YLhzaOsU9THO/cal0lUjfMjrqSMPjjyjChYM7oyj4DnyaXEzA8gnW6cVJeyCrCVeyesrY2PlEdUYJSPFYL4Nkg==}
     dev: false
 
-  /markdown-it-shikiji@0.9.3:
-    resolution: {integrity: sha512-cM929MgXeyb2qcCBUNcPu0N5576JwfOAaPVWG2wzhN/8tf5AvKWWXPKG3H85keGjmHVAQBmLkZ61+WfkbfQHYQ==}
+  /markdown-it-shikiji@0.9.5:
+    resolution: {integrity: sha512-4TvcBAkcRMTbzO8bDiKLJ6gz5EUv63LBfoRBV6hpI3H7FQY+lsjUnnSyGsh5aPY9RLMFJRFTL4OAKcDSxaywRg==}
     dependencies:
       markdown-it: 14.0.0
-      shikiji: 0.9.3
+      shikiji: 0.9.5
     dev: true
 
   /markdown-it-sub@2.0.0:
@@ -6606,14 +6602,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shikiji-core@0.9.3:
-    resolution: {integrity: sha512-Khc/xyxUDAXit7QWA8QhtmuGSVdvpxooTathF+sYcsT52uKVH59GR2D48tMxQ8lnpW6Dx17TSZSE1ocRmhr6wQ==}
+  /shikiji-core@0.9.5:
+    resolution: {integrity: sha512-gL6hgbkO3S+ma+McpAGmQnE0CGiMtqc//+VlS98j+7jH77Rdwx3s4ywaoajKzcQa/EVX7uaDh3pa2G34Cai0Ug==}
     dev: true
 
-  /shikiji@0.9.3:
-    resolution: {integrity: sha512-v1F/jlsEDjxVticC9IZ74vHOaLe6zpyXkv5sI/8mfZ0esoitDjVDoINP2Tmbsx9NZuX1gSvLfjbK2mqkPM1ViA==}
+  /shikiji@0.9.5:
+    resolution: {integrity: sha512-2pOL26ihXHFenmQd0Vuzdb1WSmciYO3SheWrjkTweNQf1zL7vc68qG9HxxYvugM4qBYqI/lAI5sjelao3MYgHA==}
     dependencies:
-      shikiji-core: 0.9.3
+      shikiji-core: 0.9.5
     dev: true
 
   /side-channel@1.0.4:
@@ -7872,3 +7868,7 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
