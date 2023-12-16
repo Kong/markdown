@@ -145,26 +145,26 @@ const markdownHtml = ref<string>('')
 // The preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
-const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(componentContainerId.value)
+const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(componentContainerId.value, rawMarkdown)
 
 const formatSelection = (format: InlineFormat): void => {
-  toggleInlineFormatting(rawMarkdown, format)
+  toggleInlineFormatting(format)
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
 
 const insertTemplate = (template: MarkdownTemplate): void => {
-  insertMarkdownTemplate(rawMarkdown, template)
+  insertMarkdownTemplate(template)
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
 
 const onTab = (): void => {
-  toggleTab(rawMarkdown, 'add', props.tabSize)
+  toggleTab('add', props.tabSize)
 }
 
 const onShiftTab = (): void => {
-  toggleTab(rawMarkdown, 'remove', props.tabSize)
+  toggleTab('remove', props.tabSize)
 }
 
 const toggleEditing = (isEditing: boolean): void => {

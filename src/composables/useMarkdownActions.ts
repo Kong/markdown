@@ -8,7 +8,7 @@ import type { InlineFormat, MarkdownTemplate } from '../types'
  * @param {string} componentContainerId The `id` of the component container
  * @returns
  */
-export default function useMarkdownActions(componentContainerId: string) {
+export default function useMarkdownActions(componentContainerId: string, rawMarkdown: Ref<string>) {
   if (!componentContainerId) {
     console.error('useMarkdownActions: no componentContainerId')
   }
@@ -58,11 +58,10 @@ export default function useMarkdownActions(componentContainerId: string) {
 
   /**
    * Toggle inline formatting within the textarea. Can be used with and without an active selection.
-   * @param {string} rawMarkdown The Vue Ref mapped to the v-model of the textarea.
    * @param {InlineFormat} format The inline format being added/removed, e.g. 'bold'
    * @returns {Promise<void>}
    */
-  const toggleInlineFormatting = async (rawMarkdown: Ref<string>, format: InlineFormat): Promise<void> => {
+  const toggleInlineFormatting = async (format: InlineFormat): Promise<void> => {
     try {
       const textarea = getTextarea()
 
@@ -190,12 +189,11 @@ export default function useMarkdownActions(componentContainerId: string) {
 
   /**
    * Toggle a tab in the editor at the current cursor position, or for all selected lines.
-   * @param {string} rawMarkdown The Vue Ref mapped to the v-model of the textarea.
    * @param {'add' | 'remove'} action The action being taken in the textarea. One of 'add' or 'remove'.
    * @param {number} tabSize The value of props.tabSize
    * @returns {Promise<void>}
    */
-  const toggleTab = async (rawMarkdown: Ref<string>, action: 'add' | 'remove', tabSize: number): Promise<void> => {
+  const toggleTab = async (action: 'add' | 'remove', tabSize: number): Promise<void> => {
     try {
       const textarea = getTextarea()
 
@@ -251,11 +249,10 @@ export default function useMarkdownActions(componentContainerId: string) {
 
   /**
    * Insert a markdown template at the current cursor position.
-   * @param {string} rawMarkdown The Vue Ref mapped to the v-model of the textarea.
    * @param {MarkdownTemplate} template The type of markdown template to insert at the current cursor position.
    * @returns {Promise<void>}
    */
-  const insertMarkdownTemplate = async (rawMarkdown: Ref<string>, template: MarkdownTemplate): Promise<void> => {
+  const insertMarkdownTemplate = async (template: MarkdownTemplate): Promise<void> => {
     try {
       const textarea = getTextarea()
 
