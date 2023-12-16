@@ -45,9 +45,9 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
       })
       .use(abbreviation)
       .use(attrs, {
-      // optional, these are default options
-        leftDelimiter: '{',
-        rightDelimiter: '}',
+        // optional, these are default options
+        leftDelimiter: '{{', // Do not use single curly, it will conflict with code line syntax highlighting
+        rightDelimiter: '}}', // Do not use single curly, it will conflict with code line syntax highlighting
         allowedAttributes: ['id', 'class', 'style', 'target', 'rel', /^data.*$/], // allow-list
       })
       .use(markdownItTextualUml)
