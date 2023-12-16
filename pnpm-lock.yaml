@@ -154,8 +154,8 @@ devDependencies:
     specifier: ^22.1.0
     version: 22.1.0
   markdown-it-shikiji:
-    specifier: ^0.9.5
-    version: 0.9.5
+    specifier: ^0.9.7
+    version: 0.9.7
   postcss:
     specifier: ^8.4.32
     version: 8.4.32
@@ -175,8 +175,8 @@ devDependencies:
     specifier: ^22.0.12
     version: 22.0.12(typescript@5.3.3)
   shikiji:
-    specifier: ^0.9.5
-    version: 0.9.5
+    specifier: ^0.9.7
+    version: 0.9.7
   stylelint:
     specifier: ^15.11.0
     version: 15.11.0(typescript@5.3.3)
@@ -5037,11 +5037,11 @@ packages:
     resolution: {integrity: sha512-YLhzaOsU9THO/cal0lUjfMjrqSMPjjyjChYM7oyj4DnyaXEzA8gnW6cVJeyCrCVeyesrY2PlEdUYJSPFYL4Nkg==}
     dev: false
 
-  /markdown-it-shikiji@0.9.5:
-    resolution: {integrity: sha512-4TvcBAkcRMTbzO8bDiKLJ6gz5EUv63LBfoRBV6hpI3H7FQY+lsjUnnSyGsh5aPY9RLMFJRFTL4OAKcDSxaywRg==}
+  /markdown-it-shikiji@0.9.7:
+    resolution: {integrity: sha512-BEJfk9+zYTT0qZ7pqIWhf2ZfosKbrGjO8K6VeJbGQ543uTR8Ro3N3c2R+wozH+xlsvfc8TXjA2ZmfbufLQL/hQ==}
     dependencies:
       markdown-it: 14.0.0
-      shikiji: 0.9.5
+      shikiji: 0.9.7
     dev: true
 
   /markdown-it-sub@2.0.0:
@@ -6602,14 +6602,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shikiji-core@0.9.5:
-    resolution: {integrity: sha512-gL6hgbkO3S+ma+McpAGmQnE0CGiMtqc//+VlS98j+7jH77Rdwx3s4ywaoajKzcQa/EVX7uaDh3pa2G34Cai0Ug==}
+  /shikiji-core@0.9.7:
+    resolution: {integrity: sha512-VaNXwEyWIAkOqA3fjCUU1p8sbRWmnYLr0Ni4YX2q+ePR9nxIcYOQG6BEd6xu+nyk8QlpADOS2/naMYce9KpBNg==}
     dev: true
 
-  /shikiji@0.9.5:
-    resolution: {integrity: sha512-2pOL26ihXHFenmQd0Vuzdb1WSmciYO3SheWrjkTweNQf1zL7vc68qG9HxxYvugM4qBYqI/lAI5sjelao3MYgHA==}
+  /shikiji@0.9.7:
+    resolution: {integrity: sha512-PdemkqPoYmcxEsJzBOl1rd7Iuh03IxkyBT2Xf8OXHUU0SICFld8+6c4YT6txeTzCJufmmoIl4vwJr5mPu27ntg==}
     dependencies:
-      shikiji-core: 0.9.5
+      shikiji-core: 0.9.7
     dev: true
 
   /side-channel@1.0.4:
