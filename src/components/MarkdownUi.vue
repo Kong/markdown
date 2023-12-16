@@ -416,6 +416,12 @@ $minHeightDesktop: 120px;
     white-space: pre-wrap;
   }
 
+  .line.highlighted {
+    background-color: #eee;
+    display: inline-block;
+    width: 100%;
+  }
+
   img {
     max-width: 100%;
   }
