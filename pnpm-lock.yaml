@@ -7,6 +7,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.7.0
     version: 10.7.0(vue@3.3.11)
+  '@vueuse/math':
+    specifier: ^10.7.0
+    version: 10.7.0(vue@3.3.11)
   html-format:
     specifier: ^1.1.2
     version: 1.1.2
@@ -1708,6 +1711,16 @@ packages:
     dependencies:
       '@types/web-bluetooth': 0.0.20
       '@vueuse/metadata': 10.7.0
+      '@vueuse/shared': 10.7.0(vue@3.3.11)
+      vue-demi: 0.14.6(vue@3.3.11)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/math@10.7.0(vue@3.3.11):
+    resolution: {integrity: sha512-JTHFTQ/Mr5nGe6YYC30evYna+981TR6HYFvjD83Aay2dLIEVZGRwM8+f6IxOGcoq9u95hFkhOcer/VsjIDvETg==}
+    dependencies:
       '@vueuse/shared': 10.7.0(vue@3.3.11)
       vue-demi: 0.14.6(vue@3.3.11)
     transitivePeerDependencies:

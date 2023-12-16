@@ -5,14 +5,10 @@ import type { InlineFormat, MarkdownTemplate } from '../types'
 
 /**
  * Utilize the markdown editor actions.
- * @param {string} componentContainerId The `id` of the component container
+ * @param {string} textareaId The `id` of the textarea
  * @returns
  */
-export default function useMarkdownActions(componentContainerId: string, rawMarkdown: Ref<string>) {
-  if (!componentContainerId) {
-    console.error('useMarkdownActions: no componentContainerId')
-  }
-
+export default function useMarkdownActions(textareaId: string, rawMarkdown: Ref<string>) {
   // A reactive object to keep track of the textarea's selection
   const selectedText = reactive({
     start: 0,
@@ -20,10 +16,10 @@ export default function useMarkdownActions(componentContainerId: string, rawMark
     text: '',
   })
 
-  /** Utilize the componentContainerId to obtain a reference to the underlying textarea element */
+  /** Utilize the textareaId to obtain a reference to the underlying textarea element */
   const getTextarea = (): HTMLTextAreaElement | null => {
     // Find the textarea within the component container
-    const selector = `#${componentContainerId} textarea`
+    const selector = `#${textareaId}`
     const textarea: HTMLTextAreaElement | null = document.querySelector(selector)
 
     if (!textarea) {

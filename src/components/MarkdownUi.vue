@@ -21,6 +21,7 @@
         data-testid="markdown-editor"
       >
         <textarea
+          :id="textareaId"
           autocapitalize="off"
           autocomplete="off"
           autocorrect="off"
@@ -114,6 +115,7 @@ const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
 
 // Generate a unique id to handle mutiple components on the same page
 const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
+const textareaId = computed((): string => `markdown-ui-textarea-${uuidv4()}`)
 
 // Provide the id to child components
 provide(COMPONENT_CONTAINER_ID_INJECTION_KEY, computed((): string => componentContainerId.value))
@@ -145,7 +147,7 @@ const markdownHtml = ref<string>('')
 // The preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
-const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(componentContainerId.value, rawMarkdown)
+const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(textareaId.value, rawMarkdown)
 
 const formatSelection = (format: InlineFormat): void => {
   toggleInlineFormatting(format)
@@ -214,6 +216,9 @@ const emulateInputEvent = (): void => {
 const saveChanges = async (): Promise<void> => {
   emit('save', rawMarkdown.value)
 }
+
+// Initialize keyboard shortcuts
+composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, emulateInputEvent)
 
 onBeforeMount(async () => {
   // Initialize markdown-it
