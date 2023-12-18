@@ -1,11 +1,15 @@
 <template>
   <div class="sandbox-container">
     <main>
+      <button @click="content = 'adam **is my name**'">
+        Change content
+      </button>
       <MarkdownUi
         v-model="content"
         :editable="editable"
         mode="edit"
         @save="contentSaved"
+        @update:model-value="contentUpdated"
       />
     </main>
   </div>
@@ -17,6 +21,10 @@ import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 
 const editable = ref<boolean>(true)
+
+const contentUpdated = (markdown: string) => {
+  console.log('content updated: %o', JSON.stringify(markdown))
+}
 
 const contentSaved = (markdown: string) => {
   console.log('saved! %o', JSON.stringify(markdown))

@@ -175,15 +175,17 @@ watchEffect(() => {
 })
 
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
-const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
+const onContentEdit = async (event: TextAreaInputEvent, emitEvent = true): Promise<void> => {
   // Update the ref
   rawMarkdown.value = event.target.value
 
   // Update the output
   markdownHtml.value = getHtmlFromMarkdown(rawMarkdown.value)
 
-  // Emit the updated content
-  emit('update:modelValue', rawMarkdown.value)
+  // Emit the updated content if `emitEvent` is not false
+  if (emitEvent) {
+    emit('update:modelValue', rawMarkdown.value)
+  }
 
   // Re-render any `.mermaid` containers
   await nextTick()
@@ -193,8 +195,11 @@ const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
 // Call the `onContentEdit` method, debounced, since this is bound to the textarea element's input event
 const debouncedContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => onContentEdit(event), EDITOR_DEBOUNCE_TIMEOUT)
 
-/** Emulate an `input` event when injecting content into the textarea */
-const emulateInputEvent = (): void => {
+/**
+ * Emulate an `input` event when injecting content into the textarea
+ * @param {boolean} emitEvent Should the `onContentEdit` function emit the `update:modelValue` event. Should be false when this event is triggered by `props.modelValue` changes.
+ */
+const emulateInputEvent = (emitEvent = true): void => {
   const event: TextAreaInputEvent = {
     target: {
       value: rawMarkdown.value,
@@ -202,13 +207,14 @@ const emulateInputEvent = (): void => {
   }
 
   // Trigger the update
-  onContentEdit(event)
+  onContentEdit(event, emitEvent)
 }
 
 // Initialize rawMarkdown.value with the props.modelValue content
 watch(() => props.modelValue, (input: string) => {
   rawMarkdown.value = input
-  emulateInputEvent()
+  // Pass `false` only here since the host app is the one changing the value, meaning we don't need to emit an update event
+  emulateInputEvent(false)
 })
 
 // Toggle previewing the markdown preview HTML
