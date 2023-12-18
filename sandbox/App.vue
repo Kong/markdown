@@ -4,6 +4,7 @@
       <MarkdownUi
         v-model="content"
         :editable="editable"
+        mode="edit"
         @save="contentSaved"
       />
     </main>
@@ -17,8 +18,8 @@ import mockResponse from './mock-document-response'
 
 const editable = ref<boolean>(true)
 
-const contentSaved = () => {
-  console.log('saved!')
+const contentSaved = (markdown: string) => {
+  console.log('saved!', JSON.stringify(markdown))
 }
 
 const mockMarkdownResponse = async (): Promise<Record<string, any>> => {

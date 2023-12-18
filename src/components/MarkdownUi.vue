@@ -39,20 +39,12 @@
         class="markdown-preview"
         data-testid="markdown-preview"
       >
-        <!-- eslint-disable vue/no-v-html -->
         <div
-          v-if="!htmlPreview"
-          class="markdown-rendered-content preview-output"
-          data-testid="markdown-rendered-content"
-          v-html="markdownHtml"
-        />
-        <div
-          v-else
-          class="markdown-html-preview preview-output"
-          data-testid="markdown-html-preview"
-          v-html="markdownPreviewHtml"
-        />
-        <!-- eslint-enable vue/no-v-html -->
+          class="markdown-content preview-output"
+          data-testid="markdown-content"
+        >
+          <MarkdownContent :content="htmlPreview ? markdownPreviewHtml : markdownHtml" />
+        </div>
       </div>
     </div>
   </div>
@@ -62,6 +54,7 @@
 import { onBeforeMount, onMounted, computed, ref, nextTick, provide, watch, watchEffect } from 'vue'
 import type { PropType } from 'vue'
 import MarkdownToolbar from './MarkdownToolbar.vue'
+import MarkdownContent from './MarkdownContent.vue'
 import composables from '../composables'
 import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT } from '../constants'
@@ -135,11 +128,6 @@ const getHtmlFromMarkdown = (content: string): string => {
 
 // Initialize a ref to store the KTextArea value with prop content
 const rawMarkdown = ref<string>('')
-
-// Initialize rawMarkdown.value with the props.modelValue content
-watch(() => props.modelValue, (input: string) => {
-  rawMarkdown.value = input
-}, { immediate: true })
 
 // The processed markdown output
 const markdownHtml = ref<string>('')
@@ -216,6 +204,14 @@ const emulateInputEvent = (): void => {
   onContentEdit(event)
 }
 
+// Initialize rawMarkdown.value with the props.modelValue content when ready
+watch(() => props.modelValue, (input: string) => {
+  if (ready.value) {
+    rawMarkdown.value = input
+    emulateInputEvent()
+  }
+}, { immediate: true })
+
 const saveChanges = async (): Promise<void> => {
   emit('save', rawMarkdown.value)
 }
@@ -236,11 +232,11 @@ onBeforeMount(async () => {
 
 const updateMermaid = async () => {
   if (props.mermaid) {
-    // Scope the query selector to this rendered component (unique id)
-    const mermaidNodes = `#${componentContainerId.value} .markdown-rendered-content .mermaid`
+    // Scope the query selector to this instance of the markdown component (unique container id)
+    const mermaidNodes = `#${componentContainerId.value} .markdown-content .mermaid`
     if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
       await MermaidJs.run({
-        querySelector: `#${componentContainerId.value} .markdown-rendered-content .mermaid`,
+        querySelector: mermaidNodes,
         suppressErrors: true,
       })
     }
@@ -395,49 +391,6 @@ $minHeightDesktop: 120px;
       &:focus {
         box-shadow: var(--kui-shadow-border-danger, $kui-shadow-border-danger), var(--kui-shadow-focus, $kui-shadow-focus);
       }
-    }
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-// Markdown Preview styles
-:deep(.markdown-rendered-content) {
-  font-size: $kui-font-size-40;
-  line-height: $kui-line-height-40;
-
-  // task list
-  .contains-task-list {
-    list-style-type: none;
-    padding-left: $kui-space-0;
-  }
-
-  // inline code
-  code {
-    font-family: $kui-font-family-code;
-  }
-
-  // code blocks
-  pre {
-    font-family: $kui-font-family-code;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-  }
-
-  .line.highlighted {
-    background-color: #eee;
-    display: inline-block;
-    width: 100%;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  // mermaid charts
-  .mermaid {
-    svg {
-      max-width: 100%;
     }
   }
 }
