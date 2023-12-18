@@ -20,11 +20,11 @@ import mockResponse from './mock-document-response'
 const editable = ref<boolean>(true)
 
 const contentUpdated = (markdown: string) => {
-  console.log('content updated: %o', JSON.stringify(markdown))
+  console.log('content updated: %o', markdown)
 }
 
 const contentSaved = (markdown: string) => {
-  console.log('saved! %o', JSON.stringify(markdown))
+  console.log('saved! %o', markdown)
 }
 
 const mockMarkdownResponse = async (): Promise<Record<string, any>> => {
