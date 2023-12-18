@@ -1,4 +1,4 @@
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import type { Ref } from 'vue'
 import useMarkdownActions from './useMarkdownActions'
 import { useActiveElement, useMagicKeys } from '@vueuse/core'

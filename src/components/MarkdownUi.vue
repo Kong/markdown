@@ -127,7 +127,7 @@ const getHtmlFromMarkdown = (content: string): string => {
 }
 
 // Initialize a ref to store the KTextArea value with prop content
-const rawMarkdown = ref<string>('')
+const rawMarkdown = ref<string>(props.modelValue)
 // A ref to store the processed markdown output
 const markdownHtml = ref<string>('')
 // A ref to store the preview HTML (if user enables it in the toolbar)
@@ -175,7 +175,6 @@ watchEffect(() => {
 })
 
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
-// TODO: Do not call markdown-it or mermaid when only the editor is visible
 const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
   // Update the ref
   rawMarkdown.value = event.target.value
@@ -206,13 +205,11 @@ const emulateInputEvent = (): void => {
   onContentEdit(event)
 }
 
-// Initialize rawMarkdown.value with the props.modelValue content when ready
+// Initialize rawMarkdown.value with the props.modelValue content
 watch(() => props.modelValue, (input: string) => {
-  if (ready.value) {
-    rawMarkdown.value = input
-    emulateInputEvent()
-  }
-}, { immediate: true })
+  rawMarkdown.value = input
+  emulateInputEvent()
+})
 
 // Toggle previewing the markdown preview HTML
 const toggleHtmlPreview = (): void => {
