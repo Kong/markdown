@@ -22,27 +22,24 @@ export default function useKeyboardShortcuts(
   const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId)
   const { toggleInlineFormatting } = useMarkdownActions(textareaId, rawMarkdown)
 
-  // Bind keyboard shortcuts
   useMagicKeys({
     passive: false,
     onEventFired(e) {
+      // Exit if the textarea is not active or not a `keydown` event
+      if (!textareaIsActive.value || e.type !== 'keydown') {
+        return
+      }
+
+      // Bind keyboard shortcuts
       if (
-        // If textarea is active
-        textareaIsActive.value &&
-        // If the event type is `keydown`
-        e.type === 'keydown' &&
         // If Control or Meta (Command) is pressed
         (e.ctrlKey || e.metaKey) &&
         // If the other key is in the KEYBOARD_SHORTCUTS dictionary
         Object.keys(KEYBOARD_SHORTCUTS).includes(e.key.toLowerCase())
       ) {
         e.preventDefault()
-        try {
-          toggleInlineFormatting((KEYBOARD_SHORTCUTS[e.key] as InlineFormat))
-          onEditCallback()
-        } catch (err) {
-          console.error('useKeyboardShortcuts: invalid key', err)
-        }
+        toggleInlineFormatting((KEYBOARD_SHORTCUTS[e.key] as InlineFormat))
+        onEditCallback()
       }
     },
   })

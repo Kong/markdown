@@ -1,9 +1,6 @@
 <template>
   <div class="sandbox-container">
     <main>
-      <button @click="content = 'adam **is my name**'">
-        Change content
-      </button>
       <MarkdownUi
         v-model="content"
         :editable="editable"

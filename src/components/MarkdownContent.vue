@@ -42,9 +42,9 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 1px);
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
-  // max-height: calc(100vh - 50px); // TODO: Re-enable for a scrollable container
+  max-height: calc(100vh - 50px); // TODO: enable/disable for a scrollable container
   min-height: v-bind('MIN_HEIGHT_DESKTOP');
-  // overflow: auto; // TODO: Re-enable for a scrollable container
+  overflow: auto; // TODO: enable/disable for a scrollable container
   padding: 0 var(--kui-space-70, $kui-space-70);
   width: 100%;
 
