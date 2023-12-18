@@ -114,6 +114,7 @@ const templateOptions: TemplateOption[] = [
   gap: $kui-space-70;
   justify-content: space-between;
   overflow-x: auto;
+  padding: $kui-space-0 $kui-space-30;
 
   .toolbar-left,
   .toolbar-right {
