@@ -40,8 +40,8 @@
         data-testid="markdown-preview"
       >
         <div
-          class="markdown-content preview-output"
-          data-testid="markdown-content"
+          class="markdown-content-container"
+          data-testid="markdown-content-container"
         >
           <MarkdownContent :content="htmlPreview ? markdownPreviewHtml : markdownHtml" />
         </div>
@@ -56,8 +56,8 @@ import type { PropType } from 'vue'
 import MarkdownToolbar from './MarkdownToolbar.vue'
 import MarkdownContent from './MarkdownContent.vue'
 import composables from '../composables'
-import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
-import { EDITOR_DEBOUNCE_TIMEOUT } from '../constants'
+import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { EDITOR_DEBOUNCE_TIMEOUT, MIN_HEIGHT_MOBILE, MIN_HEIGHT_DESKTOP } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
 import formatHtml from 'html-format'
@@ -112,6 +112,7 @@ const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
 const textareaId = computed((): string => `markdown-ui-textarea-${uuidv4()}`)
 
 // Provide values to child components
+provide(TEXTAREA_ID, computed((): string => textareaId.value))
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
 
@@ -246,7 +247,7 @@ onBeforeMount(async () => {
 const updateMermaid = async () => {
   if (props.mermaid) {
     // Scope the query selector to this instance of the markdown component (unique container id)
-    const mermaidNodes = `#${componentContainerId.value} .markdown-content .mermaid`
+    const mermaidNodes = `#${componentContainerId.value} .markdown-content-container .mermaid`
     if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
       await MermaidJs.run({
         querySelector: mermaidNodes,
@@ -272,9 +273,6 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-$minHeightMobile: 300px;
-$minHeightDesktop: 120px;
-
 .kong-ui-public-markdown-ui {
   box-sizing: border-box;
   display: flex;
@@ -321,24 +319,6 @@ $minHeightDesktop: 120px;
     }
   }
 
-  .preview-output {
-    background-color: var(--kui-color-background, $kui-color-background);
-    border: $kui-border-width-10 solid $kui-color-border;
-    border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
-    box-sizing: border-box; // Ensure the padding is calculated in the element's width
-    color: var(--kui-color-text, $kui-color-text);
-    flex: 1;
-    font-family: var(--kui-font-family-text, $kui-font-family-text);
-    font-size: var(--kui-font-size-30, $kui-font-size-30);
-    font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
-    line-height: var(--kui-line-height-40, $kui-line-height-40);
-    max-height: calc(100vh - 50px);
-    min-height: $minHeightDesktop;
-    overflow: auto;
-    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
-    width: 100%;
-  }
-
   .markdown-html-preview {
     :deep(pre) {
       font-family: $kui-font-family-code;
@@ -367,9 +347,9 @@ $minHeightDesktop: 120px;
     font-size: var(--kui-font-size-40, $kui-font-size-40); // needs to be at least 16px to prevent automatic zoom in on focus on mobile
     font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
     line-height: var(--kui-line-height-40, $kui-line-height-40);
-    max-height: calc(100vh - (#{$kui-space-70} * 2));
+    // max-height: calc(100vh - (#{$kui-space-70} * 2));
     max-width: 100%;
-    min-height: $minHeightMobile;
+    min-height: v-bind('MIN_HEIGHT_MOBILE');
     outline: none;
     padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
     resize: vertical;
@@ -379,7 +359,7 @@ $minHeightDesktop: 120px;
 
     @media (min-width: $kui-breakpoint-phablet) {
       font-size: var(--kui-font-size-30, $kui-font-size-30);
-      min-height: $minHeightDesktop;
+      min-height: v-bind('MIN_HEIGHT_DESKTOP');
     }
 
     &::placeholder {

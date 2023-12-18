@@ -7,6 +7,7 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`format-option-${option.action}`"
+          :disabled="!textareaIsActive"
           @mousedown.prevent="emit('format-selection', option.action)"
         >
           {{ option.label }}
@@ -19,6 +20,7 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`template-option-${option.action}`"
+          :disabled="!textareaIsActive"
           @mousedown.prevent="emit('insert-template', option.action)"
         >
           {{ option.label }}
@@ -64,11 +66,13 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import type { Ref } from 'vue'
-import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { useActiveElement } from '@vueuse/core'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '../types'
 
+const textareaId: Ref<string> = inject(TEXTAREA_ID, ref(''))
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('view'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 
@@ -79,6 +83,10 @@ const emit = defineEmits<{
   (e: 'toggle-html-preview'): void
   (e: 'save'): void
 }>()
+
+// The document.activeElement
+const activeElement = useActiveElement()
+const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId.value)
 
 const toggleEditMode = (): void => {
   emit('toggle-editing', mode.value !== 'edit')
