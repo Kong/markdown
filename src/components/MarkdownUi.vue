@@ -128,34 +128,38 @@ const getHtmlFromMarkdown = (content: string): string => {
 
 // Initialize a ref to store the KTextArea value with prop content
 const rawMarkdown = ref<string>('')
-
-// The processed markdown output
+// A ref to store the processed markdown output
 const markdownHtml = ref<string>('')
-// The preview HTML (if user enables it in the toolbar)
+// A ref to store the preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
 const { toggleInlineFormatting, toggleTab, insertMarkdownTemplate } = composables.useMarkdownActions(textareaId.value, rawMarkdown)
 
+// When the user toggles inline formatting
 const formatSelection = (format: InlineFormat): void => {
   toggleInlineFormatting(format)
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
 
+// When the user clicks one of the insert template buttons
 const insertTemplate = (template: MarkdownTemplate): void => {
   insertMarkdownTemplate(template)
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
 
+// When the user presses the `tab` key in the textarea
 const onTab = (): void => {
   toggleTab('add', props.tabSize)
 }
 
+// When the user presses `shift + tab` keys in the textarea
 const onShiftTab = (): void => {
   toggleTab('remove', props.tabSize)
 }
 
+// Toggle the current mode
 const toggleEditing = (isEditing: boolean): void => {
   currentMode.value = isEditing ? 'edit' : 'view'
 }
@@ -170,12 +174,8 @@ watchEffect(() => {
   }
 })
 
-const toggleHtmlPreview = (): void => {
-  htmlPreview.value = !htmlPreview.value
-  // Emulate an input event to redraw diagrams
-  emulateInputEvent()
-}
-
+// When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
+// TODO: Do not call markdown-it or mermaid when only the editor is visible
 const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
   // Update the ref
   rawMarkdown.value = event.target.value
@@ -191,6 +191,7 @@ const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
   await updateMermaid()
 }
 
+// Call the `onContentEdit` method, debounced, since this is bound to the textarea element's input event
 const debouncedContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => onContentEdit(event), EDITOR_DEBOUNCE_TIMEOUT)
 
 /** Emulate an `input` event when injecting content into the textarea */
@@ -201,6 +202,7 @@ const emulateInputEvent = (): void => {
     },
   }
 
+  // Trigger the update
   onContentEdit(event)
 }
 
@@ -212,11 +214,19 @@ watch(() => props.modelValue, (input: string) => {
   }
 }, { immediate: true })
 
+// Toggle previewing the markdown preview HTML
+const toggleHtmlPreview = (): void => {
+  htmlPreview.value = !htmlPreview.value
+  // Emulate an input event to redraw diagrams
+  emulateInputEvent()
+}
+
+// Handle the user clicking the `save` button
 const saveChanges = async (): Promise<void> => {
   emit('save', rawMarkdown.value)
 }
 
-// Initialize keyboard shortcuts
+// Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, emulateInputEvent)
 
 onBeforeMount(async () => {
