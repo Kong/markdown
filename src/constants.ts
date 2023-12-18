@@ -30,5 +30,7 @@ export const KEYBOARD_SHORTCUTS: Record<string, InlineFormat> = {
   u: 'underline',
 }
 
+/** Minimum editor and preview height, on mobile */
 export const MIN_HEIGHT_MOBILE: string = '300px'
+/** Minimum editor and preview height, on desktop */
 export const MIN_HEIGHT_DESKTOP: string = '120px'

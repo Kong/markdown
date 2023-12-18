@@ -1,6 +1,9 @@
 <template>
   <div class="sandbox-container">
     <main>
+      <h3>This is an example of a page</h3>
+      <p>This is more content on the page.</p>
+      <p>Mollitia aspernatur itaque mollitia suscipit adipisci consectetur error quis. Pariatur et magni mollitia quia. Ut sit quos.</p>
       <MarkdownUi
         v-model="content"
         :editable="editable"

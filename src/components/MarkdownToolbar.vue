@@ -29,6 +29,15 @@
         <div class="toolbar-divider" />
 
         <button
+          data-testid="toggle-fullscreen"
+          @mousedown.prevent="emit('toggle-fullscreen')"
+        >
+          Toggle Fullscreen
+        </button>
+
+        <div class="toolbar-divider" />
+
+        <button
           data-testid="toggle-html-preview"
           @mousedown.prevent="emit('toggle-html-preview')"
         >
@@ -81,6 +90,7 @@ const emit = defineEmits<{
   (e: 'insert-template', format: MarkdownTemplate): void
   (e: 'toggle-editing', editing: boolean): void
   (e: 'toggle-html-preview'): void
+  (e: 'toggle-fullscreen'): void
   (e: 'cancel'): void
   (e: 'save'): void
 }>()

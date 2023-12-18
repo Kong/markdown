@@ -3,6 +3,7 @@
     v-if="ready"
     :id="componentContainerId"
     class="kong-ui-public-markdown-ui"
+    :class="[`mode-${currentMode}`, { 'is-fullscreen': isFullscreen }]"
   >
     <MarkdownToolbar
       @cancel="cancelChanges"
@@ -10,12 +11,10 @@
       @insert-template="insertTemplate"
       @save="saveChanges"
       @toggle-editing="toggleEditing"
+      @toggle-fullscreen="toggleFullscreen"
       @toggle-html-preview="toggleHtmlPreview"
     />
-    <div
-      class="markdown-panes"
-      :class="[`mode-${currentMode}`]"
-    >
+    <div class="markdown-panes">
       <div
         v-if="editable && currentMode === 'edit'"
         class="markdown-editor"
@@ -104,6 +103,11 @@ const props = defineProps({
     default: 'light',
     validator: (theme: string):boolean => ['light', 'dark'].includes(theme),
   },
+  /** When the editor is in fullscreen mode, the top offset, in pixels */
+  fullscreenOffsetTop: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const emit = defineEmits<{
@@ -175,6 +179,9 @@ const toggleEditing = (isEditing: boolean): void => {
   currentMode.value = isEditing ? 'edit' : 'view'
   if (isEditing) {
     emit('edit')
+  } else {
+    // Always exit fullscreen mode when not editing
+    isFullscreen.value = false
   }
 }
 
@@ -251,6 +258,13 @@ const toggleHtmlPreview = (): void => {
   emulateInputEvent()
 }
 
+// Toggle the fullscreen editor
+const isFullscreen = ref<boolean>(false)
+const fullscreenOffsetTop = computed((): string => `${props.fullscreenOffsetTop}px`)
+const toggleFullscreen = (): void => {
+  isFullscreen.value = !isFullscreen.value
+}
+
 // Handle the user clicking the `cancel` button
 const cancelChanges = (): void => {
   emit('cancel')
@@ -325,8 +339,29 @@ onUnmounted(() => {
     @media (min-width: $kui-breakpoint-phablet) {
       flex-direction: row;
     }
+  }
 
-    &.mode-edit {
+  &.mode-edit {
+    // Fullscreen mode only available when editing
+    &.is-fullscreen {
+      background: var(--kui-color-background, $kui-color-background);
+      bottom: 0;
+      height: 100%;
+      left: 0;
+      margin-top: v-bind('fullscreenOffsetTop');
+      overflow: auto;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 100%;
+      z-index: 1001;
+
+      :deep(.markdown-content) {
+        max-height: calc(100vh - 50px); // TODO: enable/disable for a scrollable container
+      }
+    }
+
+    .markdown-panes {
       .markdown-preview {
         // Hide the preview in edit mode on small screens
         display: none;
@@ -378,7 +413,7 @@ onUnmounted(() => {
     font-size: var(--kui-font-size-40, $kui-font-size-40); // needs to be at least 16px to prevent automatic zoom in on focus on mobile
     font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
     line-height: var(--kui-line-height-40, $kui-line-height-40);
-    // max-height: calc(100vh - (#{$kui-space-70} * 2));
+    max-height: calc(100vh - (#{$kui-space-70} * 2));
     max-width: 100%;
     min-height: v-bind('MIN_HEIGHT_MOBILE');
     outline: none;
