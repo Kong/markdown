@@ -6,9 +6,13 @@ import type { InlineFormat, MarkdownTemplate } from '../types'
 /**
  * Utilize the markdown editor actions.
  * @param {string} textareaId The `id` of the textarea
+ * @param {Ref<string>} rawMarkdown A Vue ref containing the raw markdown content from the textarea.
  * @returns
  */
-export default function useMarkdownActions(textareaId: string, rawMarkdown: Ref<string>) {
+export default function useMarkdownActions(
+  textareaId: string,
+  rawMarkdown: Ref<string>,
+) {
   // A reactive object to keep track of the textarea's selection
   const selectedText = reactive({
     start: 0,

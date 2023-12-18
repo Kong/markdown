@@ -30,7 +30,7 @@
           placeholder="Begin editing..."
           spellcheck="false"
           :value="rawMarkdown"
-          @input="onContentEdit"
+          @input="debouncedContentEdit"
           @keydown.shift.tab.exact.prevent="onShiftTab"
           @keydown.tab.exact.prevent="onTab"
         />
@@ -63,7 +63,8 @@ import { onBeforeMount, onMounted, computed, ref, nextTick, provide, watch, watc
 import type { PropType } from 'vue'
 import MarkdownToolbar from './MarkdownToolbar.vue'
 import composables from '../composables'
-import { COMPONENT_CONTAINER_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { EDITOR_DEBOUNCE_TIMEOUT } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
 import formatHtml from 'html-format'
@@ -117,9 +118,7 @@ const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
 const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
 const textareaId = computed((): string => `markdown-ui-textarea-${uuidv4()}`)
 
-// Provide the id to child components
-provide(COMPONENT_CONTAINER_ID_INJECTION_KEY, computed((): string => componentContainerId.value))
-// Provide prop values to child components
+// Provide values to child components
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
 
@@ -187,7 +186,7 @@ const toggleHtmlPreview = (): void => {
   htmlPreview.value = !htmlPreview.value
 }
 
-const onContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => {
+const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
   // Update the ref
   rawMarkdown.value = event.target.value
 
@@ -200,7 +199,9 @@ const onContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> 
   // Re-render any `.mermaid` containers
   await nextTick()
   await updateMermaid()
-}, 500)
+}
+
+const debouncedContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => onContentEdit(event), EDITOR_DEBOUNCE_TIMEOUT)
 
 /** Emulate an `input` event when injecting content into the textarea */
 const emulateInputEvent = (): void => {
