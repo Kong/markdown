@@ -184,7 +184,7 @@ const htmlPreview = ref<boolean>(false)
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
 watchEffect(() => {
   if (htmlPreview.value) {
-    markdownPreviewHtml.value = md.value?.render('```html\n' + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + '```')
+    markdownPreviewHtml.value = md.value?.render('```html\n' + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + '\n```')
   }
 })
 
