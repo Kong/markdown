@@ -3,6 +3,7 @@ import useKeyboardShortcuts from './useKeyboardShortcuts'
 import useMarkdownActions from './useMarkdownActions'
 import useMarkdownIt from './useMarkdownIt'
 import useShikiji from './useShikiji'
+import useSyncScroll from './useSyncScroll'
 
 export default {
   useDebounce,
@@ -10,4 +11,5 @@ export default {
   useMarkdownActions,
   useMarkdownIt,
   useShikiji,
+  useSyncScroll,
 }

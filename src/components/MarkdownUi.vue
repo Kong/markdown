@@ -26,6 +26,7 @@
           autocomplete="off"
           autocorrect="off"
           class="markdown-editor-textarea"
+          :class="[scrollableClass]"
           data-testid="markdown-editor-textarea"
           placeholder="Begin editing..."
           spellcheck="false"
@@ -43,7 +44,10 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
-          <MarkdownContent :content="htmlPreview ? markdownPreviewHtml : markdownHtml" />
+          <MarkdownContent
+            :class="[scrollableClass]"
+            :content="htmlPreview ? markdownPreviewHtml : markdownHtml"
+          />
         </div>
       </div>
     </div>
@@ -51,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, computed, ref, nextTick, provide, watch, watchEffect } from 'vue'
+import { onBeforeMount, onMounted, onUnmounted, computed, ref, nextTick, provide, watch, watchEffect } from 'vue'
 import type { PropType } from 'vue'
 import MarkdownToolbar from './MarkdownToolbar.vue'
 import MarkdownContent from './MarkdownContent.vue'
@@ -108,8 +112,10 @@ const emit = defineEmits<{
 const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
 
 // Generate a unique id to handle mutiple components on the same page
-const componentContainerId = computed((): string => `markdown-ui-${uuidv4()}`)
-const textareaId = computed((): string => `markdown-ui-textarea-${uuidv4()}`)
+const uniqueId = uuidv4()
+const componentContainerId = computed((): string => `markdown-ui-${uniqueId}`)
+const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
+const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
 
 // Provide values to child components
 provide(TEXTAREA_ID, computed((): string => textareaId.value))
@@ -175,6 +181,19 @@ watchEffect(() => {
   }
 })
 
+const updateMermaid = async () => {
+  if (props.mermaid) {
+    // Scope the query selector to this instance of the markdown component (unique container id)
+    const mermaidNodes = `#${componentContainerId.value} .markdown-content-container .mermaid`
+    if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
+      await MermaidJs.run({
+        querySelector: mermaidNodes,
+        suppressErrors: true,
+      })
+    }
+  }
+}
+
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
 const onContentEdit = async (event: TextAreaInputEvent, emitEvent = true): Promise<void> => {
   // Update the ref
@@ -189,7 +208,7 @@ const onContentEdit = async (event: TextAreaInputEvent, emitEvent = true): Promi
   }
 
   // Re-render any `.mermaid` containers
-  await nextTick()
+  await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
   await updateMermaid()
 }
 
@@ -244,18 +263,7 @@ onBeforeMount(async () => {
   await updateMermaid()
 })
 
-const updateMermaid = async () => {
-  if (props.mermaid) {
-    // Scope the query selector to this instance of the markdown component (unique container id)
-    const mermaidNodes = `#${componentContainerId.value} .markdown-content-container .mermaid`
-    if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
-      await MermaidJs.run({
-        querySelector: mermaidNodes,
-        suppressErrors: true,
-      })
-    }
-  }
-}
+const { initializeSyncScroll, destroySyncScroll } = composables.useSyncScroll(scrollableClass)
 
 onMounted(async () => {
   ready.value = true
@@ -269,6 +277,17 @@ onMounted(async () => {
       theme: props.theme === 'light' ? 'default' : 'dark',
     })
   }
+
+  // Must await to let virtual DOM cycle
+  await nextTick()
+
+  // Syncronize container scrolling
+  initializeSyncScroll()
+})
+
+onUnmounted(() => {
+  // Remove scrolling event listeners
+  destroySyncScroll()
 })
 </script>
 

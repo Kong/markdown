@@ -6,7 +6,7 @@ import { KEYBOARD_SHORTCUTS } from '../constants'
 import type { InlineFormat } from '../types'
 
 /**
- * Utilize keyboard shortcuts in the markdown editor.
+ * Utilize keyboard shortcuts in the markdown editor. Must be called at the root of the `setup` function.
  * @param {string} textareaId The `id` of the textarea
  * @param {Ref<string>} rawMarkdown A Vue ref containing the raw markdown content from the textarea.
  * @param {Function} onEditCallback A function to call after toggling the inline text formatting.
