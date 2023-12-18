@@ -1,13 +1,6 @@
 <template>
   <div class="markdown-ui-toolbar">
     <div class="toolbar-left">
-      <button
-        v-if="editable && mode !== 'edit'"
-        data-testid="edit"
-        @click="toggleEditMode"
-      >
-        Edit
-      </button>
       <template v-if="mode === 'edit'">
         <button
           v-for="option in formatOptions"
@@ -42,9 +35,16 @@
       </template>
     </div>
     <div class="toolbar-right">
-      <div
+      <template v-if="editable && mode !== 'edit'">
+        <button
+          data-testid="edit"
+          @click="toggleEditMode"
+        >
+          Edit
+        </button>
+      </template>
+      <template
         v-if="editable && mode === 'edit'"
-        class="save-container"
       >
         <button
           data-testid="cancel"
@@ -58,7 +58,7 @@
         >
           Save
         </button>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -122,12 +122,6 @@ const templateOptions: TemplateOption[] = [
     display: flex;
     gap: $kui-space-20;
     padding: $kui-space-40 $kui-space-0;
-  }
-
-  .save-container {
-    align-items: center;
-    display: flex;
-    gap: $kui-space-20;
   }
 
   .toolbar-divider {

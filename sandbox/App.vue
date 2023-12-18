@@ -4,7 +4,6 @@
       <MarkdownUi
         v-model="content"
         :editable="editable"
-        mode="edit"
         @save="contentSaved"
       />
     </main>

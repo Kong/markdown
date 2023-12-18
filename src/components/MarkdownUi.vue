@@ -184,6 +184,8 @@ watchEffect(() => {
 
 const toggleHtmlPreview = (): void => {
   htmlPreview.value = !htmlPreview.value
+  // Emulate an input event to redraw diagrams
+  emulateInputEvent()
 }
 
 const onContentEdit = async (event: TextAreaInputEvent): Promise<void> => {
