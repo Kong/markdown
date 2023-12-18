@@ -30,6 +30,7 @@
           data-testid="markdown-editor-textarea"
           placeholder="Begin editing..."
           spellcheck="false"
+          translate="no"
           :value="rawMarkdown"
           @input="debouncedContentEdit"
           @keydown.shift.tab.exact.prevent="onShiftTab"
