@@ -5,6 +5,7 @@
     class="kong-ui-public-markdown-ui"
   >
     <MarkdownToolbar
+      @cancel="cancelChanges"
       @format-selection="formatSelection"
       @insert-template="insertTemplate"
       @save="saveChanges"
@@ -107,7 +108,9 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', rawMarkdown: string): void
+  (e: 'edit'): void
   (e: 'save', rawMarkdown: string): void
+  (e: 'cancel'): void
 }>()
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
@@ -170,6 +173,9 @@ const onShiftTab = (): void => {
 // Toggle the current mode
 const toggleEditing = (isEditing: boolean): void => {
   currentMode.value = isEditing ? 'edit' : 'view'
+  if (isEditing) {
+    emit('edit')
+  }
 }
 
 /** When true, show the HTML preview instead of the rendered markdown preview */
@@ -245,8 +251,13 @@ const toggleHtmlPreview = (): void => {
   emulateInputEvent()
 }
 
+// Handle the user clicking the `cancel` button
+const cancelChanges = (): void => {
+  emit('cancel')
+}
+
 // Handle the user clicking the `save` button
-const saveChanges = async (): Promise<void> => {
+const saveChanges = (): void => {
   emit('save', rawMarkdown.value)
 }
 

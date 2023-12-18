@@ -50,7 +50,7 @@
       >
         <button
           data-testid="cancel"
-          @click="toggleEditMode"
+          @click="cancelEdit"
         >
           Cancel
         </button>
@@ -81,6 +81,7 @@ const emit = defineEmits<{
   (e: 'insert-template', format: MarkdownTemplate): void
   (e: 'toggle-editing', editing: boolean): void
   (e: 'toggle-html-preview'): void
+  (e: 'cancel'): void
   (e: 'save'): void
 }>()
 
@@ -90,6 +91,11 @@ const textareaIsActive = computed((): boolean => activeElement.value?.id === tex
 
 const toggleEditMode = (): void => {
   emit('toggle-editing', mode.value !== 'edit')
+}
+
+const cancelEdit = (): void => {
+  emit('cancel')
+  toggleEditMode()
 }
 
 const saveChanges = (): void => {

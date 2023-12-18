@@ -5,6 +5,8 @@
         v-model="content"
         :editable="editable"
         mode="edit"
+        @cancel="cancelEdit"
+        @edit="beginEditing"
         @save="contentSaved"
         @update:model-value="contentUpdated"
       />
@@ -23,7 +25,18 @@ const contentUpdated = (markdown: string) => {
   console.log('content updated: %o', markdown)
 }
 
+const beginEditing = () => {
+  originalContent.value = content.value
+  console.log('begin editing')
+}
+
+const cancelEdit = () => {
+  content.value = originalContent.value
+  console.log('canceled')
+}
+
 const contentSaved = (markdown: string) => {
+  originalContent.value = content.value
   console.log('saved! %o', markdown)
 }
 
@@ -33,12 +46,16 @@ const mockMarkdownResponse = async (): Promise<Record<string, any>> => {
   return mockResponse
 }
 
+const originalContent = ref<string>('')
 const content = ref<string>('')
 
 onBeforeMount(async () => {
   // Simulate fetching the document
   const { content: markdownContent } = await mockMarkdownResponse()
 
-  content.value = markdownContent
+  // Store the original content in case the user cancels
+  originalContent.value = markdownContent
+  // Copy the content for editing
+  content.value = originalContent.value
 })
 </script>
