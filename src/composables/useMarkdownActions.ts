@@ -7,7 +7,6 @@ import type { InlineFormat, MarkdownTemplate } from '../types'
  * Utilize the markdown editor actions.
  * @param {string} textareaId The `id` of the textarea
  * @param {Ref<string>} rawMarkdown A Vue ref containing the raw markdown content from the textarea.
- * @returns
  */
 export default function useMarkdownActions(
   textareaId: string,
@@ -325,6 +324,10 @@ export default function useMarkdownActions(
     }
   }
 
+  /**
+   * Insert a new line in the editor, conditionally adding or removing line templates if the previous line also started with one.
+   * @returns {Promise<void>}
+   */
   const insertNewLine = async (): Promise<void> => {
     try {
       const textarea = getTextarea()
