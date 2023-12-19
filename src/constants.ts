@@ -1,5 +1,3 @@
-import type { InlineFormat } from './types'
-
 /** The time, in milliseconds, to debounce the textarea input event */
 export const EDITOR_DEBOUNCE_TIMEOUT: number = 500
 
@@ -14,20 +12,6 @@ export enum InlineFormatWrapper {
   Superscript = '^',
   Mark = '==',
   Code = '`',
-}
-
-/**
- * Dictionary of keyboard shortcut combinations.
- * [key: string]: Single keyboard letter.
- * [value: InlineFormat]: Text format to pass to `toggleInlineFormatting` function.
- */
-export const KEYBOARD_SHORTCUTS: Record<string, InlineFormat> = {
-  /** bold text */
-  b: 'bold',
-  /** italicize text */
-  i: 'italic',
-  /** underline text */
-  u: 'underline',
 }
 
 /** The height of the .markdown-ui-toolbar */

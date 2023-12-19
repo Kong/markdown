@@ -2,7 +2,6 @@ import { computed } from 'vue'
 import type { Ref } from 'vue'
 import useMarkdownActions from './useMarkdownActions'
 import { useActiveElement, useMagicKeys } from '@vueuse/core'
-import { KEYBOARD_SHORTCUTS } from '../constants'
 import type { InlineFormat } from '../types'
 
 /**
@@ -22,6 +21,40 @@ export default function useKeyboardShortcuts(
   const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId)
   const { toggleInlineFormatting } = useMarkdownActions(textareaId, rawMarkdown)
 
+  const getFormatForKeyEvent = (evt: any): InlineFormat | undefined => {
+    let format: InlineFormat | undefined
+
+    // Find mapped keys
+    switch (evt.key) {
+      // Bold
+      case 'b':
+        format = 'bold'
+        break
+      // Italic
+      case 'i':
+        format = 'italic'
+        break
+      // Underline
+      case 'u':
+        format = 'underline'
+        break
+      // Strikethrough (also requires shift modifier)
+      case 'x':
+        if (evt.shiftKey) {
+          format = 'strikethrough'
+        }
+        break
+      // Code (also requires shift modifier)
+      case 'c':
+        if (evt.shiftKey) {
+          format = 'code'
+        }
+        break
+    }
+
+    return format
+  }
+
   useMagicKeys({
     passive: false,
     onEventFired(e) {
@@ -30,16 +63,15 @@ export default function useKeyboardShortcuts(
         return
       }
 
-      // Bind keyboard shortcuts
-      if (
-        // If Control or Meta (Command) is pressed
-        (e.ctrlKey || e.metaKey) &&
-        // If the other key is in the KEYBOARD_SHORTCUTS dictionary
-        Object.keys(KEYBOARD_SHORTCUTS).includes(e.key.toLowerCase())
-      ) {
-        e.preventDefault()
-        toggleInlineFormatting((KEYBOARD_SHORTCUTS[e.key] as InlineFormat))
-        onEditCallback()
+      // If Control or Meta (Command) is pressed
+      if (e.key && (e.ctrlKey || e.metaKey)) {
+        const format = getFormatForKeyEvent(e)
+        // If the format is set, toggle the formatting
+        if (format) {
+          e.preventDefault()
+          toggleInlineFormatting(format)
+          onEditCallback()
+        }
       }
     },
   })
