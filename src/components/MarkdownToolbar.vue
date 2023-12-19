@@ -142,6 +142,10 @@ const templateOptions: TemplateOption[] = [
   justify-content: space-between;
   overflow-x: auto;
 
+  button {
+    white-space: nowrap;
+  }
+
   .toolbar-left,
   .toolbar-right {
     align-items: center;
