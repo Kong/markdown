@@ -26,6 +26,8 @@ export type MarkdownTemplate =
   | 'table'
   | 'codeblock'
   | 'task'
+  | 'unordered-list'
+  | 'blockquote'
 
 export interface TemplateOption {
   label: string

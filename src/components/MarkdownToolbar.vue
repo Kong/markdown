@@ -168,6 +168,8 @@ const templateOptions: TemplateOption[] = [
   { label: 'CodeBlock', action: 'codeblock' },
   { label: 'Table', action: 'table' },
   { label: 'Task', action: 'task' },
+  { label: 'UL', action: 'unordered-list' },
+  { label: 'Blockquote', action: 'blockquote' },
 ]
 </script>
 

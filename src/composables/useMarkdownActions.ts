@@ -1,6 +1,6 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_TABLE } from '../constants'
+import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '../constants'
 import type { InlineFormat, MarkdownTemplate } from '../types'
 
 /**
@@ -250,6 +250,8 @@ export default function useMarkdownActions(
     }
   }
 
+  const singleLineTemplateExists = (startText: string, template: string) => String(startText?.split('\n')?.pop() || '').endsWith(template)
+
   /**
    * Insert a markdown template at the current cursor position.
    * @param {MarkdownTemplate} template The type of markdown template to insert at the current cursor position.
@@ -270,9 +272,9 @@ export default function useMarkdownActions(
         return
       }
 
-      const prevLineText = rawMarkdown.value.substring(0, selectedText.start)
+      const startText = rawMarkdown.value.substring(0, selectedText.start)
       // If the previous line is not empty, insert a new line at the cursor position in the switch
-      const needsNewLine: string = prevLineText.length === 0 || prevLineText.endsWith('\n\n') ? '' : '\n'
+      const needsNewLine: string = startText.length === 0 || startText.endsWith('\n\n') ? '' : /(.*)?[^\n]$/.test(startText) ? '\n\n' : '\n'
 
       let markdownTemplate: string = ''
 
@@ -288,10 +290,28 @@ export default function useMarkdownActions(
           MARKDOWN_TEMPLATE_TABLE
           break
         case 'task':
+          // Do nothing if the template already exists
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_TASK)) { return }
           // needsNewLine not needed here
           markdownTemplate =
           needsNewLine +
           MARKDOWN_TEMPLATE_TASK
+          break
+        case 'unordered-list':
+          // Do nothing if the template already exists
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_UL)) { return }
+          // needsNewLine not needed here
+          markdownTemplate =
+          needsNewLine +
+          MARKDOWN_TEMPLATE_UL
+          break
+        case 'blockquote':
+          // Do nothing if the template already exists
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_BLOCKQUOTE)) { return }
+          // needsNewLine not needed here
+          markdownTemplate =
+          needsNewLine +
+          MARKDOWN_TEMPLATE_BLOCKQUOTE
           break
       }
 
@@ -310,9 +330,11 @@ export default function useMarkdownActions(
       switch (template) {
         case 'codeblock':
           // Move the cursor to the language string of the codeblock
-          textarea.selectionStart = selectedText.start + (needsNewLine ? 4 : 3)
+          // (needsNewLine.length + 3 characters for codeblock ```)
+          textarea.selectionStart = selectedText.start + (needsNewLine.length + 3)
           // Move the end of the selection to the end of the default language so it is selected
-          textarea.selectionEnd = selectedText.start + (needsNewLine ? 4 : 3) + DEFAULT_CODEBLOCK_LANGUAGE.length
+          // (needsNewLine.length + 3 characters for codeblock ```)
+          textarea.selectionEnd = selectedText.start + (needsNewLine.length + 3) + DEFAULT_CODEBLOCK_LANGUAGE.length
           break
         default:
           // Move the cursor to the end of the table markdown
@@ -340,9 +362,9 @@ export default function useMarkdownActions(
       getSelectedText()
 
       // Check the current line to see if we're within another format block (e.g. list, code, etc.)
-      const prevLineText = rawMarkdown.value.substring(0, selectedText.start)
+      const startText = rawMarkdown.value.substring(0, selectedText.start)
       // Grab the last line before the cursor
-      const lastLine = prevLineText?.split('\n')?.pop() || ''
+      const lastLine = startText?.split('\n')?.pop() || ''
 
       const newLineCharacter = '\n'
       let newLineContent = newLineCharacter
@@ -351,29 +373,38 @@ export default function useMarkdownActions(
       let removeNewLineTemplate = false
       let templateLength = 0
 
-      // If the last line starts with any formatting blocks, also inject them into the next line
-      if (lastLine.startsWith(MARKDOWN_TEMPLATE_TASK)) {
-        templateLength = MARKDOWN_TEMPLATE_TASK.length
-        // If the last task item is empty, remove the template
-        if (lastLine === MARKDOWN_TEMPLATE_TASK) {
-          removeNewLineTemplate = true
-        } else {
-          newLineContent += MARKDOWN_TEMPLATE_TASK
+      const newLineTemplates = [
+        MARKDOWN_TEMPLATE_TASK, // Task template be processed before UL and OL
+        MARKDOWN_TEMPLATE_UL,
+        MARKDOWN_TEMPLATE_BLOCKQUOTE,
+      ]
+
+      // Loop through the new line templates.
+      // If the last line before the \n starts with any formatting templates, also inject the template into the next line
+      for (const template of newLineTemplates) {
+        if (lastLine.startsWith(template)) {
+          templateLength = template.length
+          // If the last task item is empty, remove the template instead
+          if (lastLine === template) {
+            removeNewLineTemplate = true
+          } else {
+            newLineContent += template
+          }
+          // We found a match, so exit the loop
+          break
         }
       }
 
-      if (removeNewLineTemplate) {
-        rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start - templateLength) + rawMarkdown.value.substring(selectedText.end)
-      } else {
-        rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + newLineContent + rawMarkdown.value.substring(selectedText.end)
-      }
+      // Update the raw markdown content
+      rawMarkdown.value = removeNewLineTemplate ? rawMarkdown.value.substring(0, selectedText.start - templateLength) + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start) + newLineContent + rawMarkdown.value.substring(selectedText.end)
 
       // Wait for the DOM to cycle
       await nextTick()
       // Always focus back on the textarea
       textarea.focus()
 
-      textarea.selectionEnd = selectedText.start + newLineContent.length
+      // Update the cursor position
+      textarea.selectionEnd = removeNewLineTemplate ? selectedText.start - templateLength : selectedText.start + newLineContent.length
     } catch (err) {
       console.warn('insertNewLine', err)
     }
