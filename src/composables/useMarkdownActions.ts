@@ -1,6 +1,6 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE } from '../constants'
+import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_TABLE } from '../constants'
 import type { InlineFormat, MarkdownTemplate } from '../types'
 
 /**
@@ -116,6 +116,7 @@ export default function useMarkdownActions(
           // Remove the empty wrapper
           rawMarkdown.value = beforeText.substring(0, beforeText.length - wrapperLength) + afterText.substring(wrapperLength)
 
+          // Wait for the DOM to cycle
           await nextTick()
           // Always focus back on the textarea
           textarea.focus()
@@ -127,6 +128,7 @@ export default function useMarkdownActions(
           // If the `wrapper` text does not exist to the left and right of the cursor
           rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + wrapper + wrapper + rawMarkdown.value.substring(selectedText.end)
 
+          // Wait for the DOM to cycle
           await nextTick()
           // Always focus back on the textarea
           textarea.focus()
@@ -167,6 +169,7 @@ export default function useMarkdownActions(
         rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + newText + rawMarkdown.value.substring(selectedText.end)
       }
 
+      // Wait for the DOM to cycle
       await nextTick()
       // Always focus back on the textarea
       textarea.focus()
@@ -227,6 +230,7 @@ export default function useMarkdownActions(
         rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start) + spaces + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length) + rawMarkdown.value.substring(selectedText.end)
       }
 
+      // Wait for the DOM to cycle
       await nextTick()
       // Always focus back on the textarea
       textarea.focus()
@@ -267,24 +271,28 @@ export default function useMarkdownActions(
         return
       }
 
+      const prevLineText = rawMarkdown.value.substring(0, selectedText.start)
+      // If the previous line is not empty, insert a new line at the cursor position in the switch
+      const needsNewLine: string = prevLineText.length === 0 || prevLineText.endsWith('\n\n') ? '' : '\n'
+
       let markdownTemplate: string = ''
 
       switch (template) {
         case 'codeblock':
           markdownTemplate =
-          '```' + DEFAULT_CODEBLOCK_LANGUAGE + '\n' +
-          '\n' +
-          '```'
+          needsNewLine +
+          MARKDOWN_TEMPLATE_CODEBLOCK
           break
         case 'table':
           markdownTemplate =
-          '| Column1 | Column2 | Column3 |\n' +
-          '| :--- | :--- | :--- |\n' +
-          '| Content | Content | Content |'
+          needsNewLine +
+          MARKDOWN_TEMPLATE_TABLE
           break
         case 'task':
+          // needsNewLine not needed here
           markdownTemplate =
-          '- [ ] '
+          needsNewLine +
+          MARKDOWN_TEMPLATE_TASK
           break
       }
 
@@ -295,6 +303,7 @@ export default function useMarkdownActions(
 
       rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + markdownTemplate + rawMarkdown.value.substring(selectedText.end)
 
+      // Wait for the DOM to cycle
       await nextTick()
       // Always focus back on the textarea
       textarea.focus()
@@ -302,9 +311,9 @@ export default function useMarkdownActions(
       switch (template) {
         case 'codeblock':
           // Move the cursor to the language string of the codeblock
-          textarea.selectionStart = selectedText.start + 3
+          textarea.selectionStart = selectedText.start + (needsNewLine ? 4 : 3)
           // Move the end of the selection to the end of the default language so it is selected
-          textarea.selectionEnd = selectedText.start + 3 + DEFAULT_CODEBLOCK_LANGUAGE.length
+          textarea.selectionEnd = selectedText.start + (needsNewLine ? 4 : 3) + DEFAULT_CODEBLOCK_LANGUAGE.length
           break
         default:
           // Move the cursor to the end of the table markdown
@@ -316,10 +325,62 @@ export default function useMarkdownActions(
     }
   }
 
+  const insertNewLine = async (): Promise<void> => {
+    try {
+      const textarea = getTextarea()
+
+      if (!textarea) {
+        return
+      }
+
+      // Update the selected text object
+      getSelectedText()
+
+      // Check the current line to see if we're within another format block (e.g. list, code, etc.)
+      const prevLineText = rawMarkdown.value.substring(0, selectedText.start)
+      // Grab the last line before the cursor
+      const lastLine = prevLineText?.split('\n')?.pop() || ''
+
+      const newLineCharacter = '\n'
+      let newLineContent = newLineCharacter
+
+      // Should we remove the new line template on second Enter keypress
+      let removeNewLineTemplate = false
+      let templateLength = 0
+
+      // If the last line starts with any formatting blocks, also inject them into the next line
+      if (lastLine.startsWith(MARKDOWN_TEMPLATE_TASK)) {
+        templateLength = MARKDOWN_TEMPLATE_TASK.length
+        // If the last task item is empty, remove the template
+        if (lastLine === MARKDOWN_TEMPLATE_TASK) {
+          removeNewLineTemplate = true
+        } else {
+          newLineContent += MARKDOWN_TEMPLATE_TASK
+        }
+      }
+
+      if (removeNewLineTemplate) {
+        rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start - templateLength) + rawMarkdown.value.substring(selectedText.end)
+      } else {
+        rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + newLineContent + rawMarkdown.value.substring(selectedText.end)
+      }
+
+      // Wait for the DOM to cycle
+      await nextTick()
+      // Always focus back on the textarea
+      textarea.focus()
+
+      textarea.selectionEnd = selectedText.start + newLineContent.length
+    } catch (err) {
+      console.warn('insertNewLine', err)
+    }
+  }
+
   return {
     selectedText,
     toggleInlineFormatting,
     toggleTab,
     insertMarkdownTemplate,
+    insertNewLine,
   }
 }

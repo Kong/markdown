@@ -19,7 +19,7 @@ export default function useKeyboardShortcuts(
   // The document.activeElement
   const activeElement = useActiveElement()
   const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId)
-  const { toggleInlineFormatting } = useMarkdownActions(textareaId, rawMarkdown)
+  const { toggleInlineFormatting, insertNewLine } = useMarkdownActions(textareaId, rawMarkdown)
 
   const getFormatForKeyEvent = (evt: any): InlineFormat | undefined => {
     let format: InlineFormat | undefined
@@ -44,7 +44,7 @@ export default function useKeyboardShortcuts(
           format = 'strikethrough'
         }
         break
-      // Code (also requires shift modifier)
+      // Inline code (also requires shift modifier)
       case 'c':
         if (evt.shiftKey) {
           format = 'code'
@@ -55,6 +55,7 @@ export default function useKeyboardShortcuts(
     return format
   }
 
+  // Bind keyboard events
   useMagicKeys({
     passive: false,
     onEventFired(e) {
@@ -70,8 +71,16 @@ export default function useKeyboardShortcuts(
         if (format) {
           e.preventDefault()
           toggleInlineFormatting(format)
+          // Always fire the callback
           onEditCallback()
         }
+      }
+
+      if (e.key && e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault()
+        insertNewLine()
+        // Always fire the callback
+        onEditCallback()
       }
     },
   })

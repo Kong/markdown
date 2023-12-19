@@ -32,7 +32,7 @@
           spellcheck="false"
           translate="no"
           :value="rawMarkdown"
-          @input="debouncedContentEdit"
+          @input="$event => onContentEdit($event as any)"
           @keydown.shift.tab.exact.prevent="onShiftTab"
           @keydown.tab.exact.prevent="onTab"
         />
@@ -232,10 +232,15 @@ const updateMermaid = async () => {
 }
 
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
-const onContentEdit = async (event: TextAreaInputEvent, emitEvent = true): Promise<void> => {
-  // Update the ref
+const onContentEdit = (event: TextAreaInputEvent, emitEvent = true): void => {
+  // Update the ref immediately
   rawMarkdown.value = event.target.value
 
+  // Debounce the update for the UI
+  debouncedUpdateContent(emitEvent)
+}
+
+const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> => {
   // Update the output
   markdownHtml.value = getHtmlFromMarkdown(rawMarkdown.value)
 
@@ -247,10 +252,7 @@ const onContentEdit = async (event: TextAreaInputEvent, emitEvent = true): Promi
   // Re-render any `.mermaid` containers
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
   await updateMermaid()
-}
-
-// Call the `onContentEdit` method, debounced, since this is bound to the textarea element's input event
-const debouncedContentEdit = debounce(async (event: TextAreaInputEvent): Promise<void> => onContentEdit(event), EDITOR_DEBOUNCE_TIMEOUT)
+}, EDITOR_DEBOUNCE_TIMEOUT)
 
 /**
  * Emulate an `input` event when injecting content into the textarea

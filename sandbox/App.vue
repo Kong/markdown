@@ -24,7 +24,7 @@ import mockResponse from './mock-document-response'
 const editable = ref<boolean>(true)
 
 const contentUpdated = (markdown: string) => {
-  console.log('content updated: %o', markdown)
+  console.log('content updated')
 }
 
 const modeChanged = (mode: string) => {
