@@ -186,6 +186,8 @@ const toggleEditing = (isEditing: boolean): void => {
   if (isEditing) {
     emit('edit')
   } else {
+    // Always exit from viewing html when not editing
+    htmlPreview.value = false
     // Always exit fullscreen mode when not editing
     isFullscreen.value = false
   }
