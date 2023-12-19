@@ -1,5 +1,9 @@
 /** The current mode of the markdown component */
-export type MarkdownMode = 'view' | 'edit'
+export type MarkdownMode =
+| 'read'
+| 'edit'
+| 'split'
+| 'preview'
 
 /** The text format to insert/wrap selection */
 export type InlineFormat =

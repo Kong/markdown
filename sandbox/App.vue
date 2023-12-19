@@ -7,9 +7,8 @@
       <MarkdownUi
         v-model="content"
         :editable="editable"
-        mode="edit"
         @cancel="cancelEdit"
-        @edit="beginEditing"
+        @mode="modeChanged"
         @save="contentSaved"
         @update:model-value="contentUpdated"
       />
@@ -28,9 +27,12 @@ const contentUpdated = (markdown: string) => {
   console.log('content updated: %o', markdown)
 }
 
-const beginEditing = () => {
-  originalContent.value = content.value
-  console.log('begin editing')
+const modeChanged = (mode: string) => {
+  console.log('mode', mode)
+  if (mode === 'edit' || mode === 'split') {
+    originalContent.value = content.value
+    console.log('begin editing')
+  }
 }
 
 const cancelEdit = () => {

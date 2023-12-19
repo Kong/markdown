@@ -1,7 +1,34 @@
 <template>
   <div class="markdown-ui-toolbar">
     <div class="toolbar-left">
-      <template v-if="mode === 'edit'">
+      <div
+        v-if="editable && mode !== 'read'"
+        class="button-group"
+      >
+        <button
+          :class="{ 'active': mode === 'edit' }"
+          :disabled="mode === 'edit'"
+          @mousedown.prevent="changeMode('edit')"
+        >
+          Edit
+        </button>
+        <button
+          :class="{ 'active': mode === 'split' }"
+          @mousedown.prevent="changeMode('split')"
+        >
+          Split
+        </button>
+        <button
+          :class="{ 'active': mode === 'preview' }"
+          @mousedown.prevent="changeMode('preview')"
+        >
+          Preview
+        </button>
+      </div>
+
+      <template v-if="editable && mode !== 'read'">
+        <div class="toolbar-divider" />
+
         <button
           v-for="option in formatOptions"
           :key="option.label"
@@ -25,37 +52,39 @@
         >
           {{ option.label }}
         </button>
-
-        <div class="toolbar-divider" />
-
-        <button
-          data-testid="toggle-fullscreen"
-          @mousedown.prevent="emit('toggle-fullscreen')"
-        >
-          Toggle Fullscreen
-        </button>
-
-        <div class="toolbar-divider" />
-
-        <button
-          data-testid="toggle-html-preview"
-          @mousedown.prevent="emit('toggle-html-preview')"
-        >
-          Toggle HTML Preview
-        </button>
       </template>
+
+      <div
+        v-if="mode !== 'read'"
+        class="toolbar-divider"
+      />
+
+      <button
+        v-if="mode !== 'read'"
+        data-testid="toggle-fullscreen"
+        @mousedown.prevent="emit('toggle-fullscreen')"
+      >
+        Toggle Fullscreen
+      </button>
+      <button
+        v-if="['split', 'preview'].includes(mode)"
+        data-testid="toggle-html-preview"
+        @mousedown.prevent="emit('toggle-html-preview')"
+      >
+        Toggle HTML Preview
+      </button>
     </div>
     <div class="toolbar-right">
-      <template v-if="editable && mode !== 'edit'">
+      <template v-if="editable && mode === 'read'">
         <button
           data-testid="edit"
-          @click="toggleEditMode"
+          @click="determineEditMode"
         >
           Edit
         </button>
       </template>
       <template
-        v-if="editable && mode === 'edit'"
+        v-if="editable && ['edit', 'split', 'preview'].includes(mode)"
       >
         <button
           data-testid="cancel"
@@ -78,18 +107,19 @@
 import { computed, inject, ref } from 'vue'
 import type { Ref } from 'vue'
 import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
-import { useActiveElement } from '@vueuse/core'
+import { useActiveElement, useMediaQuery } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '../constants'
+import { KUI_BREAKPOINT_TABLET } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '../types'
 
 const textareaId: Ref<string> = inject(TEXTAREA_ID, ref(''))
-const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('view'))
+const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 
 const emit = defineEmits<{
   (e: 'format-selection', format: InlineFormat): void
   (e: 'insert-template', format: MarkdownTemplate): void
-  (e: 'toggle-editing', editing: boolean): void
+  (e: 'change-mode', mode: MarkdownMode): void
   (e: 'toggle-html-preview'): void
   (e: 'toggle-fullscreen'): void
   (e: 'cancel'): void
@@ -100,18 +130,27 @@ const emit = defineEmits<{
 const activeElement = useActiveElement()
 const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId.value)
 
-const toggleEditMode = (): void => {
-  emit('toggle-editing', mode.value !== 'edit')
+const determineEditMode = (): void => {
+  // Determine if the user is on a wider viewport
+  const isWideScreen = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_TABLET})`)
+  // If yes, enter `split` mode, otherwise `edit` mode
+  changeMode(isWideScreen.value ? 'split' : 'edit')
+}
+
+const changeMode = (newMode: MarkdownMode): void => {
+  if (mode.value !== newMode) {
+    emit('change-mode', newMode)
+  }
 }
 
 const cancelEdit = (): void => {
   emit('cancel')
-  toggleEditMode()
+  changeMode('read')
 }
 
 const saveChanges = (): void => {
   emit('save')
-  toggleEditMode()
+  changeMode('read')
 }
 
 const formatOptions: FormatOption[] = [
@@ -143,7 +182,32 @@ const templateOptions: TemplateOption[] = [
   overflow-x: auto;
 
   button {
+    cursor: pointer;
     white-space: nowrap;
+  }
+
+  .button-group {
+    align-items: center;
+    display: flex;
+
+    button {
+      border: 0;
+      border-right: 1px solid $kui-color-border;
+      padding: $kui-space-20 $kui-space-30;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+
+      &:last-of-type {
+        border-right: 0;
+      }
+
+      &.active {
+        background: $kui-color-background-primary;
+        color: $kui-color-text-inverse;
+      }
+    }
   }
 
   .toolbar-left,

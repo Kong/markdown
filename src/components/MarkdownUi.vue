@@ -7,16 +7,16 @@
   >
     <MarkdownToolbar
       @cancel="cancelChanges"
+      @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"
       @insert-template="insertTemplate"
       @save="saveChanges"
-      @toggle-editing="toggleEditing"
       @toggle-fullscreen="toggleFullscreen"
       @toggle-html-preview="toggleHtmlPreview"
     />
     <div class="markdown-panes">
       <div
-        v-if="editable && currentMode === 'edit'"
+        v-if="editable && (['edit', 'split'].includes(currentMode))"
         class="markdown-editor"
         data-testid="markdown-editor"
       >
@@ -38,6 +38,7 @@
         />
       </div>
       <div
+        v-if="['read', 'preview', 'split'].includes(currentMode)"
         class="markdown-preview"
         :class="[scrollableClass]"
         data-testid="markdown-preview"
@@ -46,9 +47,7 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
-          <MarkdownContent
-            :content="htmlPreview ? markdownPreviewHtml : markdownHtml"
-          />
+          <MarkdownContent :content="htmlPreview ? markdownPreviewHtml : markdownHtml" />
         </div>
       </div>
     </div>
@@ -75,11 +74,11 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  /** The mode used when the component initializes */
+  /** The mode used when the component initializes, one of 'read', 'edit', 'split', 'preview' */
   mode: {
     type: String as PropType<MarkdownMode>,
-    default: 'view',
-    validator: (mode: string): boolean => ['view', 'edit'].includes(mode),
+    default: 'read',
+    validator: (mode: string): boolean => ['read', 'edit', 'split', 'preview'].includes(mode),
   },
   /** Optionally show the markdown editor */
   editable: {
@@ -118,7 +117,8 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', rawMarkdown: string): void
-  (e: 'edit'): void
+  (e: 'mode', mode: MarkdownMode): void
+  (e: 'fullscreen', active: boolean): void
   (e: 'save', rawMarkdown: string): void
   (e: 'cancel'): void
 }>()
@@ -140,7 +140,35 @@ const { debounce } = composables.useDebounce()
 const ready = ref<boolean>(false)
 // Set the currentMode when the component mounts.
 // props.editable will override the `props.mode`
-const currentMode = ref<'view' | 'edit'>(props.mode === 'edit' && props.editable ? props.mode : 'view')
+const currentMode = ref<MarkdownMode>(['edit', 'split', 'preview'].includes(props.mode) && props.editable ? props.mode : 'read')
+
+const { initializeSyncScroll, destroySyncScroll } = composables.useSyncScroll(scrollableClass)
+
+// Reinitialize the scroll syncing when the mode changes
+watch(currentMode, async (mode: MarkdownMode): Promise<void> => {
+  switch (mode) {
+    case 'edit':
+      htmlPreview.value = false
+      break
+    case 'split':
+      // Still emit `edit` event here - split mode is just another form of editing
+      break
+    case 'preview':
+      break
+    case 'read':
+      htmlPreview.value = false
+      isFullscreen.value = false
+      break
+  }
+
+  // Emit the changed mode
+  emit('mode', mode)
+
+  destroySyncScroll()
+  await nextTick()
+  // Re-synchronize the scroll containers
+  initializeSyncScroll()
+})
 
 // Get rendered markdown
 const getHtmlFromMarkdown = (content: string): string => {
@@ -178,19 +206,6 @@ const onTab = (): void => {
 // When the user presses `shift + tab` keys in the textarea
 const onShiftTab = (): void => {
   toggleTab('remove', props.tabSize)
-}
-
-// Toggle the current mode
-const toggleEditing = (isEditing: boolean): void => {
-  currentMode.value = isEditing ? 'edit' : 'view'
-  if (isEditing) {
-    emit('edit')
-  } else {
-    // Always exit from viewing html when not editing
-    htmlPreview.value = false
-    // Always exit fullscreen mode when not editing
-    isFullscreen.value = false
-  }
 }
 
 /** When true, show the HTML preview instead of the rendered markdown preview */
@@ -273,6 +288,11 @@ const toggleFullscreen = (): void => {
   isFullscreen.value = !isFullscreen.value
 }
 
+// Emit an event when fullscreen mode is toggled
+watch(isFullscreen, (active: boolean): void => {
+  emit('fullscreen', active)
+})
+
 // Handle the user clicking the `cancel` button
 const cancelChanges = (): void => {
   emit('cancel')
@@ -297,8 +317,6 @@ onBeforeMount(async () => {
   await updateMermaid()
 })
 
-const { initializeSyncScroll, destroySyncScroll } = composables.useSyncScroll(scrollableClass)
-
 onMounted(async () => {
   ready.value = true
 
@@ -314,9 +332,6 @@ onMounted(async () => {
 
   // Must await to let virtual DOM cycle
   await nextTick()
-
-  // Syncronize container scrolling
-  initializeSyncScroll()
 })
 
 onUnmounted(() => {
@@ -352,7 +367,9 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     }
   }
 
-  &.mode-edit {
+  &.mode-edit,
+  &.mode-split,
+  &.mode-preview {
 
     // Fullscreen mode only available when editing
     &.fullscreen {
