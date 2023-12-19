@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { MIN_HEIGHT_DESKTOP } from '../constants'
 
 const props = defineProps({
   content: {
@@ -27,14 +26,10 @@ watch(() => props.content, (content: string): void => {
 
 <style lang="scss" scoped>
 // Computed component variables
-$header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 1px);
+$header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
 
 // Markdown Preview content styles
 .markdown-content {
-  background-color: var(--kui-color-background, $kui-color-background);
-  border: $kui-border-width-10 solid $kui-color-border;
-  border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
-  box-sizing: border-box; // Ensure the padding is calculated in the element's width
   color: var(--kui-color-text, $kui-color-text);
   flex: 1;
   font-family: var(--kui-font-family-text, $kui-font-family-text);
@@ -42,17 +37,17 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 1px);
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
-  max-height: calc(100vh - 50px); // TODO: enable/disable for a scrollable container
-  min-height: v-bind('MIN_HEIGHT_DESKTOP');
-  overflow: auto; // TODO: enable/disable for a scrollable container
   padding: 0 var(--kui-space-70, $kui-space-70);
-  width: 100%;
+  width: calc(100% - (#{$kui-space-70} * 2)); // 100% width minus 2x padding
+  word-wrap: break-word;
 
   :deep() {
     font-size: $kui-font-size-40;
     line-height: $kui-line-height-40;
 
-    h1, h2, h3, h4, h5, h6 {
+    // Adjust h2-66 tags for scroll-to margin & padding
+    // Exclude the h1 header
+    h2, h3, h4, h5, h6 {
       margin-top: -$kui-space-20;
       padding-top: $kui-space-50;
       position: relative;

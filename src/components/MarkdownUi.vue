@@ -3,7 +3,7 @@
     v-if="ready"
     :id="componentContainerId"
     class="kong-ui-public-markdown-ui"
-    :class="[`mode-${currentMode}`, { 'is-fullscreen': isFullscreen }]"
+    :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
   >
     <MarkdownToolbar
       @cancel="cancelChanges"
@@ -39,6 +39,7 @@
       </div>
       <div
         class="markdown-preview"
+        :class="[scrollableClass]"
         data-testid="markdown-preview"
       >
         <div
@@ -46,7 +47,6 @@
           data-testid="markdown-content-container"
         >
           <MarkdownContent
-            :class="[scrollableClass]"
             :content="htmlPreview ? markdownPreviewHtml : markdownHtml"
           />
         </div>
@@ -62,7 +62,7 @@ import MarkdownToolbar from './MarkdownToolbar.vue'
 import MarkdownContent from './MarkdownContent.vue'
 import composables from '../composables'
 import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
-import { EDITOR_DEBOUNCE_TIMEOUT, MIN_HEIGHT_MOBILE, MIN_HEIGHT_DESKTOP } from '../constants'
+import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
 import formatHtml from 'html-format'
@@ -79,7 +79,7 @@ const props = defineProps({
   mode: {
     type: String as PropType<MarkdownMode>,
     default: 'view',
-    validator: (mode: string):boolean => ['view', 'edit'].includes(mode),
+    validator: (mode: string): boolean => ['view', 'edit'].includes(mode),
   },
   /** Optionally show the markdown editor */
   editable: {
@@ -101,7 +101,13 @@ const props = defineProps({
   theme: {
     type: String as PropType<'light' | 'dark'>,
     default: 'light',
-    validator: (theme: string):boolean => ['light', 'dark'].includes(theme),
+    validator: (theme: string): boolean => ['light', 'dark'].includes(theme),
+  },
+  /** The max height of the editor when not being displayed fullscreen. Defaults to 300, Minimum of 100. */
+  editorMaxHeight: {
+    type: Number,
+    default: 300,
+    validator: (height: number): boolean => height >= 100,
   },
   /** When the editor is in fullscreen mode, the top offset, in pixels */
   fullscreenOffsetTop: {
@@ -315,6 +321,10 @@ onUnmounted(() => {
   // Remove scrolling event listeners
   destroySyncScroll()
 })
+
+// Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
+const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - 10px)`)
+const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}px`)
 </script>
 
 <style lang="scss" scoped>
@@ -332,8 +342,7 @@ onUnmounted(() => {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: $kui-space-70;
-    padding: $kui-space-30;
+    gap: $kui-space-40;
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {
@@ -342,32 +351,36 @@ onUnmounted(() => {
   }
 
   &.mode-edit {
+
     // Fullscreen mode only available when editing
-    &.is-fullscreen {
+    &.fullscreen {
       background: var(--kui-color-background, $kui-color-background);
       bottom: 0;
       height: 100%;
       left: 0;
       margin-top: v-bind('fullscreenOffsetTop');
-      overflow: auto;
       position: fixed;
       right: 0;
       top: 0;
       width: 100%;
       z-index: 1001;
 
-      :deep(.markdown-content) {
-        max-height: calc(100vh - 50px); // TODO: enable/disable for a scrollable container
+      .markdown-panes {
+        height: v-bind('fullscreenMarkdownPanesHeight');
       }
     }
 
     .markdown-panes {
+      height: v-bind('markdownEditorMaxHeight'); // max-height in edit mode
+
       .markdown-preview {
+        border: $kui-border-width-10 solid $kui-color-border;
+        border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
         // Hide the preview in edit mode on small screens
         display: none;
 
         @media (min-width: $kui-breakpoint-phablet) {
-          display: block;
+          display: flex;
         }
       }
     }
@@ -376,13 +389,19 @@ onUnmounted(() => {
   .markdown-editor,
   .markdown-preview {
     display: flex;
-    flex: 1;
+    flex: 1; // Each column takes up equal width
     flex-direction: column;
+    overflow-y: auto;
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {
       width: 50%;
     }
+  }
+
+  .markdown-preview {
+    background-color: var(--kui-color-background, $kui-color-background);
+    box-sizing: border-box; // Ensure the padding is calculated in the element's width
   }
 
   .markdown-html-preview {
@@ -413,9 +432,7 @@ onUnmounted(() => {
     font-size: var(--kui-font-size-40, $kui-font-size-40); // needs to be at least 16px to prevent automatic zoom in on focus on mobile
     font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
     line-height: var(--kui-line-height-40, $kui-line-height-40);
-    max-height: calc(100vh - (#{$kui-space-70} * 2));
     max-width: 100%;
-    min-height: v-bind('MIN_HEIGHT_MOBILE');
     outline: none;
     padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
     resize: vertical;
@@ -425,7 +442,6 @@ onUnmounted(() => {
 
     @media (min-width: $kui-breakpoint-phablet) {
       font-size: var(--kui-font-size-30, $kui-font-size-30);
-      min-height: v-bind('MIN_HEIGHT_DESKTOP');
     }
 
     &::placeholder {

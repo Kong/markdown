@@ -79,6 +79,7 @@ import { computed, inject, ref } from 'vue'
 import type { Ref } from 'vue'
 import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
 import { useActiveElement } from '@vueuse/core'
+import { TOOLBAR_HEIGHT } from '../constants'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '../types'
 
 const textareaId: Ref<string> = inject(TEXTAREA_ID, ref(''))
@@ -134,11 +135,12 @@ const templateOptions: TemplateOption[] = [
 <style lang="scss" scoped>
 .markdown-ui-toolbar {
   align-items: center;
+  background-color: var(--kui-color-background, $kui-color-background);
   display: flex;
   gap: $kui-space-70;
+  height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
   overflow-x: auto;
-  padding: $kui-space-0 $kui-space-30;
 
   .toolbar-left,
   .toolbar-right {

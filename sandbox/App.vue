@@ -62,3 +62,9 @@ onBeforeMount(async () => {
   content.value = originalContent.value
 })
 </script>
+
+<style lang="scss" scoped>
+.sandbox-container {
+  padding: $kui-space-0 $kui-space-70;
+}
+</style>
