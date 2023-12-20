@@ -8,19 +8,22 @@
         <button
           :class="{ 'active': mode === 'edit' }"
           :disabled="mode === 'edit'"
-          @mousedown.prevent="changeMode('edit')"
+          :tabindex="0"
+          @click.prevent="changeMode('edit')"
         >
           Edit
         </button>
         <button
           :class="{ 'active': mode === 'split' }"
-          @mousedown.prevent="changeMode('split')"
+          :tabindex="0"
+          @click.prevent="changeMode('split')"
         >
           Split
         </button>
         <button
           :class="{ 'active': mode === 'preview' }"
-          @mousedown.prevent="changeMode('preview')"
+          :tabindex="0"
+          @click.prevent="changeMode('preview')"
         >
           Preview
         </button>
@@ -34,7 +37,8 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`format-option-${option.action}`"
-          @mousedown.prevent="emit('format-selection', option.action)"
+          :tabindex="0"
+          @click.prevent="emit('format-selection', option.action)"
         >
           {{ option.label }}
         </button>
@@ -46,7 +50,8 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`template-option-${option.action}`"
-          @mousedown.prevent="emit('insert-template', option.action)"
+          :tabindex="0"
+          @click.prevent="emit('insert-template', option.action)"
         >
           {{ option.label }}
         </button>
@@ -60,14 +65,16 @@
       <button
         v-if="mode !== 'read'"
         data-testid="toggle-fullscreen"
-        @mousedown.prevent="emit('toggle-fullscreen')"
+        :tabindex="0"
+        @click.prevent="emit('toggle-fullscreen')"
       >
         Toggle Fullscreen
       </button>
       <button
         v-if="['split', 'preview'].includes(mode)"
         data-testid="toggle-html-preview"
-        @mousedown.prevent="emit('toggle-html-preview')"
+        :tabindex="0"
+        @click.prevent="emit('toggle-html-preview')"
       >
         Toggle HTML Preview
       </button>
@@ -76,6 +83,7 @@
       <template v-if="editable && mode === 'read'">
         <button
           data-testid="edit"
+          :tabindex="0"
           @click="determineEditMode"
         >
           Edit
@@ -86,12 +94,14 @@
       >
         <button
           data-testid="cancel"
+          :tabindex="0"
           @click="cancelEdit"
         >
           Cancel
         </button>
         <button
           data-testid="save"
+          :tabindex="0"
           @click="saveChanges"
         >
           Save
