@@ -23,6 +23,7 @@ import mockResponse from './mock-document-response'
 
 const editable = ref<boolean>(true)
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contentUpdated = (markdown: string) => {
   console.log('content updated')
 }
