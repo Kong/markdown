@@ -63,6 +63,7 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
       .use(superscript)
       .use(tasklists, {
         label: true,
+        enabled: false, // Not enabled since checking the box doesn't update the markdown
       })
 
     // disable converting email to link

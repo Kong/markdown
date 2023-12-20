@@ -94,7 +94,7 @@ export default function useMarkdownActions(
       }
 
       // If no element or wrapper, exit early
-      if (!textarea || !wrapper || document.activeElement !== textarea) {
+      if (!textarea || !wrapper) {
         return
       }
 

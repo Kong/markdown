@@ -466,7 +466,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     max-width: 100%;
     outline: none;
     padding: var(--kui-space-40, $kui-space-40) var(--kui-space-50, $kui-space-50);
-    resize: vertical;
+    resize: none;
     text-wrap: wrap;
     transition: box-shadow 0.2s ease-in-out;
     width: 100%;
