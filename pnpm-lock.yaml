@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@kong/icons':
+    specifier: ^1.8.7
+    version: 1.8.7(vue@3.3.11)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -819,6 +822,15 @@ packages:
   /@kong/design-tokens@1.12.1:
     resolution: {integrity: sha512-I6C2HHJ+Kx14Exmr9OEe4yzHvhneC5RGrWzViZXcWNOYCl2VN9dMmgjTAaowbdeyLEeZ+4AtC+LJ2JU7eN4o8w==}
     dev: true
+
+  /@kong/icons@1.8.7(vue@3.3.11):
+    resolution: {integrity: sha512-gSs8VRUyPVacVg/4/bTjnRSuIzcXrWFvV7+4vxjUJXt0dMWBq8GzMZ4JTj9ar7eUHLWeY1nmP55PmwF2Qwsa5A==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      vue: ^3.3.11
+    dependencies:
+      vue: 3.3.11(typescript@5.3.3)
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

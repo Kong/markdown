@@ -1,4 +1,4 @@
-import MarkdownUi from './components/MarkdownUi.vue'
+import MarkdownUi from '@/components/MarkdownUi.vue'
 
 export { MarkdownUi }
 

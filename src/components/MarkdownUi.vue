@@ -57,13 +57,13 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, onUnmounted, computed, ref, nextTick, provide, watch, watchEffect } from 'vue'
 import type { PropType } from 'vue'
-import MarkdownToolbar from './MarkdownToolbar.vue'
-import MarkdownContent from './MarkdownContent.vue'
-import composables from '../composables'
-import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
-import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT } from '../constants'
+import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
+import MarkdownContent from '@/components/MarkdownContent.vue'
+import composables from '@/composables'
+import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
+import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT } from '@/constants'
 import { v4 as uuidv4 } from 'uuid'
-import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '../types'
+import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE } from '@kong/design-tokens'
 import MermaidJs from 'mermaid'
@@ -132,9 +132,11 @@ const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
 const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
 
 // Provide values to child components
-provide(TEXTAREA_ID, computed((): string => textareaId.value))
+provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
+provide(FULLSCREEN_INJECTION_KEY, computed((): boolean => isFullscreen.value))
+provide(HTML_PREVIEW_INJECTION_KEY, computed((): boolean => htmlPreview.value))
 
 const { debounce } = composables.useDebounce()
 const ready = ref<boolean>(false)

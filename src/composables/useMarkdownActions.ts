@@ -1,7 +1,7 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '../constants'
-import type { InlineFormat, MarkdownTemplate } from '../types'
+import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '@/constants'
+import type { InlineFormat, MarkdownTemplate } from '@/types'
 
 /**
  * Utilize the markdown editor actions.
@@ -53,6 +53,21 @@ export default function useMarkdownActions(
       selectedText.end = 0
       selectedText.text = ''
     }
+  }
+
+  /** Focus on the textarea and wait a virtual DOM cycle */
+  const focusTextarea = async (): Promise<void> => {
+    const textarea = getTextarea()
+
+    // If no element, exit early
+    if (!textarea) {
+      return
+    }
+
+    // Always focus back on the textarea
+    textarea.focus()
+    // Wait for the DOM to cycle
+    await nextTick()
   }
 
   /**
@@ -116,9 +131,7 @@ export default function useMarkdownActions(
           rawMarkdown.value = startText.substring(0, startText.length - wrapperLength) + endText.substring(wrapperLength)
 
           // Always focus back on the textarea
-          textarea.focus()
-          // Wait for the DOM to cycle
-          await nextTick()
+          await focusTextarea()
 
           textarea.selectionEnd = selectedText.start - wrapperLength
 
@@ -128,9 +141,7 @@ export default function useMarkdownActions(
           rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start) + wrapper + wrapper + rawMarkdown.value.substring(selectedText.end)
 
           // Always focus back on the textarea
-          textarea.focus()
-          // Wait for the DOM to cycle
-          await nextTick()
+          await focusTextarea()
 
           // Move the cursor between the `wrapper`
           textarea.selectionEnd = selectedText.start + wrapperLength
@@ -169,9 +180,7 @@ export default function useMarkdownActions(
       }
 
       // Always focus back on the textarea
-      textarea.focus()
-      // Wait for the DOM to cycle
-      await nextTick()
+      await focusTextarea()
 
       // Adjust the selection position
       if (!isWrapped) {
@@ -238,9 +247,7 @@ export default function useMarkdownActions(
       }
 
       // Always focus back on the textarea
-      textarea.focus()
-      // Wait for the DOM to cycle
-      await nextTick()
+      await focusTextarea()
 
       // Move the cursor and selected text
       if (selectedText.text.length !== 0) {
@@ -291,7 +298,10 @@ export default function useMarkdownActions(
       switch (template) {
         case 'task':
           // Do nothing if the template already exists
-          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_TASK)) { return }
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_TASK)) {
+            await focusTextarea()
+            return
+          }
           // needsNewLine not needed here
           markdownTemplate =
           needsNewLine +
@@ -299,7 +309,10 @@ export default function useMarkdownActions(
           break
         case 'unordered-list':
           // Do nothing if the template already exists
-          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_UL)) { return }
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_UL)) {
+            await focusTextarea()
+            return
+          }
           // needsNewLine not needed here
           markdownTemplate =
           needsNewLine +
@@ -307,7 +320,10 @@ export default function useMarkdownActions(
           break
         case 'blockquote':
           // Do nothing if the template already exists
-          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_BLOCKQUOTE)) { return }
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_BLOCKQUOTE)) {
+            await focusTextarea()
+            return
+          }
           // needsNewLine not needed here
           markdownTemplate =
           needsNewLine +
@@ -333,9 +349,7 @@ export default function useMarkdownActions(
       rawMarkdown.value = startText + markdownTemplate + rawMarkdown.value.substring(selectedText.end)
 
       // Always focus back on the textarea
-      textarea.focus()
-      // Wait for the DOM to cycle
-      await nextTick()
+      await focusTextarea()
 
       switch (template) {
         case 'codeblock':
@@ -410,9 +424,7 @@ export default function useMarkdownActions(
       rawMarkdown.value = removeNewLineTemplate ? rawMarkdown.value.substring(0, selectedText.start - lastLine.length) + rawMarkdown.value.substring(selectedText.end) : startText + newLineContent + rawMarkdown.value.substring(selectedText.end)
 
       // Always focus back on the textarea
-      textarea.focus()
-      // Wait for the DOM to cycle
-      await nextTick()
+      await focusTextarea()
 
       // Update the cursor position
       textarea.selectionEnd = removeNewLineTemplate ? selectedText.start - templateLength : selectedText.start + newLineContent.length

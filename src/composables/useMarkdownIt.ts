@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import useShikiji from './useShikiji'
+import useShikiji from '@/composables/useShikiji'
 
 // markdown-it
 import MarkdownIt from 'markdown-it'

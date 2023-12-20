@@ -1,8 +1,8 @@
 import { computed } from 'vue'
 import type { Ref } from 'vue'
-import useMarkdownActions from './useMarkdownActions'
+import useMarkdownActions from '@/composables/useMarkdownActions'
 import { useActiveElement, useMagicKeys } from '@vueuse/core'
-import type { InlineFormat } from '../types'
+import type { InlineFormat } from '@/types'
 
 /**
  * Utilize keyboard shortcuts in the markdown editor. Must be called at the root of the `setup` function.

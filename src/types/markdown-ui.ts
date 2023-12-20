@@ -1,3 +1,6 @@
+// Get a generic `@kong/icons` interface for the option prop
+import type { BoldIcon as GenericIcon } from '@kong/icons'
+
 /** The current mode of the markdown component */
 export type MarkdownMode =
 | 'read'
@@ -19,6 +22,8 @@ export type InlineFormat =
 export interface FormatOption {
   label: string
   action: InlineFormat
+  icon: typeof GenericIcon
+  keys?: string[]
 }
 
 /** The type of markdown template to insert */
@@ -32,6 +37,7 @@ export type MarkdownTemplate =
 export interface TemplateOption {
   label: string
   action: MarkdownTemplate
+  icon: typeof GenericIcon
 }
 
 export interface TextAreaInputEvent {
