@@ -1,7 +1,7 @@
 # Kong Markdown
 
 > [!IMPORTANT]
-> This repository is currently in development. Breaking changes should be expected.
+> This repository and the `@kong/markdown` package are currently in development. Breaking changes should be expected.
 
 Kong's open-source markdown renderer and live editor.
 
