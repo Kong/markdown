@@ -374,6 +374,13 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   }
 
   &.mode-edit,
+  &.mode-split {
+    .markdown-panes {
+      height: v-bind('markdownEditorMaxHeight'); // max-height in edit and split modes
+    }
+  }
+
+  &.mode-edit,
   &.mode-split,
   &.mode-preview {
 
@@ -396,8 +403,6 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     }
 
     .markdown-panes {
-      height: v-bind('markdownEditorMaxHeight'); // max-height in edit mode
-
       .markdown-preview {
         border: $kui-border-width-10 solid $kui-color-border;
         border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
