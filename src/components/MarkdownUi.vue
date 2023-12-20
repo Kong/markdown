@@ -391,6 +391,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
       height: 100%;
       left: 0;
       margin-top: v-bind('fullscreenOffsetTop');
+      padding: $kui-space-0 $kui-space-40 $kui-space-40;
       position: fixed;
       right: 0;
       top: 0;
