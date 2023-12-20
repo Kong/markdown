@@ -92,6 +92,8 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     pre {
       border-radius: $kui-border-radius-40;
       font-family: $kui-font-family-code;
+      font-size: $kui-font-size-30;
+      line-height: $kui-line-height-30;
       overflow-wrap: break-word;
       white-space: pre-wrap;
     }

@@ -34,7 +34,6 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`format-option-${option.action}`"
-          :disabled="!textareaIsActive"
           @mousedown.prevent="emit('format-selection', option.action)"
         >
           {{ option.label }}
@@ -47,7 +46,6 @@
           :key="option.label"
           :aria-label="option.label"
           :data-testid="`template-option-${option.action}`"
-          :disabled="!textareaIsActive"
           @mousedown.prevent="emit('insert-template', option.action)"
         >
           {{ option.label }}
@@ -104,15 +102,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue'
+import { inject, ref } from 'vue'
 import type { Ref } from 'vue'
-import { TEXTAREA_ID, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
-import { useActiveElement, useMediaQuery } from '@vueuse/core'
+import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
+import { useMediaQuery } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '../constants'
 import { KUI_BREAKPOINT_TABLET } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '../types'
 
-const textareaId: Ref<string> = inject(TEXTAREA_ID, ref(''))
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 
@@ -125,10 +122,6 @@ const emit = defineEmits<{
   (e: 'cancel'): void
   (e: 'save'): void
 }>()
-
-// The document.activeElement
-const activeElement = useActiveElement()
-const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId.value)
 
 const determineEditMode = (): void => {
   // Determine if the user is on a wider viewport

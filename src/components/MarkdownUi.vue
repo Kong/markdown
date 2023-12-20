@@ -201,11 +201,15 @@ const insertTemplate = (template: MarkdownTemplate): void => {
 // When the user presses the `tab` key in the textarea
 const onTab = (): void => {
   toggleTab('add', props.tabSize)
+  // Emulate an `input` event to trigger an update
+  emulateInputEvent()
 }
 
 // When the user presses `shift + tab` keys in the textarea
 const onShiftTab = (): void => {
   toggleTab('remove', props.tabSize)
+  // Emulate an `input` event to trigger an update
+  emulateInputEvent()
 }
 
 /** When true, show the HTML preview instead of the rendered markdown preview */
