@@ -156,7 +156,7 @@ const saveChanges = (): void => {
   changeMode('read')
 }
 
-// TODO: Keyboard shortcuts - Command icon `content: "\2318"`
+// TODO: Keyboard shortcuts - Command icon `content: '\2318'` or `content: 'Ctrl'`
 const formatOptions: FormatOption[] = [
   { label: 'Bold', action: 'bold' },
   { label: 'Italic', action: 'italic' },
