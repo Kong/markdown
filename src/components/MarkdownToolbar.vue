@@ -1,5 +1,8 @@
 <template>
-  <div class="markdown-ui-toolbar">
+  <div
+    ref="toolbar"
+    class="markdown-ui-toolbar"
+  >
     <div class="toolbar-left">
       <div
         v-if="editable && mode !== 'read'"
@@ -112,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { inject, ref, onMounted } from 'vue'
 import type { Ref } from 'vue'
 import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY } from '../injection-keys'
 import { useMediaQuery } from '@vueuse/core'
@@ -122,6 +125,8 @@ import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, Markdown
 
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
+
+const toolbar = ref<HTMLElement>()
 
 const emit = defineEmits<{
   (e: 'format-selection', format: InlineFormat): void
@@ -175,6 +180,12 @@ const templateOptions: TemplateOption[] = [
   { label: 'UL', action: 'unordered-list' },
   { label: 'Blockquote', action: 'blockquote' },
 ]
+
+onMounted(() => {
+  // Add a `mac` class to the container if on Mac (for shortcut icons)
+  // @ts-ignore - property exists
+  toolbar.value?.classList?.toggle('mac', /Mac|iPhone|iPod|iPad/i.test(navigator?.platform) || /macOS|Mac|iPhone|iPod|iPad/i.test(navigator?.userAgentData?.platform))
+})
 </script>
 
 <style lang="scss" scoped>
