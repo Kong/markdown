@@ -55,6 +55,8 @@ jobs:
       - name: Publish Package Preview
         id: package-preview
         if: github.event_name == 'pull_request' && (github.actor != 'renovate[bot]' || contains(github.event.pull_request.labels.*.name, 'create preview package'))
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
         run: |
           git config user.email "konnectx-engineers+kongponents-bot@konghq.com"
           git config user.name "Kong UI Bot"
@@ -64,7 +66,7 @@ jobs:
           echo "preid=${preid}"
 
 
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
           # Use yarn to bump the version for the prerelease
           yarn version --prerelease --preid ${preid} --no-git-tag-version --yes --amend
