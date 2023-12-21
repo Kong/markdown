@@ -48,7 +48,6 @@
     "test": "cross-env FORCE_COLOR=1 vitest run",
     "test:open": "cross-env FORCE_COLOR=1 vitest --ui",
     "semantic-release": "semantic-release",
-    "lerna": "lerna",
     "commit": "cz"
   },
   "peerDependencies": {
@@ -109,7 +108,6 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.19.2",
     "jsdom": "^22.1.0",
-    "lerna": "^8.0.1",
     "markdown-it-shikiji": "^0.9.9",
     "postcss": "^8.4.32",
     "postcss-html": "^1.5.0",

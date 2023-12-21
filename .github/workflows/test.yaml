@@ -65,36 +65,33 @@ jobs:
           tag="pr-${{ github.event.pull_request.number }}"
           echo "preid=${preid}"
 
-          git checkout ${{ github.head_ref }}
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
-          pnpm --silent lerna version prerelease --preid ${preid} --allow-branch ${{ github.head_ref }} --conventional-prerelease --yes --amend || true
+          pnpm version --prerelease --preid ${preid} --allow-branch ${{ github.head_ref }} --no-git-tag-version --yes --amend
 
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+          package_version=$(jq -r ".version" package.json)
+          package=@kong/markdown@"${package_version}"
 
-          pnpmPublish=$(pnpm publish --no-git-checks --access public --report-summary --tag "${tag}")
-
-          if [[ ! -z $(echo "${pnpmPublish}"|grep "There are no new packages that should be published") ]]; then
-            echo "There are no new packages that should be published"
+          npm show "${package}" >/dev/null 2>&1 && npm_show_status=0 || npm_show_status=1
+          if [ $npm_show_status -eq 0 ]; then
+            echo "Package ${package} is already published. Skipping publishing."
             exit 0
           fi
 
           npm_instructions=""
-          pkg=$(echo "${pnpmPublish}" | grep "+ "| sed 's/+ //')
 
-          pkg="@$(echo ${pkg}|cut -d'@' -f2)@${tag}"
-          if [ "${npm_instructions}" != "" ]; then
-            npm_instructions="${npm_instructions}\n"
-          fi
-          npm_instructions="${npm_instructions}${pkg}"
+          pkg=$(npm publish --no-git-checks --access public --report-summary --tag "${tag}" | grep "+ "| sed 's/+ //')
 
-          if [[ -z "${npm_instructions}" ]]; then
-            echo "Error creating preview instructions"
+          if [[ -z "${pkg}" ]]; then
+            echo "Error publishing package"
             exit -1
           fi
 
-          echo "npm_instructions<<EOF" >> $GITHUB_ENV
-          echo -e "$npm_instructions" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          npm_instructions="pnpm add @$(echo ${pkg}|cut -d'@' -f2)@${tag}"
+
+          echo "npm_instructions<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$npm_instructions" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Provide preview link info
         if: ${{ steps.package-preview.outputs.npm_instructions != '' }}
