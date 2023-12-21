@@ -2,7 +2,14 @@
   "name": "@kong/markdown",
   "version": "0.0.1",
   "description": "Kong's open-source markdown renderer and live editor",
-  "keywords": ["markdown", "markdown-it", "vue", "editor", "markdown editor", "markdown renderer"],
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "vue",
+    "editor",
+    "markdown editor",
+    "markdown renderer"
+  ],
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/kong-markdown.umd.js",
@@ -175,8 +182,7 @@
   },
   "volta": {
     "node": "18.18.2",
-    "pnpm": "8.10.5",
-    "yarn": "1.22.21"
+    "pnpm": "8.10.5"
   },
   "config": {
     "commitizen": {
