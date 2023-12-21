@@ -9,6 +9,7 @@
       class="keys"
     >
       <kbd
+        :aria-label="isMac ? 'Command' : 'Control'"
         class="keyboard-button meta-key"
         :class="{ 'mac': isMac }"
       />
