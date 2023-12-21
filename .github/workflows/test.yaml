@@ -52,6 +52,12 @@ jobs:
       - name: Test
         run: pnpm run test
 
+      # TODO: Remove
+      - name: Debug
+        run: |
+          echo "head_ref={{ github.head_ref }}"
+          echo "ref_name={{ github.ref_name }}"
+
       - name: Publish Package Preview
         id: package-preview
         if: github.event_name == 'pull_request' && (github.actor != 'renovate[bot]' || contains(github.event.pull_request.labels.*.name, 'create preview package'))
