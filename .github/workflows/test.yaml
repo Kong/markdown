@@ -57,8 +57,8 @@ jobs:
       # TODO: Remove
       - name: Debug
         run: |
-          echo "head_ref={{ github.head_ref }}"
-          echo "ref_name={{ github.ref_name }}"
+          echo "head_ref=${{ github.head_ref }}"
+          echo "ref_name=${{ github.ref_name }}"
 
       - name: Publish Package Preview
         id: package-preview
