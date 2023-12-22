@@ -1,3 +1,10 @@
+# [1.0.0-alpha.2](https://github.com/Kong/markdown/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2023-12-22)
+
+
+### Features
+
+* toolbar updates ([#3](https://github.com/Kong/markdown/issues/3)) ([14a2976](https://github.com/Kong/markdown/commit/14a297600ee28d4eee23d64119f85ffc6a7cd414))
+
 # 1.0.0-alpha.1 (2023-12-22)
 
 
