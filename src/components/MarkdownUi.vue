@@ -250,7 +250,6 @@ const copyCodeBlock = async (e: any): Promise<void> => {
       const copyText = e.target?.dataset?.copytext || ''
       if (copyText) {
         await navigator.clipboard.writeText(copyText)
-        console.log(e.target)
         e?.target?.blur()
       }
     }
@@ -272,6 +271,10 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
   // Update the output
   markdownHtml.value = getHtmlFromMarkdown(rawMarkdown.value)
 
+  await nextTick() // **MUST** await nextTick for the virtual DOM to refresh again
+
+  updateCodeCopyClickEvents(true)
+
   // Emit the updated content if `emitEvent` is not false
   if (emitEvent) {
     emit('update:modelValue', rawMarkdown.value)
@@ -281,11 +284,19 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
 
   await updateMermaid()
-
-  await nextTick() // **MUST** await nextTick for the virtual DOM to refresh again
-
-  updateCodeCopyClickEvents(true)
 }, EDITOR_DEBOUNCE_TIMEOUT)
+
+const updateCodeCopyClickEvents = (enable = true): void => {
+  // Bind click events to code copy blocks
+  Array.from([...document.querySelectorAll(`#${componentContainerId.value} .kong-markdown-code-block-copy[data-copytext]`)]).forEach((el: Element) => {
+    if (enable) {
+      el.removeEventListener('click', copyCodeBlock)
+      el.addEventListener('click', copyCodeBlock)
+    } else {
+      el.removeEventListener('click', copyCodeBlock)
+    }
+  })
+}
 
 /**
  * Emulate an `input` event when injecting content into the textarea
@@ -300,18 +311,8 @@ const emulateInputEvent = (emitEvent = true): void => {
 
   // Trigger the update
   onContentEdit(event, emitEvent)
-}
 
-const updateCodeCopyClickEvents = (enable = true): void => {
-  // Bind click events to code copy blocks
-  Array.from([...document.querySelectorAll(`#${componentContainerId.value} .kong-markdown-code-block-copy[data-copytext]`)]).forEach((el: Element) => {
-    if (enable) {
-      el.removeEventListener('click', copyCodeBlock)
-      el.addEventListener('click', copyCodeBlock)
-    } else {
-      el.removeEventListener('click', copyCodeBlock)
-    }
-  })
+  updateCodeCopyClickEvents(true)
 }
 
 // Initialize rawMarkdown.value with the props.modelValue content
