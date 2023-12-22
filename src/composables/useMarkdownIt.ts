@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import useShikiji from '@/composables/useShikiji'
+import { NEW_LINE_CHARACTER } from '@/constants'
 
 // markdown-it
 import MarkdownIt from 'markdown-it'
@@ -70,7 +71,7 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
     md.value.linkify.set({ fuzzyLink: false })
 
     // Customize table element
-    md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">\n'
+    md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">' + NEW_LINE_CHARACTER
 
     // Configure external links
     const defaultLinkRenderer = md.value.renderer.rules.link_open ||

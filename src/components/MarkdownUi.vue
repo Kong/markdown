@@ -61,7 +61,7 @@ import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
 import MarkdownContent from '@/components/MarkdownContent.vue'
 import composables from '@/composables'
 import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
-import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT } from '@/constants'
+import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
@@ -220,7 +220,7 @@ const htmlPreview = ref<boolean>(false)
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
 watchEffect(() => {
   if (htmlPreview.value) {
-    markdownPreviewHtml.value = md.value?.render('```html\n' + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + '\n```')
+    markdownPreviewHtml.value = md.value?.render('```html' + NEW_LINE_CHARACTER + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + NEW_LINE_CHARACTER + '```')
   }
 })
 
