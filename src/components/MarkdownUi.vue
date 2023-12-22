@@ -242,6 +242,23 @@ const updateMermaid = async () => {
   }
 }
 
+/** Copy the contents of the code block to the clipboard */
+const copyCodeBlock = async (e: any): Promise<void> => {
+  try {
+    e.preventDefault()
+    if (navigator?.clipboard?.writeText) {
+      const copyText = e.target?.dataset?.copytext || ''
+      if (copyText) {
+        await navigator.clipboard.writeText(copyText)
+        console.log(e.target)
+        e?.target?.blur()
+      }
+    }
+  } catch (err) {
+    console.warn('Could not copy text to clipboard', err)
+  }
+}
+
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
 const onContentEdit = (event: TextAreaInputEvent, emitEvent = true): void => {
   // Update the ref immediately
@@ -262,7 +279,12 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
 
   // Re-render any `.mermaid` containers
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
+
   await updateMermaid()
+
+  await nextTick() // **MUST** await nextTick for the virtual DOM to refresh again
+
+  updateCodeCopyClickEvents(true)
 }, EDITOR_DEBOUNCE_TIMEOUT)
 
 /**
@@ -278,6 +300,18 @@ const emulateInputEvent = (emitEvent = true): void => {
 
   // Trigger the update
   onContentEdit(event, emitEvent)
+}
+
+const updateCodeCopyClickEvents = (enable = true): void => {
+  // Bind click events to code copy blocks
+  Array.from([...document.querySelectorAll(`#${componentContainerId.value} .kong-markdown-code-block-copy[data-copytext]`)]).forEach((el: Element) => {
+    if (enable) {
+      el.removeEventListener('click', copyCodeBlock)
+      el.addEventListener('click', copyCodeBlock)
+    } else {
+      el.removeEventListener('click', copyCodeBlock)
+    }
+  })
 }
 
 // Initialize rawMarkdown.value with the props.modelValue content
@@ -343,13 +377,19 @@ onMounted(async () => {
     })
   }
 
-  // Must await to let virtual DOM cycle
-  await nextTick()
+  if (currentMode.value === 'split') {
+    await nextTick()
+    // Synchronize the scroll containers
+    initializeSyncScroll()
+  }
 })
 
 onUnmounted(() => {
   // Remove scrolling event listeners
   destroySyncScroll()
+
+  // Unbind click events
+  updateCodeCopyClickEvents(false)
 })
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.

@@ -275,6 +275,7 @@ onMounted(() => {
     button {
       border: 0;
       border-right: 1px solid $kui-color-border;
+      cursor: pointer;
       padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
 
       &:disabled {

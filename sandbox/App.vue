@@ -7,7 +7,8 @@
       <MarkdownUi
         v-model="content"
         :editable="editable"
-        mode="split"
+        mode="read"
+        theme="light"
         @cancel="cancelEdit"
         @mode="modeChanged"
         @save="contentSaved"

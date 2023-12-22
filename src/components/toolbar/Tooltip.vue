@@ -57,5 +57,6 @@ defineProps({
   transform: translateX(-50%);
   transition: opacity 0.2s ease-in-out;
   width: max-content;
+  z-index: 1;
 }
 </style>

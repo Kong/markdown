@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import useShikiji from '@/composables/useShikiji'
-import { NEW_LINE_CHARACTER, HEADER_LINK_SVG } from '@/constants'
+import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
 
 // markdown-it
 import MarkdownIt from 'markdown-it'
@@ -44,7 +44,7 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
           placement: 'before',
           class: 'header-anchor', // The class applied to the anchor tag; allows for styling
           // Utilize an SVG icon instead of a `#` string
-          symbol: HEADER_LINK_SVG,
+          symbol: HEADER_LINK_ICON_SVG,
         }),
       })
       .use(abbreviation)
@@ -73,14 +73,15 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
     // Customize table element
     md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">' + NEW_LINE_CHARACTER
 
-    // Configure external links
-    const defaultLinkRenderer = md.value.renderer.rules.link_open ||
-      function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
+    const getDefaultRenderer = (original: any): Function => {
+      return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
+    }
 
+    // Configure custom external links
+    const defaultLinkRenderer = getDefaultRenderer(md.value.renderer.rules.link_open)
     const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
-
     md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
         const aIndex = tokens[idx].attrIndex(attribute)
@@ -94,6 +95,31 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
         }
       })
       return defaultLinkRenderer(tokens, idx, options, env, self)
+    }
+
+    // Configure custom code blocks
+    const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
+    md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+      // Strip out quote characters
+      const content = tokens[idx].content
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&apos;')
+      const originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+
+      if (content.length === 0) {
+        return originalContent
+      }
+
+      // Styles injected from `src/components/MarkdownContent.vue`
+      // The event is bound to an element with `.kong-markdown-code-block-copy[data-copytext]`
+      return `
+        <div class="kong-markdown-code-block-container" style="position: relative">
+          ${originalContent}
+          <button class="kong-markdown-code-block-copy" data-copytext="${content}" aria-label="Copy code" tabindex="0">
+            ${COPY_ICON_SVG}
+          </button>
+        </div>
+      `
     }
   }
 
