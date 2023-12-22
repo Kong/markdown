@@ -17,16 +17,18 @@ export enum InlineFormatWrapper {
 /** The height of the .markdown-ui-toolbar */
 export const TOOLBAR_HEIGHT: string = '40px'
 
+export const NEW_LINE_CHARACTER = '\n'
+
 /** The markdown template for a codeblock */
 export const MARKDOWN_TEMPLATE_CODEBLOCK =
-'```' + DEFAULT_CODEBLOCK_LANGUAGE + '\n' +
-'\n' +
+'```' + DEFAULT_CODEBLOCK_LANGUAGE + NEW_LINE_CHARACTER +
+NEW_LINE_CHARACTER +
 '```'
 
 /** The markdown template for a table */
 export const MARKDOWN_TEMPLATE_TABLE =
-'| Column1 | Column2 | Column3 |\n' +
-'| :--- | :--- | :--- |\n' +
+'| Column1 | Column2 | Column3 |' + NEW_LINE_CHARACTER +
+'| :--- | :--- | :--- |' + NEW_LINE_CHARACTER +
 '| Content | Content | Content |'
 
 /** The markdown template for a task. Ensure trailing space remains */
@@ -34,6 +36,8 @@ export const MARKDOWN_TEMPLATE_TASK = '- [ ] '
 
 /** The markdown template for an unordered list. Ensure trailing space remains */
 export const MARKDOWN_TEMPLATE_UL = '- '
+/** The markdown template for an ordered list. Ensure trailing space remains */
+export const MARKDOWN_TEMPLATE_OL = '1. '
 
 /** The markdown template for a blockquote. Ensure trailing space remains */
 export const MARKDOWN_TEMPLATE_BLOCKQUOTE = '> '

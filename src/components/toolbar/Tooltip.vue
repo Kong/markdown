@@ -53,7 +53,7 @@ defineProps({
   padding: $kui-space-40;
   pointer-events: none;
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 4px);
   transform: translateX(-50%);
   transition: opacity 0.2s ease-in-out;
   width: max-content;

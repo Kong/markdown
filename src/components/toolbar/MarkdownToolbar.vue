@@ -35,7 +35,7 @@
       <template v-if="editable && mode !== 'read'">
         <div class="toolbar-divider" />
 
-        <InfoTooltip
+        <Tooltip
           v-for="option in formatOptions"
           :key="option.label"
           :data-testid="`tooltip-${option.action}`"
@@ -59,11 +59,11 @@
               :size="KUI_ICON_SIZE_40"
             />
           </IconButton>
-        </InfoTooltip>
+        </Tooltip>
 
         <div class="toolbar-divider" />
 
-        <InfoTooltip
+        <Tooltip
           v-for="option in templateOptions"
           :key="option.label"
           :data-testid="`tooltip-${option.action}`"
@@ -83,7 +83,7 @@
               :size="KUI_ICON_SIZE_40"
             />
           </IconButton>
-        </InfoTooltip>
+        </Tooltip>
       </template>
 
       <div
@@ -91,7 +91,7 @@
         class="toolbar-divider"
       />
 
-      <InfoTooltip
+      <Tooltip
         v-if="mode !== 'read'"
         :data-testid="`tooltip-fullscreen`"
       >
@@ -110,9 +110,9 @@
             :size="KUI_ICON_SIZE_40"
           />
         </IconButton>
-      </InfoTooltip>
+      </Tooltip>
 
-      <InfoTooltip
+      <Tooltip
         v-if="['split', 'preview'].includes(mode)"
         :data-testid="`tooltip-fullscreen`"
       >
@@ -131,7 +131,7 @@
             :size="KUI_ICON_SIZE_40"
           />
         </IconButton>
-      </InfoTooltip>
+      </Tooltip>
     </div>
     <div class="toolbar-right">
       <template v-if="editable && mode === 'read'">
@@ -174,9 +174,9 @@ import { TOOLBAR_HEIGHT } from '@/constants'
 import { KUI_BREAKPOINT_TABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '@/types'
 import IconButton from '@/components/toolbar/IconButton.vue'
-import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
+import Tooltip from '@/components/toolbar/Tooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
-import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, SubscriptIcon, SuperscriptIcon, MarkIcon, CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
+import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, SubscriptIcon, SuperscriptIcon, MarkIcon, CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
 
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
@@ -242,10 +242,11 @@ const formatOptions: FormatOption[] = [
 ]
 
 const templateOptions: TemplateOption[] = [
-  { label: 'CodeBlock', action: 'codeblock', icon: CodeblockIcon },
+  { label: 'Codeblock', action: 'codeblock', icon: CodeblockIcon },
   { label: 'Table', action: 'table', icon: TableIcon },
-  { label: 'Task', action: 'task', icon: TasklistIcon },
-  { label: 'UL', action: 'unordered-list', icon: ListUnorderedIcon },
+  { label: 'Tasklist', action: 'task', icon: TasklistIcon },
+  { label: 'Unordered List', action: 'unordered-list', icon: ListUnorderedIcon },
+  { label: 'Ordered List', action: 'ordered-list', icon: ListOrderedIcon },
   { label: 'Blockquote', action: 'blockquote', icon: BlockquoteIcon },
 ]
 

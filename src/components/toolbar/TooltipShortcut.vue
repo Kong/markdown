@@ -58,7 +58,7 @@ onMounted(() => {
   font-family: $kui-font-family-text;
   font-size: $kui-font-size-20;
   font-weight: $kui-font-weight-regular;
-  gap: $kui-space-20;
+  gap: $kui-space-30;
   justify-content: center;
   user-select: none;
 

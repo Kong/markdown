@@ -32,6 +32,7 @@ export type MarkdownTemplate =
   | 'codeblock'
   | 'task'
   | 'unordered-list'
+  | 'ordered-list'
   | 'blockquote'
 
 export interface TemplateOption {

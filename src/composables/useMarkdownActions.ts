@@ -1,6 +1,6 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '@/constants'
+import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, NEW_LINE_CHARACTER } from '@/constants'
 import type { InlineFormat, MarkdownTemplate } from '@/types'
 
 /**
@@ -221,8 +221,8 @@ export default function useMarkdownActions(
 
       const startText = rawMarkdown.value.substring(0, selectedText.start)
 
-      // When removing tabs, ensure string starts with two spaces; if not, exit
-      if (action === 'remove' && !startText.endsWith(spaces)) {
+      // When removing tabs, ensure string starts with two spaces; or a list item that is already indented. If not, exit
+      if (action === 'remove' && (!startText.endsWith(spaces) && !startText.endsWith('  ' + MARKDOWN_TEMPLATE_UL))) {
         return
       }
 
@@ -231,9 +231,9 @@ export default function useMarkdownActions(
         lineBreakCount = (selectedText.text.match(/\n(?!\n)/g) || []).length
         // If text is selected
         if (action === 'add') {
-          rawMarkdown.value = startText + spaces + selectedText.text.replace(/\n(?!\n)/g, `\n${spaces}`) + rawMarkdown.value.substring(selectedText.end)
+          rawMarkdown.value = startText + spaces + selectedText.text.replace(/\n(?!\n)/g, `${NEW_LINE_CHARACTER}${spaces}`) + rawMarkdown.value.substring(selectedText.end)
         } else {
-          rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start - spaces.length) + selectedText.text.replaceAll(`\n${spaces}`, '\n') + rawMarkdown.value.substring(selectedText.end)
+          rawMarkdown.value = rawMarkdown.value.substring(0, selectedText.start - spaces.length) + selectedText.text.replaceAll(`${NEW_LINE_CHARACTER}${spaces}`, NEW_LINE_CHARACTER) + rawMarkdown.value.substring(selectedText.end)
         }
       } else {
         // If text is not selected
@@ -241,6 +241,8 @@ export default function useMarkdownActions(
         // If text starts with an inline template
         if (startText.endsWith(MARKDOWN_TEMPLATE_UL)) {
           rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start - MARKDOWN_TEMPLATE_UL.length) + spaces + MARKDOWN_TEMPLATE_UL + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length - MARKDOWN_TEMPLATE_UL.length) + MARKDOWN_TEMPLATE_UL + rawMarkdown.value.substring(selectedText.end)
+        } else if (startText.endsWith(MARKDOWN_TEMPLATE_OL)) {
+          rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start - MARKDOWN_TEMPLATE_OL.length) + spaces + MARKDOWN_TEMPLATE_OL + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length - MARKDOWN_TEMPLATE_OL.length) + MARKDOWN_TEMPLATE_OL + rawMarkdown.value.substring(selectedText.end)
         } else {
           rawMarkdown.value = action === 'add' ? startText + spaces + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length) + rawMarkdown.value.substring(selectedText.end)
         }
@@ -266,7 +268,15 @@ export default function useMarkdownActions(
   }
 
   /** Check if the single line template already exists on the line */
-  const singleLineTemplateExists = (startText: string, template: string) => String(startText?.split('\n')?.pop() || '').endsWith(template)
+  const singleLineTemplateExists = (startText: string, template: string) => {
+    // Special handling for ordered list items
+    if (template === MARKDOWN_TEMPLATE_OL) {
+      // If the startText begins with `{number}. `
+      return /^\d{1,}\. /.test(String(startText?.split(NEW_LINE_CHARACTER)?.pop() || ''))
+    }
+    // All other templates
+    return String(startText?.split(NEW_LINE_CHARACTER)?.pop() || '').endsWith(template)
+  }
 
   /**
    * Insert a markdown template at the current cursor position.
@@ -291,7 +301,7 @@ export default function useMarkdownActions(
       const startText = rawMarkdown.value.substring(0, selectedText.start)
       // If the previous line is not empty and doesn't already have an empty line above it (if so, empty string)
       // If the line does not start with a new line, insert two, otherwise, insert one new line
-      const needsNewLine: string = startText.length === 0 || startText.endsWith('\n\n') ? '' : /(.*)?[^\n]$/.test(startText) ? '\n\n' : '\n'
+      const needsNewLine: string = startText.length === 0 || startText.endsWith(`${NEW_LINE_CHARACTER}${NEW_LINE_CHARACTER}`) ? '' : /(.*)?[^\n]$/.test(startText) ? `${NEW_LINE_CHARACTER}${NEW_LINE_CHARACTER}` : NEW_LINE_CHARACTER
 
       let markdownTemplate: string = ''
 
@@ -317,6 +327,17 @@ export default function useMarkdownActions(
           markdownTemplate =
           needsNewLine +
           MARKDOWN_TEMPLATE_UL
+          break
+        case 'ordered-list':
+          // Do nothing if the template already exists
+          if (singleLineTemplateExists(startText, MARKDOWN_TEMPLATE_OL)) {
+            await focusTextarea()
+            return
+          }
+          // needsNewLine not needed here
+          markdownTemplate =
+          needsNewLine +
+          MARKDOWN_TEMPLATE_OL
           break
         case 'blockquote':
           // Do nothing if the template already exists
@@ -388,10 +409,9 @@ export default function useMarkdownActions(
       // Check the current line to see if we're within another format block (e.g. list, code, etc.)
       const startText = rawMarkdown.value.substring(0, selectedText.start)
       // Grab the last line before the cursor
-      const lastLine = startText?.split('\n')?.pop() || ''
+      const lastLine = startText?.split(NEW_LINE_CHARACTER)?.pop() || ''
 
-      const newLineCharacter = '\n'
-      let newLineContent = newLineCharacter
+      let newLineContent = NEW_LINE_CHARACTER
 
       // Should we remove the new line template on second Enter keypress
       let removeNewLineTemplate = false
@@ -400,23 +420,51 @@ export default function useMarkdownActions(
       const newLineTemplates = [
         MARKDOWN_TEMPLATE_TASK, // Task template **must** be processed before UL template since they share starting chars
         MARKDOWN_TEMPLATE_UL,
+        MARKDOWN_TEMPLATE_OL,
         MARKDOWN_TEMPLATE_BLOCKQUOTE,
       ]
 
       // Loop through the new line templates.
       // If the last line before the \n starts with any formatting templates, also inject the template into the next line
       for (const template of newLineTemplates) {
-        if (lastLine.trimStart().startsWith(template)) {
-          templateLength = template.length
-          // If the last task item is empty, remove the template instead
-          if (lastLine.trimStart() === template) {
-            removeNewLineTemplate = true
-          } else {
-            // Add a new line appended with the same template with indentation, if applicable
-            newLineContent += lastLine.split(template)[0] + template
+        // Special handling for Ordered Lists
+        if (template === MARKDOWN_TEMPLATE_OL) {
+          if (/^\d{1,}\. /.test(lastLine.trimStart())) {
+            // Remove the `1` in the ordered list template
+            const numberSuffix = MARKDOWN_TEMPLATE_OL.replace('1', '')
+            // Split the line by the `. ` string after the number, and get the first entry (which should be the list number)
+            const listNumber = Number(lastLine.trimStart().split(numberSuffix)[0])
+            if (!isNaN(listNumber) && listNumber > 0) {
+              // Increment the number for the next list item
+              const newLineNumber: number = listNumber + 1
+              // Get the template length
+              templateLength = String(newLineNumber + numberSuffix).length
+
+              // If the last list item is empty, remove the template instead
+              if (/^\d{1,}\. $/.test(lastLine.trimStart())) {
+                removeNewLineTemplate = true
+              } else {
+                // Add a new line appended with the same template with indentation, if applicable
+                newLineContent += lastLine.split(listNumber + numberSuffix)[0] + newLineNumber + numberSuffix
+              }
+            }
+            // We found a match, so exit the loop
+            break
           }
-          // We found a match, so exit the loop
-          break
+        } else {
+          // All other templates (other than ordered list)
+          if (lastLine.trimStart().startsWith(template)) {
+            templateLength = template.length
+            // If the last list item is empty, remove the template instead
+            if (lastLine.trimStart() === template) {
+              removeNewLineTemplate = true
+            } else {
+              // Add a new line appended with the same template with indentation, if applicable
+              newLineContent += lastLine.split(template)[0] + template
+            }
+            // We found a match, so exit the loop
+            break
+          }
         }
       }
 
