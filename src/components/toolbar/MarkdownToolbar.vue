@@ -35,7 +35,7 @@
       <template v-if="editable && mode !== 'read'">
         <div class="toolbar-divider" />
 
-        <Tooltip
+        <InfoTooltip
           v-for="option in formatOptions"
           :key="option.label"
           :data-testid="`tooltip-${option.action}`"
@@ -59,11 +59,11 @@
               :size="KUI_ICON_SIZE_40"
             />
           </IconButton>
-        </Tooltip>
+        </InfoTooltip>
 
         <div class="toolbar-divider" />
 
-        <Tooltip
+        <InfoTooltip
           v-for="option in templateOptions"
           :key="option.label"
           :data-testid="`tooltip-${option.action}`"
@@ -83,7 +83,7 @@
               :size="KUI_ICON_SIZE_40"
             />
           </IconButton>
-        </Tooltip>
+        </InfoTooltip>
       </template>
 
       <div
@@ -91,7 +91,7 @@
         class="toolbar-divider"
       />
 
-      <Tooltip
+      <InfoTooltip
         v-if="mode !== 'read'"
         :data-testid="`tooltip-fullscreen`"
       >
@@ -110,9 +110,9 @@
             :size="KUI_ICON_SIZE_40"
           />
         </IconButton>
-      </Tooltip>
+      </InfoTooltip>
 
-      <Tooltip
+      <InfoTooltip
         v-if="['split', 'preview'].includes(mode)"
         :data-testid="`tooltip-fullscreen`"
       >
@@ -131,7 +131,7 @@
             :size="KUI_ICON_SIZE_40"
           />
         </IconButton>
-      </Tooltip>
+      </InfoTooltip>
     </div>
     <div class="toolbar-right">
       <template v-if="editable && mode === 'read'">
@@ -174,7 +174,7 @@ import { TOOLBAR_HEIGHT } from '@/constants'
 import { KUI_BREAKPOINT_TABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '@/types'
 import IconButton from '@/components/toolbar/IconButton.vue'
-import Tooltip from '@/components/toolbar/Tooltip.vue'
+import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, SubscriptIcon, SuperscriptIcon, MarkIcon, CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
 
