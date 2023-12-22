@@ -7,6 +7,8 @@
       <MarkdownUi
         v-model="content"
         :editable="editable"
+        mode="read"
+        theme="light"
         @cancel="cancelEdit"
         @mode="modeChanged"
         @save="contentSaved"
@@ -68,6 +70,6 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .sandbox-container {
-  padding: $kui-space-0 $kui-space-70;
+  padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
 }
 </style>

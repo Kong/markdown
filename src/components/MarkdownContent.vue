@@ -25,6 +25,8 @@ watch(() => props.content, (content: string): void => {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/mixins";
+
 // Computed component variables
 $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
 
@@ -37,28 +39,29 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
+  // max-width: 900px;
   padding: 0 var(--kui-space-70, $kui-space-70);
   width: calc(100% - (#{$kui-space-70} * 2)); // 100% width minus 2x padding
   word-wrap: break-word;
 
   :deep() {
-    font-size: $kui-font-size-40;
-    line-height: $kui-line-height-40;
+    font-size: var(--kui-font-size-40, $kui-font-size-40);
+    line-height: var(--kui-line-height-40, $kui-line-height-40);
 
     // Adjust h2-66 tags for scroll-to margin & padding
     // Exclude the h1 header
     h2, h3, h4, h5, h6 {
-      margin-top: -$kui-space-20;
-      padding-top: $kui-space-50;
+      margin-top: calc(var(--kui-space-20, $kui-space-20) * -1);
+      padding-top: var(--kui-space-50, $kui-space-50);
       position: relative;
 
       a.header-anchor {
-        font-size: $kui-font-size-30;
+        font-size: var(--kui-font-size-30, $kui-font-size-30);
         left: 0;
         line-height: 1;
-        margin-left: -$kui-space-60;
+        margin-left: calc(var(--kui-space-60, $kui-space-60) * -1);
         opacity: 0;
-        padding-right: 4px;
+        padding-right: var(--kui-space-20, $kui-space-20);
         position: absolute;
         text-decoration: none;
         top: $header-anchor-offset-top;
@@ -80,22 +83,42 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     // task list
     .contains-task-list {
       list-style-type: none;
-      padding-left: $kui-space-0;
+      padding-left: var(--kui-space-0, $kui-space-0);
     }
 
     // inline code
     code {
-      font-family: $kui-font-family-code;
+      font-family: var(--kui-font-family-code, $kui-font-family-code);
     }
 
     // code blocks
+    pre,
+    code {
+      white-space: pre;
+      // width: 100%;
+      word-break: normal;
+      word-spacing: normal;
+      word-wrap: normal;
+    }
+
     pre {
-      border-radius: $kui-border-radius-40;
-      font-family: $kui-font-family-code;
-      font-size: $kui-font-size-30;
-      line-height: $kui-line-height-30;
+      border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+      border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+      font-family: var(--kui-font-family-code, $kui-font-family-code);
+      font-size: var(--kui-font-size-30, $kui-font-size-30);
+      line-height: var(--kui-line-height-50, $kui-line-height-50);
+      margin: var(--kui-space-0, $kui-space-0);
       overflow-wrap: break-word;
-      white-space: pre-wrap;
+      overflow-x: auto;
+      padding: var(--kui-space-70, $kui-space-70);
+    }
+
+    // Styles for fenced code block copy button in `src/composables/useMarkdownIt.ts`
+    .kong-markdown-code-block-copy {
+      @include icon-button;
+      position: absolute;
+      right: var(--kui-space-40, $kui-space-40);
+      top: var(--kui-space-40, $kui-space-40);
     }
 
     .line.highlighted {

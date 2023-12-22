@@ -176,7 +176,7 @@ import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, Markdown
 import IconButton from '@/components/toolbar/IconButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
-import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, SubscriptIcon, SuperscriptIcon, MarkIcon, CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
+import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, SubscriptIcon, SuperscriptIcon, MarkIcon, CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
 
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
@@ -242,10 +242,11 @@ const formatOptions: FormatOption[] = [
 ]
 
 const templateOptions: TemplateOption[] = [
-  { label: 'CodeBlock', action: 'codeblock', icon: CodeblockIcon },
+  { label: 'Codeblock', action: 'codeblock', icon: CodeblockIcon },
   { label: 'Table', action: 'table', icon: TableIcon },
-  { label: 'Task', action: 'task', icon: TasklistIcon },
-  { label: 'UL', action: 'unordered-list', icon: ListUnorderedIcon },
+  { label: 'Tasklist', action: 'task', icon: TasklistIcon },
+  { label: 'Unordered List', action: 'unordered-list', icon: ListUnorderedIcon },
+  { label: 'Ordered List', action: 'ordered-list', icon: ListOrderedIcon },
   { label: 'Blockquote', action: 'blockquote', icon: BlockquoteIcon },
 ]
 
@@ -261,7 +262,7 @@ onMounted(() => {
   align-items: center;
   background-color: var(--kui-color-background, $kui-color-background);
   display: flex;
-  gap: $kui-space-70;
+  gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
   // overflow-x: auto; // TODO: Handle overflow
@@ -274,7 +275,8 @@ onMounted(() => {
     button {
       border: 0;
       border-right: 1px solid $kui-color-border;
-      padding: $kui-space-20 $kui-space-30;
+      cursor: pointer;
+      padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
 
       &:disabled {
         cursor: not-allowed;
@@ -295,14 +297,14 @@ onMounted(() => {
   .toolbar-right {
     align-items: center;
     display: flex;
-    gap: $kui-space-20;
-    padding: $kui-space-40 $kui-space-0;
+    gap: var(--kui-space-20, $kui-space-20);
+    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-0, $kui-space-0);
   }
 
   .toolbar-divider {
-    background-color: $kui-color-border;
+    background-color: var(--kui-color-border, $kui-color-border);
     height: 16px;
-    margin: 0 $kui-space-20;
+    margin: var(--kui-space-0, $kui-space-0) var(--kui-space-20, $kui-space-20);
     width: 2px;
   }
 

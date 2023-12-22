@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import useShikiji from '@/composables/useShikiji'
+import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
 
 // markdown-it
 import MarkdownIt from 'markdown-it'
@@ -43,7 +44,7 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
           placement: 'before',
           class: 'header-anchor', // The class applied to the anchor tag; allows for styling
           // Utilize an SVG icon instead of a `#` string
-          symbol: '<svg class="header-anchor-icon" viewBox="0 0 16 16" version="1.1" width="14" height="14" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>',
+          symbol: HEADER_LINK_ICON_SVG,
         }),
       })
       .use(abbreviation)
@@ -70,16 +71,17 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
     md.value.linkify.set({ fuzzyLink: false })
 
     // Customize table element
-    md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">\n'
+    md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">' + NEW_LINE_CHARACTER
 
-    // Configure external links
-    const defaultLinkRenderer = md.value.renderer.rules.link_open ||
-      function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
+    const getDefaultRenderer = (original: any): Function => {
+      return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
+    }
 
+    // Configure custom external links
+    const defaultLinkRenderer = getDefaultRenderer(md.value.renderer.rules.link_open)
     const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
-
     md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
         const aIndex = tokens[idx].attrIndex(attribute)
@@ -93,6 +95,31 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
         }
       })
       return defaultLinkRenderer(tokens, idx, options, env, self)
+    }
+
+    // Configure custom code blocks
+    const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
+    md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+      // Strip out quote characters
+      const content = tokens[idx].content
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&apos;')
+      const originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+
+      if (content.length === 0) {
+        return originalContent
+      }
+
+      // Styles injected from `src/components/MarkdownContent.vue`
+      // The event is bound to an element with `.kong-markdown-code-block-copy[data-copytext]`
+      return `
+        <div class="kong-markdown-code-block-container" style="position: relative">
+          ${originalContent}
+          <button class="kong-markdown-code-block-copy" data-copytext="${content}" aria-label="Copy code" tabindex="0">
+            ${COPY_ICON_SVG}
+          </button>
+        </div>
+      `
     }
   }
 

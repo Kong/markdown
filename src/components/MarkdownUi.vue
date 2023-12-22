@@ -61,7 +61,7 @@ import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
 import MarkdownContent from '@/components/MarkdownContent.vue'
 import composables from '@/composables'
 import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
-import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT } from '@/constants'
+import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
@@ -108,10 +108,15 @@ const props = defineProps({
     default: 300,
     validator: (height: number): boolean => height >= 100,
   },
-  /** When the editor is in fullscreen mode, the top offset, in pixels */
+  /** When the editor is in fullscreen, the top offset, in pixels */
   fullscreenOffsetTop: {
     type: Number,
     default: 0,
+  },
+  /** The z-index of the position:fixed container when in fullscreen. */
+  fullscreenZIndex: {
+    type: Number,
+    default: 1001,
   },
 })
 
@@ -220,7 +225,7 @@ const htmlPreview = ref<boolean>(false)
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
 watchEffect(() => {
   if (htmlPreview.value) {
-    markdownPreviewHtml.value = md.value?.render('```html\n' + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + '\n```')
+    markdownPreviewHtml.value = md.value?.render('```html' + NEW_LINE_CHARACTER + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + NEW_LINE_CHARACTER + '```')
   }
 })
 
@@ -237,6 +242,22 @@ const updateMermaid = async () => {
   }
 }
 
+/** Copy the contents of the code block to the clipboard */
+const copyCodeBlock = async (e: any): Promise<void> => {
+  try {
+    e.preventDefault()
+    if (navigator?.clipboard?.writeText) {
+      const copyText = e.target?.dataset?.copytext || ''
+      if (copyText) {
+        await navigator.clipboard.writeText(copyText)
+        e?.target?.blur()
+      }
+    }
+  } catch (err) {
+    console.warn('Could not copy text to clipboard', err)
+  }
+}
+
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
 const onContentEdit = (event: TextAreaInputEvent, emitEvent = true): void => {
   // Update the ref immediately
@@ -250,6 +271,10 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
   // Update the output
   markdownHtml.value = getHtmlFromMarkdown(rawMarkdown.value)
 
+  await nextTick() // **MUST** await nextTick for the virtual DOM to refresh again
+
+  updateCodeCopyClickEvents(true)
+
   // Emit the updated content if `emitEvent` is not false
   if (emitEvent) {
     emit('update:modelValue', rawMarkdown.value)
@@ -257,8 +282,21 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
 
   // Re-render any `.mermaid` containers
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
+
   await updateMermaid()
 }, EDITOR_DEBOUNCE_TIMEOUT)
+
+const updateCodeCopyClickEvents = (enable = true): void => {
+  // Bind click events to code copy blocks
+  Array.from([...document.querySelectorAll(`#${componentContainerId.value} .kong-markdown-code-block-copy[data-copytext]`)]).forEach((el: Element) => {
+    if (enable) {
+      el.removeEventListener('click', copyCodeBlock)
+      el.addEventListener('click', copyCodeBlock)
+    } else {
+      el.removeEventListener('click', copyCodeBlock)
+    }
+  })
+}
 
 /**
  * Emulate an `input` event when injecting content into the textarea
@@ -273,6 +311,8 @@ const emulateInputEvent = (emitEvent = true): void => {
 
   // Trigger the update
   onContentEdit(event, emitEvent)
+
+  updateCodeCopyClickEvents(true)
 }
 
 // Initialize rawMarkdown.value with the props.modelValue content
@@ -338,13 +378,19 @@ onMounted(async () => {
     })
   }
 
-  // Must await to let virtual DOM cycle
-  await nextTick()
+  if (currentMode.value === 'split') {
+    await nextTick()
+    // Synchronize the scroll containers
+    initializeSyncScroll()
+  }
 })
 
 onUnmounted(() => {
   // Remove scrolling event listeners
   destroySyncScroll()
+
+  // Unbind click events
+  updateCodeCopyClickEvents(false)
 })
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
@@ -360,14 +406,14 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   width: 100%;
 
   @media (min-width: $kui-breakpoint-phablet) {
-    gap: $kui-space-0;
+    gap: var(--kui-space-0, $kui-space-0);
   }
 
   .markdown-panes {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: $kui-space-40;
+    gap: var(--kui-space-40, $kui-space-40);
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {
@@ -393,12 +439,12 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
       height: 100%;
       left: 0;
       margin-top: v-bind('fullscreenOffsetTop');
-      padding: $kui-space-0 $kui-space-40 $kui-space-40;
+      padding: var(--kui-space-0, $kui-space-0) var(--kui-space-40, $kui-space-40) var(--kui-space-40, $kui-space-40);
       position: fixed;
       right: 0;
       top: 0;
       width: 100%;
-      z-index: 1001;
+      z-index: v-bind('$props.fullscreenZIndex');
 
       .markdown-panes {
         height: v-bind('fullscreenMarkdownPanesHeight');

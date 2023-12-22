@@ -55,18 +55,18 @@ onMounted(() => {
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-family: $kui-font-family-text;
-  font-size: $kui-font-size-20;
-  font-weight: $kui-font-weight-regular;
-  gap: $kui-space-20;
+  font-family: var(--kui-font-family-text, $kui-font-family-text);
+  font-size: var(--kui-font-size-20, $kui-font-size-20);
+  font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
+  gap: var(--kui-space-30, $kui-space-30);
   justify-content: center;
   user-select: none;
 
   .keys {
     align-items: center;
     display: flex;
-    font-family: $kui-font-family-code;
-    gap: $kui-space-20;
+    font-family: var(--kui-font-family-code, $kui-font-family-code);
+    gap: var(--kui-space-20, $kui-space-20);
     justify-content: center;
     min-width: auto;
     white-space: nowrap;
@@ -74,18 +74,19 @@ onMounted(() => {
 
   .keyboard-button {
     background: rgba(255, 255, 255, 0.1);
-    border: $kui-border-width-10 solid $kui-color-border;
-    border-radius: $kui-border-radius-20;
+    border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+    border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
     display: block;
     line-height: 1;
     min-width: 0;
-    padding: $kui-space-20 $kui-space-30;
+    padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
     position: relative;
     top: -1px;
     width: auto;
   }
 
   .meta-key {
+    // Control
     &:after {
       content: 'Ctrl';
     }
