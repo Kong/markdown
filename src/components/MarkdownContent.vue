@@ -48,8 +48,8 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     // Adjust h2-66 tags for scroll-to margin & padding
     // Exclude the h1 header
     h2, h3, h4, h5, h6 {
-      margin-top: -$kui-space-20;
-      padding-top: $kui-space-50;
+      margin-top: -var(--kui-space-20, $kui-space-20);
+      padding-top: var(--kui-space-50, $kui-space-50);
       position: relative;
 
       a.header-anchor {
@@ -80,7 +80,7 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     // task list
     .contains-task-list {
       list-style-type: none;
-      padding-left: $kui-space-0;
+      padding-left: var(--kui-space-0, $kui-space-0);
     }
 
     // inline code

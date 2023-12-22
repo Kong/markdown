@@ -360,14 +360,14 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   width: 100%;
 
   @media (min-width: $kui-breakpoint-phablet) {
-    gap: $kui-space-0;
+    gap: var(--kui-space-0, $kui-space-0);
   }
 
   .markdown-panes {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: $kui-space-40;
+    gap: var(--kui-space-40, $kui-space-40);
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {
@@ -393,7 +393,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
       height: 100%;
       left: 0;
       margin-top: v-bind('fullscreenOffsetTop');
-      padding: $kui-space-0 $kui-space-40 $kui-space-40;
+      padding: var(--kui-space-0, $kui-space-0) var(--kui-space-40, $kui-space-40) var(--kui-space-40, $kui-space-40);
       position: fixed;
       right: 0;
       top: 0;

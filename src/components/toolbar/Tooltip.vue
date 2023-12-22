@@ -50,7 +50,7 @@ defineProps({
   line-height: $kui-line-height-20;
   max-width: 200px;
   opacity: 0;
-  padding: $kui-space-40;
+  padding: var(--kui-space-40, $kui-space-40);
   pointer-events: none;
   position: absolute;
   top: calc(100% + 4px);

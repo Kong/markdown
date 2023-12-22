@@ -262,7 +262,7 @@ onMounted(() => {
   align-items: center;
   background-color: var(--kui-color-background, $kui-color-background);
   display: flex;
-  gap: $kui-space-70;
+  gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
   // overflow-x: auto; // TODO: Handle overflow
@@ -275,7 +275,7 @@ onMounted(() => {
     button {
       border: 0;
       border-right: 1px solid $kui-color-border;
-      padding: $kui-space-20 $kui-space-30;
+      padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
 
       &:disabled {
         cursor: not-allowed;
@@ -296,14 +296,14 @@ onMounted(() => {
   .toolbar-right {
     align-items: center;
     display: flex;
-    gap: $kui-space-20;
-    padding: $kui-space-40 $kui-space-0;
+    gap: var(--kui-space-20, $kui-space-20);
+    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-0, $kui-space-0);
   }
 
   .toolbar-divider {
     background-color: $kui-color-border;
     height: 16px;
-    margin: 0 $kui-space-20;
+    margin: var(--kui-space-0, $kui-space-0) var(--kui-space-20, $kui-space-20);
     width: 2px;
   }
 

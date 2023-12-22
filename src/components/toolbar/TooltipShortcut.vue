@@ -58,7 +58,7 @@ onMounted(() => {
   font-family: $kui-font-family-text;
   font-size: $kui-font-size-20;
   font-weight: $kui-font-weight-regular;
-  gap: $kui-space-30;
+  gap: var(--kui-space-30, $kui-space-30);
   justify-content: center;
   user-select: none;
 
@@ -66,7 +66,7 @@ onMounted(() => {
     align-items: center;
     display: flex;
     font-family: $kui-font-family-code;
-    gap: $kui-space-20;
+    gap: var(--kui-space-20, $kui-space-20);
     justify-content: center;
     min-width: auto;
     white-space: nowrap;
@@ -79,7 +79,7 @@ onMounted(() => {
     display: block;
     line-height: 1;
     min-width: 0;
-    padding: $kui-space-20 $kui-space-30;
+    padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
     position: relative;
     top: -1px;
     width: auto;
