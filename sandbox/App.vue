@@ -69,6 +69,6 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .sandbox-container {
-  padding: $kui-space-0 $kui-space-70;
+  padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
 }
 </style>

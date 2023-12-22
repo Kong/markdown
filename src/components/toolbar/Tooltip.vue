@@ -39,15 +39,15 @@ defineProps({
 }
 
 .tooltip-content {
-  background: $kui-color-background-inverse;
-  border-radius: $kui-border-radius-20;
+  background: var(--kui-color-background-inverse, $kui-color-background-inverse);
+  border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  color: $kui-color-text-inverse;
-  font-family: $kui-font-family-text;
-  font-size: $kui-font-size-20;
-  font-weight: $kui-font-weight-regular;
+  color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+  font-family: var(--kui-font-family-text, $kui-font-family-text);
+  font-size: var(--kui-font-size-20, $kui-font-size-20);
+  font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   left: 50%;
-  line-height: $kui-line-height-20;
+  line-height: var(--kui-line-height-20, $kui-line-height-20);
   max-width: 200px;
   opacity: 0;
   padding: var(--kui-space-40, $kui-space-40);

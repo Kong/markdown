@@ -42,8 +42,8 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
   word-wrap: break-word;
 
   :deep() {
-    font-size: $kui-font-size-40;
-    line-height: $kui-line-height-40;
+    font-size: var(--kui-font-size-40, $kui-font-size-40);
+    line-height: var(--kui-line-height-40, $kui-line-height-40);
 
     // Adjust h2-66 tags for scroll-to margin & padding
     // Exclude the h1 header
@@ -53,12 +53,12 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
       position: relative;
 
       a.header-anchor {
-        font-size: $kui-font-size-30;
+        font-size: var(--kui-font-size-30, $kui-font-size-30);
         left: 0;
         line-height: 1;
-        margin-left: -$kui-space-60;
+        margin-left: -var(--kui-space-60, $kui-space-60);
         opacity: 0;
-        padding-right: 4px;
+        padding-right: var(--kui-space-20, $kui-space-20);
         position: absolute;
         text-decoration: none;
         top: $header-anchor-offset-top;
@@ -85,15 +85,15 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
 
     // inline code
     code {
-      font-family: $kui-font-family-code;
+      font-family: var(--kui-font-family-code, $kui-font-family-code);
     }
 
     // code blocks
     pre {
-      border-radius: $kui-border-radius-40;
-      font-family: $kui-font-family-code;
-      font-size: $kui-font-size-30;
-      line-height: $kui-line-height-30;
+      border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+      font-family: var(--kui-font-family-code, $kui-font-family-code);
+      font-size: var(--kui-font-size-30, $kui-font-size-30);
+      line-height: var(--kui-line-height-30, $kui-line-height-30);
       overflow-wrap: break-word;
       white-space: pre-wrap;
     }

@@ -108,10 +108,15 @@ const props = defineProps({
     default: 300,
     validator: (height: number): boolean => height >= 100,
   },
-  /** When the editor is in fullscreen mode, the top offset, in pixels */
+  /** When the editor is in fullscreen, the top offset, in pixels */
   fullscreenOffsetTop: {
     type: Number,
     default: 0,
+  },
+  /** The z-index of the position:fixed container when in fullscreen. */
+  fullscreenZIndex: {
+    type: Number,
+    default: 1001,
   },
 })
 
@@ -398,7 +403,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
       right: 0;
       top: 0;
       width: 100%;
-      z-index: 1001;
+      z-index: v-bind('$props.fullscreenZIndex');
 
       .markdown-panes {
         height: v-bind('fullscreenMarkdownPanesHeight');
