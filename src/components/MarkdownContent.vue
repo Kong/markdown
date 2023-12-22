@@ -92,12 +92,6 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     }
 
     // code blocks
-    .kong-markdown-code-block-container {
-      // border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
-      border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
-      // padding: var(--kui-space-40, $kui-space-40);
-    }
-
     pre,
     code {
       white-space: pre;
