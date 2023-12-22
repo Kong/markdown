@@ -1,0 +1,197 @@
+{
+  "name": "@kong/markdown",
+  "version": "0.0.1",
+  "description": "Kong's open-source markdown renderer and live editor",
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "vue",
+    "editor",
+    "markdown editor",
+    "markdown renderer"
+  ],
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/kong-markdown.umd.js",
+  "module": "./dist/kong-markdown.es.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types",
+  "exports": {
+    ".": {
+      "import": "./dist/kong-markdown.es.js",
+      "require": "./dist/kong-markdown.umd.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "cross-env USE_SANDBOX=true vite",
+    "build": "pnpm run typecheck && pnpm run build:package && pnpm run build:types && pnpm run build:aliases",
+    "build:package": "vite build -m production",
+    "build:types": "vue-tsc -p './tsconfig.build.json' --emitDeclarationOnly",
+    "build:aliases": "tsc-alias -p './tsconfig.build.json'",
+    "build:analyzer": "BUILD_VISUALIZER='core/markdown-ui' vite build -m production",
+    "build:sandbox": "cross-env USE_SANDBOX=true vite build -m production",
+    "preview": "pnpm run build:sandbox && cross-env USE_SANDBOX=true vite preview",
+    "typecheck": "vue-tsc -p './tsconfig.build.json' --noEmit",
+    "stylelint": "stylelint --allow-empty-input './src/**/*.{css,scss,vue}'",
+    "stylelint:fix": "stylelint --allow-empty-input './src/**/*.{css,scss,sass,vue}' --fix",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,vue}'",
+    "lint:fix": "eslint '**/*.{js,jsx,ts,tsx,vue}' --fix",
+    "test": "cross-env FORCE_COLOR=1 vitest run",
+    "test:open": "cross-env FORCE_COLOR=1 vitest --ui",
+    "semantic-release": "semantic-release",
+    "commit": "cz"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.8"
+  },
+  "dependencies": {
+    "@kong/icons": "^1.8.7",
+    "@sindresorhus/slugify": "^2.2.1",
+    "@vueuse/core": "^10.7.0",
+    "html-format": "^1.1.2",
+    "markdown-it": "^14.0.0",
+    "markdown-it-abbr": "^2.0.0",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-attrs": "^4.1.6",
+    "markdown-it-deflist": "^3.0.0",
+    "markdown-it-emoji": "^3.0.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-ins": "^4.0.0",
+    "markdown-it-mark": "^4.0.0",
+    "markdown-it-sub": "^2.0.0",
+    "markdown-it-sup": "^2.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-textual-uml": "^0.16.0",
+    "mermaid": "^10.6.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.23.6",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
+    "@evilmartians/lefthook": "^1.5.5",
+    "@kong/design-tokens": "^1.12.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/jsdom": "^21.1.6",
+    "@types/markdown-it": "^13.0.7",
+    "@types/markdown-it-attrs": "^4.1.3",
+    "@types/markdown-it-emoji": "^2.0.4",
+    "@types/markdown-it-footnote": "^3.0.3",
+    "@types/node": "^20.10.4",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "@vitest/ui": "^1.0.4",
+    "@vue/test-utils": "^2.4.3",
+    "@vue/tsconfig": "^0.4.0",
+    "autoprefixer": "^10.4.16",
+    "c8": "^8.0.1",
+    "commitizen": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.55.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.4.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.19.2",
+    "jsdom": "^22.1.0",
+    "markdown-it-shikiji": "^0.9.10",
+    "postcss": "^8.4.32",
+    "postcss-html": "^1.5.0",
+    "rimraf": "^5.0.5",
+    "rollup-plugin-visualizer": "^5.11.0",
+    "sass": "^1.69.5",
+    "semantic-release": "^22.0.12",
+    "shikiji": "^0.9.10",
+    "stylelint": "^15.11.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recommended-scss": "^13.1.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-order": "^6.0.4",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.9",
+    "vitest": "1.0.4",
+    "vue": "^3.3.11",
+    "vue-tsc": "^1.8.25"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kong/markdown.git"
+  },
+  "homepage": "https://github.com/Kong/markdown",
+  "bugs": {
+    "url": "https://github.com/Kong/markdown/issues"
+  },
+  "author": {
+    "name": "Kong Inc.",
+    "url": "https://konghq.com/"
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "main",
+      "next",
+      "next-major",
+      {
+        "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "alpha",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json"
+          ]
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "volta": {
+    "node": "18.18.2",
+    "pnpm": "8.10.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@digitalroute/cz-conventional-changelog-for-jira",
+      "skipScope": false,
+      "jiraOptional": true,
+      "jiraLocation": "post-description",
+      "jiraPrepend": "[",
+      "jiraAppend": "]"
+    }
+  }
+}
