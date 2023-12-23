@@ -2,13 +2,19 @@
   <!-- eslint-disable vue/no-v-html -->
   <div
     class="markdown-content"
+    :class="`mode-${mode}`"
     v-html="markdownContent"
   />
   <!-- eslint-enable vue/no-v-html -->
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, inject } from 'vue'
+import type { Ref } from 'vue'
+import { MODE_INJECTION_KEY } from '@/injection-keys'
+import type { MarkdownMode } from '@/types'
+
+const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 
 const props = defineProps({
   content: {
@@ -39,10 +45,13 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
-  // max-width: 900px;
-  padding: 0 var(--kui-space-70, $kui-space-70);
-  width: calc(100% - (#{$kui-space-70} * 2)); // 100% width minus 2x padding
+  padding: var(--kui-space-40, $kui-space-40) var(--kui-space-70, $kui-space-70);
   word-wrap: break-word;
+
+  &.mode-read {
+    // Remove left and right padding in read mode
+    padding: var(--kui-space-0, $kui-space-0);
+  }
 
   :deep() {
     font-size: var(--kui-font-size-40, $kui-font-size-40);
@@ -68,9 +77,10 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
         transition: opacity 0.2s ease-in-out;
         user-select: none;
 
-        &:hover {
-          opacity: 1;
-        }
+        // TODO: Re-enable opacity and add left padding to `.markdown-content` if you want to see the header links on hover
+        // &:hover {
+        //   opacity: 1;
+        // }
       }
 
       &:hover {
@@ -106,7 +116,7 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
       border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
       font-family: var(--kui-font-family-code, $kui-font-family-code);
       font-size: var(--kui-font-size-30, $kui-font-size-30);
-      line-height: var(--kui-line-height-50, $kui-line-height-50);
+      line-height: var(--kui-line-height-30, $kui-line-height-30);
       margin: var(--kui-space-0, $kui-space-0);
       overflow-wrap: break-word;
       overflow-x: auto;

@@ -481,14 +481,22 @@ export default function useMarkdownActions(
         }
       }
 
+      let indentationSpaces = ''
+      // If newline template is not needed, check if we should keep the indentation level
+      if (newLineContent === NEW_LINE_CHARACTER) {
+        Array.from(Array(lastLine.length - lastLine.trimStart().length).keys()).forEach(() => (indentationSpaces += ' '))
+      }
+
       // Update the raw markdown content
-      rawMarkdown.value = removeNewLineTemplate ? rawMarkdown.value.substring(0, selectedText.start - lastLine.length) + rawMarkdown.value.substring(selectedText.end) : startText + newLineContent + rawMarkdown.value.substring(selectedText.end)
+      rawMarkdown.value = removeNewLineTemplate
+        ? rawMarkdown.value.substring(0, selectedText.start - lastLine.length) + rawMarkdown.value.substring(selectedText.end)
+        : (startText + newLineContent + indentationSpaces + rawMarkdown.value.substring(selectedText.end))
 
       // Always focus back on the textarea
       await focusTextarea()
 
       // Update the cursor position
-      textarea.selectionEnd = removeNewLineTemplate ? selectedText.start - templateLength : selectedText.start + newLineContent.length
+      textarea.selectionEnd = removeNewLineTemplate ? selectedText.start - templateLength : selectedText.start + newLineContent.length + indentationSpaces.length
     } catch (err) {
       console.warn('insertNewLine', err)
     }
