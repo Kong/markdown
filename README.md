@@ -8,6 +8,7 @@ Kong's open-source markdown renderer and live editor.
 - [TODO](#todo)
 - [Usage](#usage)
   - [Installation](#installation)
+  - [Notes](#notes)
   - [Props](#props)
 - [Contributing \& Local Development](#contributing--local-development)
   - [Development Sandbox](#development-sandbox)
@@ -39,6 +40,12 @@ pnpm add @kong/markdown
 
 yarn add @kong/markdown
 ```
+
+### Notes
+
+By default, the editor does not handle the Tab key unless there is an active text selection within the `textarea`. This isn't an oversight —- it is an intentional decision to make the default configuration pass the ["no keyboard trap"](https://www.w3.org/TR/WCAG21/#no-keyboard-trap) criterion of the W3C Web Content Accessibility Guidelines.
+
+Some users browse the web without access to a pointing device, and it is really unfriendly towards such users to have focusable inputs that they cannot escape from.
 
 ### Props
 

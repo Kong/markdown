@@ -496,6 +496,7 @@ export default function useMarkdownActions(
 
   return {
     selectedText,
+    getTextSelection,
     toggleInlineFormatting,
     toggleTab,
     insertMarkdownTemplate,

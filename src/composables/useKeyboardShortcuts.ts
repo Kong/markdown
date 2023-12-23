@@ -8,18 +8,20 @@ import type { InlineFormat } from '@/types'
  * Utilize keyboard shortcuts in the markdown editor. Must be called at the root of the `setup` function.
  * @param {string} textareaId The `id` of the textarea
  * @param {Ref<string>} rawMarkdown A Vue ref containing the raw markdown content from the textarea.
+ * @param {Ref<number>} tabSize The current tab size
  * @param {Function} onEditCallback A function to call after toggling the inline text formatting.
  * @returns
  */
 export default function useKeyboardShortcuts(
   textareaId: string,
   rawMarkdown: Ref<string>,
+  tabSize: Ref<number>,
   onEditCallback: () => void,
 ) {
   // The document.activeElement
   const activeElement = useActiveElement()
   const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaId)
-  const { toggleInlineFormatting, insertNewLine } = useMarkdownActions(textareaId, rawMarkdown)
+  const { toggleInlineFormatting, insertNewLine, getTextSelection, selectedText, toggleTab } = useMarkdownActions(textareaId, rawMarkdown)
 
   const getFormatForKeyEvent = (evt: any): InlineFormat | undefined => {
     let format: InlineFormat | undefined
@@ -76,11 +78,28 @@ export default function useKeyboardShortcuts(
         }
       }
 
+      // Enter key
       if (e.key && e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
         insertNewLine()
         // Always fire the callback
         onEditCallback()
+      }
+
+      // Tab key, and Shift + Tab
+      if (e.key && e.key === 'Tab') {
+        getTextSelection()
+
+        if (selectedText.text) {
+          e.preventDefault()
+          if (e.shiftKey) {
+            toggleTab('remove', tabSize.value)
+          } else {
+            toggleTab('add', tabSize.value)
+          }
+          // Always fire the callback
+          onEditCallback()
+        }
       }
     },
   })

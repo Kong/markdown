@@ -33,8 +33,6 @@
           translate="no"
           :value="rawMarkdown"
           @input="$event => onContentEdit($event as any)"
-          @keydown.shift.tab.exact.prevent="onShiftTab"
-          @keydown.tab.exact.prevent="onTab"
         />
       </div>
       <div
@@ -88,7 +86,7 @@ const props = defineProps({
   /** The number of spaces to insert on tab. Defaults to 2, max of 10 */
   tabSize: {
     type: Number,
-    default: 4,
+    default: 2,
     validator: (size: number): boolean => size >= 2 && size <= 6,
   },
   /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
@@ -135,6 +133,7 @@ const uniqueId = uuidv4()
 const componentContainerId = computed((): string => `markdown-ui-${uniqueId}`)
 const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
 const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
+const tabSize = computed((): number => props.tabSize)
 
 // Provide values to child components
 provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
@@ -205,27 +204,13 @@ const insertTemplate = (template: MarkdownTemplate): void => {
   emulateInputEvent()
 }
 
-// When the user presses the `tab` key in the textarea
-const onTab = (): void => {
-  toggleTab('add', props.tabSize)
-  // Emulate an `input` event to trigger an update
-  emulateInputEvent()
-}
-
-// When the user presses `shift + tab` keys in the textarea
-const onShiftTab = (): void => {
-  toggleTab('remove', props.tabSize)
-  // Emulate an `input` event to trigger an update
-  emulateInputEvent()
-}
-
 /** When true, show the HTML preview instead of the rendered markdown preview */
 const htmlPreview = ref<boolean>(false)
 
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
 watchEffect(() => {
   if (htmlPreview.value) {
-    markdownPreviewHtml.value = md.value?.render('```html' + NEW_LINE_CHARACTER + formatHtml(markdownHtml.value, ' '.repeat(props.tabSize)) + NEW_LINE_CHARACTER + '```')
+    markdownPreviewHtml.value = md.value?.render('```html' + NEW_LINE_CHARACTER + formatHtml(markdownHtml.value, ' '.repeat(tabSize.value)) + NEW_LINE_CHARACTER + '```')
   }
 })
 
@@ -352,7 +337,7 @@ const saveChanges = (): void => {
 }
 
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
-composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, emulateInputEvent)
+composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, tabSize, emulateInputEvent)
 
 onBeforeMount(async () => {
   // Initialize markdown-it
