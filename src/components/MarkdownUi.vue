@@ -172,6 +172,10 @@ watch(currentMode, async (mode: MarkdownMode): Promise<void> => {
 
   destroySyncScroll()
   await nextTick()
+
+  // Re-render any `.mermaid` containers
+  await updateMermaid()
+
   // Re-synchronize the scroll containers
   initializeSyncScroll()
 })
@@ -265,9 +269,9 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
     emit('update:modelValue', rawMarkdown.value)
   }
 
-  // Re-render any `.mermaid` containers
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
 
+  // Re-render any `.mermaid` containers
   await updateMermaid()
 }, EDITOR_DEBOUNCE_TIMEOUT)
 
