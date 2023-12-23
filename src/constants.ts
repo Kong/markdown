@@ -28,9 +28,9 @@ NEW_LINE_CHARACTER +
 
 /** The markdown template for a table */
 export const MARKDOWN_TEMPLATE_TABLE =
-'| Column 1 | Column 2 | Column 3 |' + NEW_LINE_CHARACTER +
+'| Header | Header | Header |' + NEW_LINE_CHARACTER +
 '| :--- | :--- | :--- |' + NEW_LINE_CHARACTER +
-'| Content | Content | Content |'
+'| Cell | Cell | Cell |'
 
 /** The markdown template for a task. Ensure trailing space remains */
 export const MARKDOWN_TEMPLATE_TASK = '- [ ] '
