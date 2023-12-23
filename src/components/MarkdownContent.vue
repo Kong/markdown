@@ -90,6 +90,13 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
       }
     }
 
+    blockquote {
+      border-left: var(--kui-border-width-30, $kui-border-width-30) solid var(--kui-color-border, $kui-color-border);
+      color: var(--kui-color-text-neutral, $kui-color-text-neutral);
+      margin: var(--kui-space-70, $kui-space-70) var(--kui-space-0, $kui-space-0);
+      padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
+    }
+
     // task list
     .contains-task-list {
       list-style-type: none;
