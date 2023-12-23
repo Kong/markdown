@@ -1,3 +1,10 @@
+# [1.0.0-alpha.4](https://github.com/Kong/markdown/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2023-12-23)
+
+
+### Features
+
+* blockquote ([62409ac](https://github.com/Kong/markdown/commit/62409ac8c9f2ef631159ffab8d8ffa42fa7a068e))
+
 # [1.0.0-alpha.3](https://github.com/Kong/markdown/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2023-12-23)
 
 
