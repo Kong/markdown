@@ -257,11 +257,11 @@ const formatOptions: FormatOption[] = [
 ]
 
 const templateOptions: TemplateOption[] = [
-  { label: 'Codeblock', action: 'codeblock', icon: CodeblockIcon },
-  { label: 'Table', action: 'table', icon: TableIcon },
-  { label: 'Tasklist', action: 'task', icon: TasklistIcon },
   { label: 'Unordered List', action: 'unordered-list', icon: ListUnorderedIcon },
   { label: 'Ordered List', action: 'ordered-list', icon: ListOrderedIcon },
+  { label: 'Tasklist', action: 'task', icon: TasklistIcon },
+  { label: 'Codeblock', action: 'codeblock', icon: CodeblockIcon },
+  { label: 'Table', action: 'table', icon: TableIcon },
   { label: 'Blockquote', action: 'blockquote', icon: BlockquoteIcon },
 ]
 
