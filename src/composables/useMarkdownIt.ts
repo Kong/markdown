@@ -71,7 +71,8 @@ export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
     md.value.linkify.set({ fuzzyLink: false })
 
     // Customize table element
-    md.value.renderer.rules.table_open = () => '<table class="markdown-ui-table">' + NEW_LINE_CHARACTER
+    md.value.renderer.rules.table_open = () => '<div class="markdown-ui-table-wrapper"><table class="markdown-ui-table">' + NEW_LINE_CHARACTER
+    md.value.renderer.rules.table_close = () => '</table></div>' + NEW_LINE_CHARACTER
 
     const getDefaultRenderer = (original: any): Function => {
       return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {

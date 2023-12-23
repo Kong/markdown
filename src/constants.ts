@@ -28,7 +28,7 @@ NEW_LINE_CHARACTER +
 
 /** The markdown template for a table */
 export const MARKDOWN_TEMPLATE_TABLE =
-'| Column1 | Column2 | Column3 |' + NEW_LINE_CHARACTER +
+'| Column 1 | Column 2 | Column 3 |' + NEW_LINE_CHARACTER +
 '| :--- | :--- | :--- |' + NEW_LINE_CHARACTER +
 '| Content | Content | Content |'
 

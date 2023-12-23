@@ -34,7 +34,7 @@ watch(() => props.content, (content: string): void => {
 @import "../assets/mixins";
 
 // Computed component variables
-$header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
+$header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
 
 // Markdown Preview content styles
 .markdown-content {
@@ -61,7 +61,7 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     // Exclude the h1 header
     h2, h3, h4, h5, h6 {
       margin-top: calc(var(--kui-space-20, $kui-space-20) * -1);
-      padding-top: var(--kui-space-50, $kui-space-50);
+      padding-top: var(--kui-space-80, $kui-space-80);
       position: relative;
 
       a.header-anchor {
@@ -112,6 +112,7 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
     p code {
       background: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
       border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
+      color: $kui-color-text;
       font-size: var(--kui-font-size-30, $kui-font-size-30);
       padding: var(--kui-space-10, $kui-space-10) var(--kui-space-20, $kui-space-20);
       white-space: break-spaces;
@@ -150,6 +151,39 @@ $header-anchor-offset-top: calc(var(--kui-space-50, $kui-space-50) + 2px);
 
     img {
       max-width: 100%;
+    }
+
+    .markdown-ui-table-wrapper {
+      max-width: 100%;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table {
+      border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+      border-collapse: collapse;
+      border-spacing: 0;
+      color: var(--kui-color-text, $kui-color-text);
+      font-size: var(--kui-font-size-30, $kui-font-size-30);
+
+      thead th {
+        background-color: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
+        border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border-neutral-weaker, $kui-color-border-neutral-weaker);
+        font-weight: var(--kui-font-weight-semibold, $kui-font-weight-semibold);
+        padding: var(--kui-space-40, $kui-space-40);
+        vertical-align: text-top;
+        white-space: nowrap;
+
+        &:not(:last-of-type) {
+          border-right-color: var(--kui-color-border-neutral-weak, $kui-color-border-neutral-weak);
+        }
+      }
+
+      tbody td {
+        border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+        padding: var(--kui-space-40, $kui-space-40);
+        vertical-align: text-top;
+      }
     }
 
     // mermaid charts
