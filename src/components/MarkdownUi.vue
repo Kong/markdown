@@ -88,8 +88,8 @@ const props = defineProps({
   /** The number of spaces to insert on tab. Defaults to 2, max of 10 */
   tabSize: {
     type: Number,
-    default: 2,
-    validator: (size: number): boolean => size >= 2 && size <= 10,
+    default: 4,
+    validator: (size: number): boolean => size >= 2 && size <= 6,
   },
   /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
   mermaid: {

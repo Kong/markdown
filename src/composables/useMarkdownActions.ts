@@ -222,7 +222,14 @@ export default function useMarkdownActions(
       const startText = rawMarkdown.value.substring(0, selectedText.start)
 
       // When removing tabs, ensure string starts with two spaces; or a list item that is already indented. If not, exit
-      if (action === 'remove' && (!startText.endsWith(spaces) && !startText.endsWith('  ' + MARKDOWN_TEMPLATE_UL))) {
+      if (
+        action === 'remove' &&
+        !startText.endsWith(spaces) &&
+        // Not an unordered list
+        !startText.endsWith('  ' + MARKDOWN_TEMPLATE_UL) &&
+        // Not an ordered list
+        !/ {2}\d{1,}\. $/.test(startText)
+      ) {
         return
       }
 
@@ -241,8 +248,14 @@ export default function useMarkdownActions(
         // If text starts with an inline template
         if (startText.endsWith(MARKDOWN_TEMPLATE_UL)) {
           rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start - MARKDOWN_TEMPLATE_UL.length) + spaces + MARKDOWN_TEMPLATE_UL + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length - MARKDOWN_TEMPLATE_UL.length) + MARKDOWN_TEMPLATE_UL + rawMarkdown.value.substring(selectedText.end)
-        } else if (startText.endsWith(MARKDOWN_TEMPLATE_OL)) {
-          rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start - MARKDOWN_TEMPLATE_OL.length) + spaces + MARKDOWN_TEMPLATE_OL + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length - MARKDOWN_TEMPLATE_OL.length) + MARKDOWN_TEMPLATE_OL + rawMarkdown.value.substring(selectedText.end)
+        } else if (/\d{1,}\. $/.test(startText.split(NEW_LINE_CHARACTER).pop() || '')) {
+          // Remove the `1` in the ordered list template
+          const numberSuffix = MARKDOWN_TEMPLATE_OL.replace('1', '')
+
+          const listNumber = Number((startText.split(NEW_LINE_CHARACTER).at(-2) || startText.split(NEW_LINE_CHARACTER).pop() || '').trimStart().split(numberSuffix)[0]) + 1
+          console.log('listNumber', listNumber)
+
+          rawMarkdown.value = action === 'add' ? rawMarkdown.value.substring(0, selectedText.start - MARKDOWN_TEMPLATE_OL.length) + spaces + MARKDOWN_TEMPLATE_OL + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length - (listNumber + numberSuffix).length) + (listNumber + numberSuffix) + rawMarkdown.value.substring(selectedText.end)
         } else {
           rawMarkdown.value = action === 'add' ? startText + spaces + rawMarkdown.value.substring(selectedText.end) : rawMarkdown.value.substring(0, selectedText.start - spaces.length) + rawMarkdown.value.substring(selectedText.end)
         }

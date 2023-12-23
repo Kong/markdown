@@ -235,9 +235,12 @@ const formatOptions: FormatOption[] = [
   { label: 'Italic', action: 'italic', keys: ['I'], icon: ItalicIcon },
   { label: 'Underline', action: 'underline', keys: ['U'], icon: UnderlineIcon },
   { label: 'Strikethrough', action: 'strikethrough', keys: ['Shift', 'X'], icon: StrikethroughIcon },
-  { label: 'Subscript', action: 'subscript', icon: SubscriptIcon },
-  { label: 'Superscript', action: 'superscript', icon: SuperscriptIcon },
-  { label: 'Mark', action: 'mark', icon: MarkIcon },
+  // Hidden for now
+  // { label: 'Subscript', action: 'subscript', icon: SubscriptIcon },
+  // Hidden for now
+  // { label: 'Superscript', action: 'superscript', icon: SuperscriptIcon },
+  // Hidden for now
+  // { label: 'Mark', action: 'mark', icon: MarkIcon },
   { label: 'Code', action: 'code', keys: ['Shift', 'C'], icon: CodeIcon },
 ]
 
