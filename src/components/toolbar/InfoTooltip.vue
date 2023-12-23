@@ -33,7 +33,9 @@ defineProps({
   &:hover,
   &:focus-within {
     .tooltip-content {
-      opacity: 1;
+      @media (min-width: $kui-breakpoint-mobile) {
+        opacity: 1;
+      }
     }
   }
 }

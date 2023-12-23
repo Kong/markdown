@@ -17,6 +17,7 @@
           Edit
         </button>
         <button
+          class="mode-split-button"
           :class="{ 'active': mode === 'split' }"
           :tabindex="0"
           @click.prevent="changeMode('split')"
@@ -164,12 +165,12 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref, onMounted } from 'vue'
+import { inject, ref, onMounted, watch } from 'vue'
 import type { Ref } from 'vue'
 import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
 import { useMediaQuery } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '@/constants'
-import { KUI_BREAKPOINT_TABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
+import { KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '@/types'
 import IconButton from '@/components/toolbar/IconButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
@@ -193,12 +194,25 @@ const emit = defineEmits<{
   (e: 'save'): void
 }>()
 
+// Determine if the user is on a wider viewport
+const isPhabletWidth = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_PHABLET})`)
+
 const determineEditMode = (): void => {
-  // Determine if the user is on a wider viewport
-  const isWideScreen = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_TABLET})`)
   // If yes, enter `split` mode, otherwise `edit` mode
-  changeMode(isWideScreen.value ? 'split' : 'edit')
+  changeMode(isPhabletWidth.value ? 'split' : 'edit')
 }
+
+// Verify the browser is wide enough to make `split` mode viable
+const adjustSplitMode = (): void => {
+  if (mode.value === 'split' && !isPhabletWidth.value) {
+    changeMode('edit')
+  }
+}
+
+// If the screen size decreases and the user is in `split` mode, turn on edit mode
+watch(isPhabletWidth, (): void => {
+  adjustSplitMode()
+})
 
 const changeMode = (newMode: MarkdownMode): void => {
   if (mode.value !== newMode) {
@@ -255,6 +269,9 @@ onMounted(() => {
   // Add a `mac` class to the container if on Mac (for shortcut icons)
   // @ts-ignore - property exists
   toolbar.value?.classList?.toggle('mac', /Mac|iPhone|iPod|iPad/i.test(navigator?.platform) || /macOS|Mac|iPhone|iPod|iPad/i.test(navigator?.userAgentData?.platform))
+
+  // If the screen size decreases and the user is in `split` mode, turn on edit mode
+  adjustSplitMode()
 })
 </script>
 
@@ -266,7 +283,9 @@ onMounted(() => {
   gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
-  // overflow-x: auto; // TODO: Handle overflow
+  // Allowing the toolbar to scroll horizontally will hide the keyboard shortcut tooltips
+  // which is fine on mobile since keyboard nav isn't as relevant there.
+  // overflow-x: auto; // TODO: Enable for horizontal scrolling
 
   // TODO: Replace with tabs
   .button-group {
@@ -291,6 +310,14 @@ onMounted(() => {
         background: $kui-color-background-primary;
         color: $kui-color-text-inverse;
       }
+    }
+  }
+
+  .mode-split-button {
+    display: none;
+
+    @media (min-width: $kui-breakpoint-phablet) {
+      display: inline-block;
     }
   }
 

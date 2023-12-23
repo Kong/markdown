@@ -450,6 +450,24 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     }
   }
 
+  // Ensure split mode is never enabled below tablet
+  &.mode-edit {
+    .markdown-preview {
+      @media (max-width: ($kui-breakpoint-tablet - 1px)) {
+        display: none !important;
+      }
+    }
+  }
+
+  // Ensure split mode is never enabled below tablet
+  &.mode-preview {
+    .markdown-preview {
+      @media (max-width: ($kui-breakpoint-tablet - 1px)) {
+        display: flex !important;
+      }
+    }
+  }
+
   .markdown-editor,
   .markdown-preview {
     display: flex;
