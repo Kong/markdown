@@ -1,3 +1,10 @@
+# [1.0.0-alpha.5](https://github.com/Kong/markdown/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2023-12-23)
+
+
+### Bug Fixes
+
+* mermaid ([c7ec43c](https://github.com/Kong/markdown/commit/c7ec43c03ba0a3cbb69901cd468ab3ac81939f91))
+
 # [1.0.0-alpha.4](https://github.com/Kong/markdown/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2023-12-23)
 
 
