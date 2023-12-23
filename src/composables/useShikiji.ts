@@ -6,8 +6,8 @@ export default function useShikiji() {
   const MarkdownItShikiji = async (theme: 'light' | 'dark' = 'light') => {
     const highlighter = await getHighlighterCore({
       themes: [
-        import('shikiji/themes/github-light.mjs'),
-        import('shikiji/themes/material-theme-palenight.mjs'),
+        import('shikiji/themes/material-theme-lighter.mjs'),
+        import('shikiji/themes/material-theme-lighter.mjs'),
       ],
       // TODO: For now, I'm including all languages but this bumps up the package size ~6MB
       langs: [
@@ -188,7 +188,7 @@ export default function useShikiji() {
     })
 
     return fromHighlighter(highlighter, {
-      theme: theme === 'light' ? 'github-light' : 'material-theme-palenight',
+      theme: theme === 'light' ? 'material-theme-lighter' : 'material-theme-palenight',
     })
   }
 
