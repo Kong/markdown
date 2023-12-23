@@ -1,3 +1,13 @@
+# [1.0.0-alpha.3](https://github.com/Kong/markdown/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2023-12-23)
+
+
+### Bug Fixes
+
+* indent ordered list ([b76bd86](https://github.com/Kong/markdown/commit/b76bd8605ea46dcd1e2e69dce8e93fdaae5f6225))
+* remove tab ([3cf0d6b](https://github.com/Kong/markdown/commit/3cf0d6b66aebfd86cf72989be1800a79dcc24157))
+* split and preview modes ([d13b034](https://github.com/Kong/markdown/commit/d13b0349e23c6e8572ff710aa1a96cd430fcc930))
+* tabs if already indented ([1668a47](https://github.com/Kong/markdown/commit/1668a47d5759b2d714ef1a5e13d3b856f95f176a))
+
 # [1.0.0-alpha.2](https://github.com/Kong/markdown/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2023-12-22)
 
 
