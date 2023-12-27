@@ -133,6 +133,7 @@ export default function useMarkdownActions(
           // Always focus back on the textarea
           await focusTextarea()
 
+          // Set the cursor position
           textarea.selectionEnd = selectedText.start - wrapperLength
 
           return
@@ -233,6 +234,7 @@ export default function useMarkdownActions(
         return
       }
 
+      // If some text is selected
       if (selectedText.text.length !== 0) {
         // Count number of line breaks in selection. Only include a single `\n` or the last of `\n\n`
         lineBreakCount = (selectedText.text.match(/\n(?!\n)/g) || []).length

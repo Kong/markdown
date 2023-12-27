@@ -90,6 +90,8 @@ export default function useKeyboardShortcuts(
       if (e.key && e.key === 'Tab') {
         getTextSelection()
 
+        // Require an active text selection to bind a tab or shift+tab
+        // This configuration passes the ["no keyboard trap"](https://www.w3.org/TR/WCAG21/#no-keyboard-trap) criterion of the W3C Web Content Accessibility Guidelines
         if (selectedText.text) {
           e.preventDefault()
           if (e.shiftKey) {
