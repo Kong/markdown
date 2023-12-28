@@ -1,9 +1,9 @@
-@mixin icon-button {
+@mixin toolbar-button {
   align-items: center;
   background-color: var(--kui-color-background-transparent, $kui-color-background-transparent);
   border: var(--kui-border-width-20, $kui-border-width-20) solid
     var(--kui-color-border-transparent, $kui-color-border-transparent);
-  border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+  border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
   color: var(--kui-color-text-neutral, $kui-color-text-neutral);
   cursor: pointer;
   display: inline-flex;

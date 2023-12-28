@@ -137,7 +137,7 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
 
     // Styles for fenced code block copy button in `src/composables/useMarkdownIt.ts`
     .kong-markdown-code-block-copy {
-      @include icon-button;
+      @include toolbar-button;
       color: var(--kui-color-text-neutral-weak, $kui-color-text-neutral-weak);
       position: absolute;
       right: var(--kui-space-20, $kui-space-20);

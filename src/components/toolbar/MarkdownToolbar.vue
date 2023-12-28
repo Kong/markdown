@@ -43,7 +43,7 @@
               :text="option.label"
             />
           </template>
-          <IconButton
+          <ToolbarButton
             :aria-label="option.label"
             :data-testid="`format-option-${option.action}`"
             :tabindex="0"
@@ -54,7 +54,7 @@
               class="button-icon"
               :size="KUI_ICON_SIZE_40"
             />
-          </IconButton>
+          </ToolbarButton>
         </InfoTooltip>
 
         <div class="toolbar-divider" />
@@ -67,7 +67,7 @@
           <template #tooltip>
             {{ option.label }}
           </template>
-          <IconButton
+          <ToolbarButton
             :aria-label="option.label"
             :data-testid="`template-option-${option.action}`"
             :tabindex="0"
@@ -78,7 +78,7 @@
               class="button-icon"
               :size="KUI_ICON_SIZE_40"
             />
-          </IconButton>
+          </ToolbarButton>
         </InfoTooltip>
       </template>
 
@@ -94,7 +94,7 @@
         <template #tooltip>
           {{ fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen' }}
         </template>
-        <IconButton
+        <ToolbarButton
           :aria-label="fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'"
           data-testid="toggle-fullscreen"
           :tabindex="0"
@@ -105,7 +105,7 @@
             class="button-icon"
             :size="KUI_ICON_SIZE_40"
           />
-        </IconButton>
+        </ToolbarButton>
       </InfoTooltip>
 
       <InfoTooltip
@@ -115,7 +115,7 @@
         <template #tooltip>
           {{ htmlPreview ? 'Toggle markdown Preview' : 'Toggle HTML Preview' }}
         </template>
-        <IconButton
+        <ToolbarButton
           :aria-label="htmlPreview ? 'Toggle markdown Preview' : 'Toggle HTML Preview'"
           data-testid="toggle-html-preview"
           :tabindex="0"
@@ -126,7 +126,7 @@
             class="button-icon"
             :size="KUI_ICON_SIZE_40"
           />
-        </IconButton>
+        </ToolbarButton>
       </InfoTooltip>
     </div>
     <div class="toolbar-right">
@@ -142,20 +142,23 @@
       <template
         v-if="editable && ['edit', 'split', 'preview'].includes(mode)"
       >
-        <button
+        <ToolbarButton
           data-testid="cancel"
+          :icon="false"
           :tabindex="0"
           @click="cancelEdit"
         >
           Cancel
-        </button>
-        <button
+        </ToolbarButton>
+        <ToolbarButton
+          appearance="primary"
           data-testid="save"
+          :icon="false"
           :tabindex="0"
           @click="saveChanges"
         >
           Save
-        </button>
+        </ToolbarButton>
       </template>
     </div>
   </div>
@@ -169,7 +172,7 @@ import { useMediaQuery } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '@/types'
-import IconButton from '@/components/toolbar/IconButton.vue'
+import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
