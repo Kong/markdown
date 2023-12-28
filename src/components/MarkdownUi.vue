@@ -63,7 +63,7 @@ import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/c
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
-import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE } from '@kong/design-tokens'
+import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60 } from '@kong/design-tokens'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
@@ -383,7 +383,7 @@ onUnmounted(() => {
 })
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
-const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - 10px)`)
+const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - ${KUI_SPACE_60})`)
 const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}px`)
 </script>
 
@@ -427,12 +427,12 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
 
     // Fullscreen mode only available when editing
     &.fullscreen {
-      background: var(--kui-color-background, $kui-color-background);
+      border-bottom-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+      border-bottom-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
       bottom: 0;
       height: 100%;
       left: 0;
       margin-top: v-bind('fullscreenOffsetTop');
-      padding: var(--kui-space-0, $kui-space-0) var(--kui-space-40, $kui-space-40) var(--kui-space-40, $kui-space-40);
       position: fixed;
       right: 0;
       top: 0;
@@ -441,6 +441,12 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
 
       .markdown-panes {
         height: v-bind('fullscreenMarkdownPanesHeight');
+        padding-bottom: var(--kui-space-50, $kui-space-50);
+      }
+
+      :deep(.markdown-ui-toolbar) {
+        border-top-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+        border-top-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
       }
     }
 
