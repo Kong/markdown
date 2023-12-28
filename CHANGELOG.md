@@ -1,3 +1,10 @@
+# [1.0.0-alpha.9](https://github.com/Kong/markdown/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2023-12-28)
+
+
+### Bug Fixes
+
+* toolbar overflow ([aa5fb40](https://github.com/Kong/markdown/commit/aa5fb40638989930f70a0941623a2fa6002396bd))
+
 # [1.0.0-alpha.8](https://github.com/Kong/markdown/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2023-12-28)
 
 
