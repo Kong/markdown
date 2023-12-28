@@ -1,3 +1,10 @@
+# [1.0.0-alpha.8](https://github.com/Kong/markdown/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2023-12-28)
+
+
+### Bug Fixes
+
+* fullscreen styles ([d27ff8a](https://github.com/Kong/markdown/commit/d27ff8aa648d7a17322459ecb89022fcb14e0033))
+
 # [1.0.0-alpha.7](https://github.com/Kong/markdown/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2023-12-28)
 
 

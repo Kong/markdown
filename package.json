@@ -1,6 +1,6 @@
 {
   "name": "@kong/markdown",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "Kong's open-source markdown renderer and live editor",
   "keywords": [
     "markdown",
