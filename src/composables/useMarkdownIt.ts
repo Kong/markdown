@@ -22,9 +22,9 @@ import slugify from '@sindresorhus/slugify'
 // MarkdownIt instance
 const md = ref()
 
-export default function useMarkdownIt(theme: 'light' | 'dark' = 'light') {
+export default function useMarkdownIt() {
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
-  const init = async (): Promise<void> => {
+  const init = async (theme: 'light' | 'dark' = 'light'): Promise<void> => {
     const { MarkdownItShikiji } = useShikiji()
 
     md.value = MarkdownIt({

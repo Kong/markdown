@@ -58,7 +58,7 @@ import type { PropType } from 'vue'
 import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
 import MarkdownContent from '@/components/MarkdownContent.vue'
 import composables from '@/composables'
-import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
+import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
@@ -126,7 +126,7 @@ const emit = defineEmits<{
   (e: 'cancel'): void
 }>()
 
-const { init: initMarkdownIt, md } = composables.useMarkdownIt(props.theme)
+const { init: initMarkdownIt, md } = composables.useMarkdownIt()
 
 // Generate a unique id to handle mutiple components on the same page
 const uniqueId = uuidv4()
@@ -140,6 +140,7 @@ provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
 provide(FULLSCREEN_INJECTION_KEY, computed((): boolean => isFullscreen.value))
+provide(THEME_INJECTION_KEY, computed((): 'light' | 'dark' => props.theme))
 provide(HTML_PREVIEW_INJECTION_KEY, computed((): boolean => htmlPreview.value))
 
 const { debounce } = composables.useDebounce()
@@ -340,12 +341,37 @@ const saveChanges = (): void => {
   emit('save', rawMarkdown.value)
 }
 
+const initializeMermaid = (): void => {
+  if (props.mermaid && typeof MermaidJs !== 'undefined' && typeof MermaidJs?.initialize === 'function') {
+    MermaidJs?.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      fontFamily: KUI_FONT_FAMILY_TEXT,
+      altFontFamily: KUI_FONT_FAMILY_CODE,
+      theme: props.theme === 'light' ? 'default' : 'dark',
+    })
+  }
+}
+
+watch(() => props.theme, async (theme: 'light' | 'dark') => {
+  if (['light', 'dark'].includes(theme)) {
+    // Update the Shikiji theme
+    await initMarkdownIt(props.theme)
+
+    // Update the mermaid theme
+    initializeMermaid()
+
+    // Trigger a re-render
+    emulateInputEvent()
+  }
+})
+
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, tabSize, emulateInputEvent)
 
 onBeforeMount(async () => {
   // Initialize markdown-it
-  await initMarkdownIt()
+  await initMarkdownIt(props.theme)
 
   // Render the markdown
   markdownHtml.value = getHtmlFromMarkdown(props.modelValue)
@@ -357,15 +383,7 @@ onBeforeMount(async () => {
 onMounted(async () => {
   ready.value = true
 
-  if (props.mermaid && typeof MermaidJs !== 'undefined' && typeof MermaidJs?.initialize === 'function') {
-    MermaidJs?.initialize({
-      startOnLoad: false,
-      securityLevel: 'strict',
-      fontFamily: KUI_FONT_FAMILY_TEXT,
-      altFontFamily: KUI_FONT_FAMILY_CODE,
-      theme: props.theme === 'light' ? 'default' : 'dark',
-    })
-  }
+  initializeMermaid()
 
   if (currentMode.value === 'split') {
     await nextTick()

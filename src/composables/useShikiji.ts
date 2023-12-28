@@ -7,7 +7,7 @@ export default function useShikiji() {
     const highlighter = await getHighlighterCore({
       themes: [
         import('shikiji/themes/material-theme-lighter.mjs'),
-        import('shikiji/themes/material-theme-lighter.mjs'),
+        import('shikiji/themes/material-theme-palenight.mjs'),
       ],
       // TODO: For now, I'm including all languages but this bumps up the package size ~6MB
       langs: [
