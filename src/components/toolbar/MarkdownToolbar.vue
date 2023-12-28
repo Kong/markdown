@@ -4,7 +4,7 @@
     class="markdown-ui-toolbar"
   >
     <div class="toolbar-left">
-      <!-- <div
+      <div
         v-if="editable && mode !== 'read'"
         class="button-group"
       >
@@ -31,7 +31,7 @@
         >
           Preview
         </button>
-      </div> -->
+      </div>
 
       <template v-if="editable && !['preview', 'read'].includes(mode)">
         <InfoTooltip
