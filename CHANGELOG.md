@@ -1,3 +1,10 @@
+# [1.0.0-alpha.11](https://github.com/Kong/markdown/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2023-12-28)
+
+
+### Features
+
+* reactive theme ([cf87444](https://github.com/Kong/markdown/commit/cf87444caee07c25ac9247541e1aedfd1eb12abb))
+
 # [1.0.0-alpha.10](https://github.com/Kong/markdown/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2023-12-28)
 
 
