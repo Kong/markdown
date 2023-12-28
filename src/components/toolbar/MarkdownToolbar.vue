@@ -290,9 +290,16 @@ onMounted(() => {
   min-height: v-bind('TOOLBAR_HEIGHT');
   padding-left: var(--kui-space-50, $kui-space-50);
   padding-right: var(--kui-space-50, $kui-space-50);
+
   // Allowing the toolbar to scroll horizontally will hide the keyboard shortcut tooltips
-  // which is fine on mobile since keyboard nav isn't as relevant there.
-  // overflow-x: auto; // TODO: Enable for horizontal scrolling
+  // which is fine on mobile since keyboard nav isn't as relevant there, so we force the tooltip content to` display: none`
+  @media (max-width: ($kui-breakpoint-phablet - 1px)) {
+    overflow-x: auto; // TODO: Enable for horizontal scrolling
+
+    :deep(.tooltip-content) {
+      display: none !important;
+    }
+  }
 
   // TODO: Replace with tabs
   .button-group {
