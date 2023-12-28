@@ -287,6 +287,7 @@ onMounted(() => {
   gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
+  min-height: v-bind('TOOLBAR_HEIGHT');
   padding-left: var(--kui-space-50, $kui-space-50);
   padding-right: var(--kui-space-50, $kui-space-50);
   // Allowing the toolbar to scroll horizontally will hide the keyboard shortcut tooltips
