@@ -506,6 +506,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   }
 
   .markdown-editor {
+    border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
     flex-direction: column;
   }
 
