@@ -1,3 +1,11 @@
+# [1.0.0-alpha.7](https://github.com/Kong/markdown/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2023-12-28)
+
+
+### Bug Fixes
+
+* styles ([670296f](https://github.com/Kong/markdown/commit/670296fdb0073fafda326e154b2490d1e7ca6e06))
+* toolbar height ([ca365c3](https://github.com/Kong/markdown/commit/ca365c376a56b9d54a5e873b814aa29d10bb0a2e))
+
 # [1.0.0-alpha.6](https://github.com/Kong/markdown/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2023-12-28)
 
 
