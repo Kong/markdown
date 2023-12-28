@@ -4,7 +4,7 @@
     class="markdown-ui-toolbar"
   >
     <div class="toolbar-left">
-      <div
+      <!-- <div
         v-if="editable && mode !== 'read'"
         class="button-group"
       >
@@ -31,9 +31,9 @@
         >
           Preview
         </button>
-      </div>
+      </div> -->
 
-      <template v-if="editable && mode !== 'read'">
+      <template v-if="editable && !['preview', 'read'].includes(mode)">
         <InfoTooltip
           v-for="option in formatOptions"
           :key="option.label"
@@ -95,10 +95,10 @@
         :data-testid="`tooltip-fullscreen`"
       >
         <template #tooltip>
-          {{ fullscreen ? 'Exit fullscreen editor' : 'Enter fullscreen editor' }}
+          {{ fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen' }}
         </template>
         <IconButton
-          :aria-label="fullscreen ? 'Exit fullscreen editor' : 'Enter fullscreen editor'"
+          :aria-label="fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'"
           data-testid="toggle-fullscreen"
           :tabindex="0"
           @click.prevent="toggleFullscreen"
@@ -278,11 +278,17 @@ onMounted(() => {
 <style lang="scss" scoped>
 .markdown-ui-toolbar {
   align-items: center;
-  background-color: var(--kui-color-background, $kui-color-background);
+  background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);
+  border-bottom: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+  border-top: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+  border-top-left-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+  border-top-right-radius: var(--kui-border-radius-40, $kui-border-radius-40);
   display: flex;
   gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
+  padding-left: var(--kui-space-50, $kui-space-50);
+  padding-right: var(--kui-space-50, $kui-space-50);
   // Allowing the toolbar to scroll horizontally will hide the keyboard shortcut tooltips
   // which is fine on mobile since keyboard nav isn't as relevant there.
   // overflow-x: auto; // TODO: Enable for horizontal scrolling
@@ -326,7 +332,6 @@ onMounted(() => {
     align-items: center;
     display: flex;
     gap: var(--kui-space-20, $kui-space-20);
-    padding: var(--kui-space-40, $kui-space-40) var(--kui-space-0, $kui-space-0);
   }
 
   .toolbar-divider {

@@ -392,11 +392,10 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  gap: var(--kui-space-50, $kui-space-50);
+  margin-bottom: var(--kui-space-70, $kui-space-70);
+  padding-bottom: var(--kui-space-50, $kui-space-50);
   width: 100%;
-
-  @media (min-width: $kui-breakpoint-phablet) {
-    gap: var(--kui-space-0, $kui-space-0);
-  }
 
   .markdown-panes {
     box-sizing: border-box;
@@ -420,6 +419,11 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   &.mode-edit,
   &.mode-split,
   &.mode-preview {
+    background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);
+    border-color: var(--kui-color-border, $kui-color-border);
+    border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+    border-style: solid;
+    border-width: var(--kui-border-width-0, $kui-border-width-0) var(--kui-border-width-10, $kui-border-width-10) var(--kui-border-width-10, $kui-border-width-10) var(--kui-border-width-10, $kui-border-width-10);
 
     // Fullscreen mode only available when editing
     &.fullscreen {
@@ -441,9 +445,12 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     }
 
     .markdown-panes {
+      padding-left: var(--kui-space-50, $kui-space-50);
+      padding-right: var(--kui-space-50, $kui-space-50);
+
       .markdown-preview {
         border: $kui-border-width-10 solid $kui-color-border;
-        border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
+        border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
         // Hide the preview in edit mode on small screens
         display: none;
 
@@ -507,7 +514,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     appearance: none;
     background-color: var(--kui-color-background, $kui-color-background);
     border: 0;
-    border-radius: var(--kui-border-radius-30, $kui-border-radius-30);
+    border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
     box-shadow: var(--kui-shadow-border, $kui-shadow-border); // Ensure the padding is calculated in the element's width
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
     color: var(--kui-color-text, $kui-color-text);
