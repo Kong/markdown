@@ -94,6 +94,10 @@ onMounted(() => {
     // Change to Command icon
     &.mac:after {
       content: '\2318';
+      font-size: var(--kui-font-size-40, $kui-font-size-40);
+      line-height: 0;
+      position: relative;
+      top: 2px;
     }
   }
 }

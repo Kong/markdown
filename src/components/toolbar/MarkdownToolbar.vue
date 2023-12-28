@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="toolbar"
-    class="markdown-ui-toolbar"
-  >
+  <div class="markdown-ui-toolbar">
     <div class="toolbar-left">
       <div
         v-if="editable && mode !== 'read'"
@@ -182,8 +179,6 @@ const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 const fullscreen: Ref<boolean> = inject(FULLSCREEN_INJECTION_KEY, ref(false))
 const htmlPreview: Ref<boolean> = inject(HTML_PREVIEW_INJECTION_KEY, ref(false))
 
-const toolbar = ref<HTMLElement>()
-
 const emit = defineEmits<{
   (e: 'format-selection', format: InlineFormat): void
   (e: 'insert-template', format: MarkdownTemplate): void
@@ -266,10 +261,6 @@ const templateOptions: TemplateOption[] = [
 ]
 
 onMounted(() => {
-  // Add a `mac` class to the container if on Mac (for shortcut icons)
-  // @ts-ignore - property exists
-  toolbar.value?.classList?.toggle('mac', /Mac|iPhone|iPod|iPad/i.test(navigator?.platform) || /macOS|Mac|iPhone|iPod|iPad/i.test(navigator?.userAgentData?.platform))
-
   // If the screen size decreases and the user is in `split` mode, turn on edit mode
   adjustSplitMode()
 })
