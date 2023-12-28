@@ -1,3 +1,10 @@
+# [1.0.0-alpha.12](https://github.com/Kong/markdown/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2023-12-28)
+
+
+### Features
+
+* buttons ([7c8457c](https://github.com/Kong/markdown/commit/7c8457cf3ca882c7633bdc45906aa8cd14e0e406))
+
 # [1.0.0-alpha.11](https://github.com/Kong/markdown/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2023-12-28)
 
 
