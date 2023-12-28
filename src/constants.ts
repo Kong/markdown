@@ -15,7 +15,7 @@ export enum InlineFormatWrapper {
 }
 
 /** The height of the .markdown-ui-toolbar */
-export const TOOLBAR_HEIGHT: string = '40px'
+export const TOOLBAR_HEIGHT: string = '36px'
 
 /** The markdown new line character */
 export const NEW_LINE_CHARACTER = '\n'
