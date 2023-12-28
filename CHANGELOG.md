@@ -1,3 +1,15 @@
+# [1.0.0-alpha.6](https://github.com/Kong/markdown/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2023-12-28)
+
+
+### Bug Fixes
+
+* textarea border radius ([061500f](https://github.com/Kong/markdown/commit/061500f0d35373025fa3da6f22ab91ac4a1bd651))
+
+
+### Reverts
+
+* restore view switcher ([e357571](https://github.com/Kong/markdown/commit/e3575718e7981ffb042c8a8471fa6cdd6e6eaebe))
+
 # [1.0.0-alpha.5](https://github.com/Kong/markdown/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2023-12-23)
 
 
