@@ -1,3 +1,10 @@
+# [1.0.0-alpha.10](https://github.com/Kong/markdown/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2023-12-28)
+
+
+### Bug Fixes
+
+* meta keys ([b774d20](https://github.com/Kong/markdown/commit/b774d20bfe3b57684fd2b011f76b88d12e64217e))
+
 # [1.0.0-alpha.9](https://github.com/Kong/markdown/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2023-12-28)
 
 
