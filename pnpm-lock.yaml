@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@kong/icons':
     specifier: ^1.8.8
@@ -76,8 +80,8 @@ devDependencies:
     specifier: ^1.5.5
     version: 1.5.5
   '@kong/design-tokens':
-    specifier: ^1.12.1
-    version: 1.12.1
+    specifier: ^1.12.3
+    version: 1.12.3
   '@semantic-release/changelog':
     specifier: ^6.0.3
     version: 6.0.3(semantic-release@22.0.12)
@@ -815,8 +819,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@kong/design-tokens@1.12.1:
-    resolution: {integrity: sha512-I6C2HHJ+Kx14Exmr9OEe4yzHvhneC5RGrWzViZXcWNOYCl2VN9dMmgjTAaowbdeyLEeZ+4AtC+LJ2JU7eN4o8w==}
+  /@kong/design-tokens@1.12.3:
+    resolution: {integrity: sha512-9g42/oKt8MvXi5ihl7tjayL1sgZ6rNgloye+Bt27h+cB6cJb860+xIF3YvEASncaWuKM0IEYB8gq7dPjBKkZNA==}
     dev: true
 
   /@kong/icons@1.8.8(vue@3.3.11):
@@ -7902,7 +7906,3 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
