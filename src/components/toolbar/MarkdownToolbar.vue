@@ -130,36 +130,7 @@
       </InfoTooltip>
     </div>
     <div class="toolbar-right">
-      <template v-if="editable && mode === 'read'">
-        <button
-          data-testid="edit"
-          :tabindex="0"
-          @click="determineEditMode"
-        >
-          Edit
-        </button>
-      </template>
-      <template
-        v-if="editable && ['edit', 'split', 'preview'].includes(mode)"
-      >
-        <ToolbarButton
-          data-testid="cancel"
-          :icon="false"
-          :tabindex="0"
-          @click="cancelEdit"
-        >
-          Cancel
-        </ToolbarButton>
-        <ToolbarButton
-          appearance="primary"
-          data-testid="save"
-          :icon="false"
-          :tabindex="0"
-          @click="saveChanges"
-        >
-          Save
-        </ToolbarButton>
-      </template>
+      <slot name="toolbar-right" />
     </div>
   </div>
 </template>
@@ -188,17 +159,10 @@ const emit = defineEmits<{
   (e: 'change-mode', mode: MarkdownMode): void
   (e: 'toggle-html-preview'): void
   (e: 'toggle-fullscreen'): void
-  (e: 'cancel'): void
-  (e: 'save'): void
 }>()
 
 // Determine if the user is on a wider viewport
 const isPhabletWidth = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_PHABLET})`)
-
-const determineEditMode = (): void => {
-  // If yes, enter `split` mode, otherwise `edit` mode
-  changeMode(isPhabletWidth.value ? 'split' : 'edit')
-}
 
 // Verify the browser is wide enough to make `split` mode viable
 const adjustSplitMode = (): void => {
@@ -228,16 +192,6 @@ const toggleHtmlPreview = (e: any): void => {
   emit('toggle-html-preview')
   // Blur the button on click
   e?.target?.blur()
-}
-
-const cancelEdit = (): void => {
-  emit('cancel')
-  changeMode('read')
-}
-
-const saveChanges = (): void => {
-  emit('save')
-  changeMode('read')
 }
 
 const formatOptions: FormatOption[] = [

@@ -6,14 +6,53 @@
     :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
   >
     <MarkdownToolbar
-      @cancel="cancelChanges"
       @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"
       @insert-template="insertTemplate"
-      @save="saveChanges"
       @toggle-fullscreen="toggleFullscreen"
       @toggle-html-preview="toggleHtmlPreview"
-    />
+    >
+      <template #toolbar-right>
+        <slot
+          :cancel="cancel"
+          name="toolbar-right"
+          :save="save"
+        >
+          <template v-if="editable && currentMode === 'read'">
+            <ToolbarButton
+              data-testid="edit"
+              :icon="false"
+              :tabindex="0"
+              @click="determineEditMode"
+            >
+              Edit
+            </ToolbarButton>
+          </template>
+          <template
+            v-if="editable && ['edit', 'split', 'preview'].includes(currentMode)"
+          >
+            <ToolbarButton
+              data-testid="cancel"
+              :icon="false"
+              :tabindex="0"
+              @click="cancel"
+            >
+              Cancel
+            </ToolbarButton>
+            <ToolbarButton
+              appearance="primary"
+              data-testid="save"
+              :icon="false"
+              :tabindex="0"
+              @click="save"
+            >
+              Save
+            </ToolbarButton>
+          </template>
+        </slot>
+      </template>
+    </MarkdownToolbar>
+
     <div class="markdown-panes">
       <div
         v-if="editable && (['edit', 'split'].includes(currentMode))"
@@ -57,13 +96,15 @@ import { onBeforeMount, onMounted, onUnmounted, computed, ref, nextTick, provide
 import type { PropType } from 'vue'
 import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
 import MarkdownContent from '@/components/MarkdownContent.vue'
+import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import composables from '@/composables'
 import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
+import { useMediaQuery } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
-import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60 } from '@kong/design-tokens'
+import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET } from '@kong/design-tokens'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
@@ -331,14 +372,24 @@ watch(isFullscreen, (active: boolean): void => {
   emit('fullscreen', active)
 })
 
+// Determine if the user is on a wider viewport
+const isPhabletWidth = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_PHABLET})`)
+
+const determineEditMode = (): void => {
+  // If isPhabletWidth, enter `split` mode, otherwise `edit` mode
+  currentMode.value = isPhabletWidth.value ? 'split' : 'edit'
+}
+
 // Handle the user clicking the `cancel` button
-const cancelChanges = (): void => {
+const cancel = (): void => {
   emit('cancel')
+  currentMode.value = 'read'
 }
 
 // Handle the user clicking the `save` button
-const saveChanges = (): void => {
+const save = (): void => {
   emit('save', rawMarkdown.value)
+  currentMode.value = 'read'
 }
 
 const initializeMermaid = (): void => {
@@ -419,7 +470,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: var(--kui-space-40, $kui-space-40);
+    gap: var(--kui-space-50, $kui-space-50);
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {

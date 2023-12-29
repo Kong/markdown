@@ -13,7 +13,13 @@
         @mode="modeChanged"
         @save="contentSaved"
         @update:model-value="contentUpdated"
-      />
+      >
+        <!-- <template #toolbar-right="{ save }">
+          <button @click="save">
+            Toolbar
+          </button>
+        </template> -->
+      </MarkdownUi>
     </main>
   </div>
 </template>

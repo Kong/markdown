@@ -1,7 +1,7 @@
 @mixin toolbar-button {
   align-items: center;
   background-color: var(--kui-color-background-transparent, $kui-color-background-transparent);
-  border: var(--kui-border-width-20, $kui-border-width-20) solid
+  border: var(--kui-border-width-10, $kui-border-width-10) solid
     var(--kui-color-border-transparent, $kui-color-border-transparent);
   border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
   color: var(--kui-color-text-neutral, $kui-color-text-neutral);
@@ -9,7 +9,7 @@
   display: inline-flex;
   font-family: var(--kui-font-family-text, $kui-font-family-text);
   font-size: var(--kui-font-size-30, $kui-font-size-30);
-  font-weight: var(--kui-font-weight-semibold, $kui-font-weight-semibold);
+  font-weight: var(--kui-font-weight-medium, $kui-font-weight-medium);
   gap: var(--kui-space-30, $kui-space-30);
   justify-content: center;
   padding: var(--kui-space-10, $kui-space-10);

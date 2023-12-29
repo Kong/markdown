@@ -37,25 +37,28 @@ defineProps({
   }
 
   &.has-text {
-    border-color: var(--kui-color-border, $kui-color-border);
-    border-width: var(--kui-border-width-20, $kui-border-width-20);
-    padding: var(--kui-space-10, $kui-space-10) var(--kui-space-40, $kui-space-40);
+    // border-color: var(--kui-color-border, $kui-color-border);
+    // border-width: var(--kui-border-width-10, $kui-border-width-10);
+    padding: var(--kui-space-10, $kui-space-10) var(--kui-space-30, $kui-space-30);
 
     &.primary {
-      background-color: var(--kui-color-background-primary, $kui-color-background-primary);
-      border-color: var(--kui-color-border, $kui-color-border-primary);
-      color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+      background-color: var(--kui-color-background, $kui-color-background);
+      border-color: var(--kui-color-border-primary, $kui-color-border-primary);
+      color: var(--kui-color-text-primary, $kui-color-text-primary);
 
       &:hover:not(:disabled):not(:focus):not(:active) {
-        background-color: var(--kui-color-background-primary-strong, $kui-color-background-primary-strong);
+        background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);
+        border-color: var(--kui-color-border-primary-stronger, $kui-color-border-primary-stronger);
       }
 
       &:focus {
-        background-color: var(--kui-color-background-primary-strong, $kui-color-background-primary-strong);
+        background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);
+        border-color: var(--kui-color-border-primary-stronger, $kui-color-border-primary-stronger);
       }
 
       &:active {
-        background-color: var(--kui-color-background-primary-stronger, $kui-color-background-primary-stronger);
+        background-color: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
+        border-color: var(--kui-color-border-primary-strongest, $kui-color-border-primary-strongest);
       }
     }
   }
