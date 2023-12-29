@@ -1,3 +1,10 @@
+# [1.0.0-alpha.13](https://github.com/Kong/markdown/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2023-12-29)
+
+
+### Features
+
+* toolbar-right slot ([469390b](https://github.com/Kong/markdown/commit/469390b626dc2ee0e91e929df99ce707648df04f))
+
 # [1.0.0-alpha.12](https://github.com/Kong/markdown/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2023-12-28)
 
 
