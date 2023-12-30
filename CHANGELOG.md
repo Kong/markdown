@@ -1,3 +1,10 @@
+# [1.0.0-alpha.14](https://github.com/Kong/markdown/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2023-12-30)
+
+
+### Features
+
+* edit button ([c58617a](https://github.com/Kong/markdown/commit/c58617a87f02fb08c9417814646a06c626250f38))
+
 # [1.0.0-alpha.13](https://github.com/Kong/markdown/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2023-12-29)
 
 
