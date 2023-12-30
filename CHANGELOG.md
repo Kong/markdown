@@ -1,3 +1,10 @@
+# [1.0.0-alpha.15](https://github.com/Kong/markdown/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2023-12-30)
+
+
+### Features
+
+* typography ([d3e4dca](https://github.com/Kong/markdown/commit/d3e4dca202b14cf10b53b4a3b4f0f317100bfc4e))
+
 # [1.0.0-alpha.14](https://github.com/Kong/markdown/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2023-12-30)
 
 
