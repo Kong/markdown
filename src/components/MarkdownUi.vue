@@ -6,6 +6,7 @@
     :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
   >
     <MarkdownToolbar
+      v-if="editable && currentMode !== 'read'"
       @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"
       @insert-template="insertTemplate"
@@ -18,16 +19,6 @@
           name="toolbar-right"
           :save="save"
         >
-          <template v-if="editable && currentMode === 'read'">
-            <ToolbarButton
-              data-testid="edit"
-              :icon="false"
-              :tabindex="0"
-              @click="determineEditMode"
-            >
-              Edit
-            </ToolbarButton>
-          </template>
           <template
             v-if="editable && ['edit', 'split', 'preview'].includes(currentMode)"
           >
@@ -84,6 +75,27 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
+          <div
+            v-if="editable && currentMode === 'read'"
+            class="edit-button"
+          >
+            <slot name="edit">
+              <ToolbarButton
+                appearance="primary"
+                aria-label="Edit markdown document"
+                data-testid="edit"
+                :icon="false"
+                :tabindex="0"
+                @click="edit"
+              >
+                <EditIcon
+                  decorative
+                  :size="KUI_ICON_SIZE_30"
+                />
+                Edit
+              </ToolbarButton>
+            </slot>
+          </div>
           <MarkdownContent :content="htmlPreview ? markdownPreviewHtml : markdownHtml" />
         </div>
       </div>
@@ -104,7 +116,8 @@ import { useMediaQuery } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
-import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET } from '@kong/design-tokens'
+import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { EditIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
@@ -375,7 +388,7 @@ watch(isFullscreen, (active: boolean): void => {
 // Determine if the user is on a wider viewport
 const isPhabletWidth = useMediaQuery(`(min-width: ${KUI_BREAKPOINT_PHABLET})`)
 
-const determineEditMode = (): void => {
+const edit = (): void => {
   // If isPhabletWidth, enter `split` mode, otherwise `edit` mode
   currentMode.value = isPhabletWidth.value ? 'split' : 'edit'
 }
@@ -570,6 +583,13 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   .markdown-preview {
     background-color: var(--kui-color-background, $kui-color-background);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
+    position: relative;
+
+    .edit-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 
   .markdown-html-preview {

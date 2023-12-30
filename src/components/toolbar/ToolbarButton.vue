@@ -37,8 +37,6 @@ defineProps({
   }
 
   &.has-text {
-    // border-color: var(--kui-color-border, $kui-color-border);
-    // border-width: var(--kui-border-width-10, $kui-border-width-10);
     padding: var(--kui-space-10, $kui-space-10) var(--kui-space-30, $kui-space-30);
 
     &.primary {
