@@ -291,7 +291,7 @@ onMounted(() => {
   }
 
   .toolbar-divider {
-    background-color: var(--kui-color-border, $kui-color-border);
+    background-color: var(--kui-color-background-disabled, $kui-color-background-disabled);
     height: 16px;
     margin: var(--kui-space-0, $kui-space-0) var(--kui-space-20, $kui-space-20);
     width: 2px;

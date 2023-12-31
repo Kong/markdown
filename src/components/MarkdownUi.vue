@@ -587,8 +587,8 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
 
     .edit-button {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 4px;
+      top: 4px;
     }
   }
 
