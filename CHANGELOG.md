@@ -1,3 +1,10 @@
+# [1.0.0-alpha.16](https://github.com/Kong/markdown/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2023-12-31)
+
+
+### Bug Fixes
+
+* enable token validation ([f1808ce](https://github.com/Kong/markdown/commit/f1808ce099ec8d31a2f3b93050016895d985a866))
+
 # [1.0.0-alpha.15](https://github.com/Kong/markdown/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2023-12-30)
 
 
