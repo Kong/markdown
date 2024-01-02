@@ -115,7 +115,7 @@ export default function useMarkdownIt() {
       return `
         <div class="kong-markdown-code-block-container" style="position: relative">
           ${originalContent}
-          <button class="kong-markdown-code-block-copy" data-copytext="${content}" aria-label="Copy code" tabindex="0">
+          <button class="kong-markdown-code-block-copy" data-copytext="${content}" aria-label="Copy code" tabindex="0" type="button">
             ${COPY_ICON_SVG}
           </button>
         </div>

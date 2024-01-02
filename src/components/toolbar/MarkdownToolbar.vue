@@ -12,6 +12,7 @@
           :class="{ 'active': mode === 'edit' }"
           :disabled="mode === 'edit'"
           :tabindex="0"
+          type="button"
           @click.prevent="changeMode('edit')"
         >
           Edit
@@ -20,6 +21,7 @@
           class="mode-split-button"
           :class="{ 'active': mode === 'split' }"
           :tabindex="0"
+          type="button"
           @click.prevent="changeMode('split')"
         >
           Split
@@ -27,6 +29,7 @@
         <button
           :class="{ 'active': mode === 'preview' }"
           :tabindex="0"
+          type="button"
           @click.prevent="changeMode('preview')"
         >
           Preview
