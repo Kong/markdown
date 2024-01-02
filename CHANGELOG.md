@@ -1,3 +1,10 @@
+# [1.0.0-alpha.19](https://github.com/Kong/markdown/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2024-01-02)
+
+
+### Bug Fixes
+
+* code blocks ([833431e](https://github.com/Kong/markdown/commit/833431eb01154fb467f08b02d5e30ce07eb83d67))
+
 # [1.0.0-alpha.18](https://github.com/Kong/markdown/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2024-01-02)
 
 
