@@ -16,7 +16,6 @@
       :class="{ 'right': !arrivedState.right }"
     />
     <MarkdownToolbar
-      v-if="editable && currentMode !== 'read'"
       ref="toolbar"
       @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"

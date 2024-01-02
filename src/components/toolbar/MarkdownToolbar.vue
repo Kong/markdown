@@ -1,11 +1,11 @@
 <template>
   <div
+    v-if="editable && mode !== 'read'"
     class="markdown-ui-toolbar"
     data-testid="toolbar"
   >
     <div class="toolbar-left">
       <div
-        v-if="editable && mode !== 'read'"
         class="button-group"
         role="radiogroup"
       >
@@ -17,6 +17,7 @@
           :aria-checked="mode === 'edit'"
           :aria-labelledby="`editor-mode-options-${uniqueId}`"
           :class="['edit', { 'active': mode === 'edit' }]"
+          data-testid="edit-mode-button"
           :disabled="mode === 'edit'"
           :icon="false"
           role="radio"
@@ -30,6 +31,8 @@
           :aria-labelledby="`editor-mode-options-${uniqueId}`"
           class="mode-split-button"
           :class="['split', { 'active': mode === 'split' }]"
+          data-testid="split-mode-button"
+          :disabled="mode === 'split'"
           :icon="false"
           role="radio"
           type="button"
@@ -41,6 +44,8 @@
           :aria-checked="mode === 'preview'"
           :aria-labelledby="`editor-mode-options-${uniqueId}`"
           :class="['preview', { 'active': mode === 'preview' }]"
+          data-testid="preview-mode-button"
+          :disabled="mode === 'preview'"
           :icon="false"
           role="radio"
           type="button"
@@ -100,15 +105,9 @@
         </InfoTooltip>
       </template>
 
-      <div
-        v-if="mode !== 'read'"
-        class="toolbar-divider"
-      />
+      <div class="toolbar-divider" />
 
-      <InfoTooltip
-        v-if="mode !== 'read'"
-        :data-testid="`tooltip-fullscreen`"
-      >
+      <InfoTooltip :data-testid="`tooltip-fullscreen`">
         <template #tooltip>
           {{ fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen' }}
         </template>
@@ -247,6 +246,7 @@ const templateOptions: TemplateOption[] = [
 onMounted(() => {
   // If the screen size decreases and the user is in `split` mode, turn on edit mode
   adjustSplitMode()
+
 })
 </script>
 
