@@ -7,15 +7,16 @@
   >
     <div
       v-if="editable && currentMode !== 'read'"
-      class="toolbar-overlay"
-      :class="{ 'left': !arrivedState.left }"
+      class="toolbar-overlay left"
+      :class="{ 'overlay-visible': !arrivedState.left }"
     />
     <div
       v-if="editable && currentMode !== 'read'"
-      class="toolbar-overlay"
-      :class="{ 'right': !arrivedState.right }"
+      class="toolbar-overlay right"
+      :class="{ 'overlay-visible': !arrivedState.right }"
     />
     <MarkdownToolbar
+      v-if="editable && currentMode !== 'read'"
       ref="toolbar"
       @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"
@@ -514,6 +515,16 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     // Show an overlay transparency while the toolbar is scrollable
     @media (max-width: ($kui-breakpoint-phablet - 1px)) {
       display: block;
+    }
+
+    &.left,
+    &.right {
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    &.overlay-visible {
+      opacity: 1;
     }
 
     &.left {
