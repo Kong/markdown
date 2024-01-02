@@ -13,7 +13,7 @@
         @save="contentSaved"
         @update:model-value="contentUpdated"
       >
-        <!-- <template #toolbar-right="{ save }">
+        <!-- <template #actions="{ save }">
           <button @click="save">
             Toolbar
           </button>

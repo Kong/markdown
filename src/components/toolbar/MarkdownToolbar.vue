@@ -1,5 +1,8 @@
 <template>
-  <div class="markdown-ui-toolbar">
+  <div
+    class="markdown-ui-toolbar"
+    data-testid="toolbar"
+  >
     <div class="toolbar-left">
       <div
         v-if="editable && mode !== 'read'"
@@ -129,8 +132,11 @@
         </ToolbarButton>
       </InfoTooltip>
     </div>
-    <div class="toolbar-right">
-      <slot name="toolbar-right" />
+    <div
+      class="actions"
+      data-testid="actions"
+    >
+      <slot name="actions" />
     </div>
   </div>
 </template>
@@ -284,7 +290,7 @@ onMounted(() => {
   }
 
   .toolbar-left,
-  .toolbar-right {
+  .actions {
     align-items: center;
     display: flex;
     gap: var(--kui-space-20, $kui-space-20);

@@ -13,10 +13,10 @@
       @toggle-fullscreen="toggleFullscreen"
       @toggle-html-preview="toggleHtmlPreview"
     >
-      <template #toolbar-right>
+      <template #actions>
         <slot
           :cancel="cancel"
-          name="toolbar-right"
+          name="actions"
           :save="save"
         >
           <template
