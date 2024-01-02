@@ -1,7 +1,7 @@
 // Vitest unit test spec file
 
 import { describe, it, expect } from 'vitest'
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import { mount } from '@vue/test-utils'
 import MarkdownToolbar from './MarkdownToolbar.vue'
 import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
@@ -38,7 +38,7 @@ const templateOptions: Partial<TemplateOption>[] = [
 ]
 
 describe('<MarkdownToolbar />', () => {
-  describe('visibility', () => {
+  describe('mode switcher', () => {
     // Loop through each mode
     for (const mode of ['read', 'edit', 'split', 'preview']) {
       describe(`${mode}-mode`, () => {
@@ -92,6 +92,8 @@ describe('<MarkdownToolbar />', () => {
 
         // Ensure the starting mode is active
         expect(wrapper.findTestId('edit-mode-button').attributes('class')).toContain('active')
+        expect(wrapper.findTestId('split-mode-button').attributes('class')).not.toContain('active')
+        expect(wrapper.findTestId('preview-mode-button').attributes('class')).not.toContain('active')
 
         expect(wrapper.findTestId('split-mode-button').isVisible()).toBe(true)
 
@@ -228,6 +230,62 @@ describe('<MarkdownToolbar />', () => {
 
         expect(clickEvent).toHaveLength(1)
         // We don't check the value here because the toolbar emits an event with no payload
+      })
+    })
+  })
+
+  describe('slots', () => {
+    // We cannot test the default slot content from this component since it is provided by the parent `MarkdownUi.vue` component
+    describe('editor-actions', () => {
+      it('displays slot content if provided', async () => {
+        const saveButtonText = 'Save changes'
+        const cancelButtonText = 'Cancel changes'
+
+        const wrapper = await mount(MarkdownToolbar, {
+          global: {
+            provide: setProvideData({
+              mode: 'edit',
+              editable: true,
+            }),
+          },
+          slots: {
+            'editor-actions': () => [
+              h('button', { 'data-testid': 'save' }, saveButtonText),
+              h('button', { 'data-testid': 'cancel' }, cancelButtonText),
+            ],
+          },
+        })
+
+        expect(wrapper.findTestId('slot-editor-actions').isVisible()).toBe(true)
+        // Slotted Save button
+        expect(wrapper.findTestId('save').isVisible()).toBe(true)
+        expect(wrapper.findTestId('save').text()).toEqual(saveButtonText)
+        // Slotted Cancel button
+        expect(wrapper.findTestId('cancel').isVisible()).toBe(true)
+        expect(wrapper.findTestId('cancel').text()).toEqual(cancelButtonText)
+      })
+    })
+
+    describe('toolbar-right', () => {
+      it('displays slot content if provided', async () => {
+        const buttonText = 'Custom toolbar button'
+
+        const wrapper = await mount(MarkdownToolbar, {
+          global: {
+            provide: setProvideData({
+              mode: 'edit',
+              editable: true,
+            }),
+          },
+          slots: {
+            'toolbar-right': () => h('button', { 'data-testid': 'custom' }, buttonText),
+          },
+        })
+
+        expect(wrapper.findTestId('slot-toolbar-right').isVisible()).toBe(true)
+        // Slotted button
+        expect(wrapper.findTestId('custom').isVisible()).toBe(true)
+        expect(wrapper.findTestId('custom').text()).toEqual(buttonText)
       })
     })
   })

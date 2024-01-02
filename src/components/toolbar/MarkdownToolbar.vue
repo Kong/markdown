@@ -145,12 +145,14 @@
       </InfoTooltip>
     </div>
     <div
+      v-if="$slots['toolbar-right']"
       class="toolbar-right"
       data-testid="slot-toolbar-right"
     >
       <slot name="toolbar-right" />
     </div>
     <div
+      v-if="$slots['editor-actions']"
       class="editor-actions"
       data-testid="slot-editor-actions"
     >
@@ -225,12 +227,9 @@ const formatOptions: FormatOption[] = [
   { label: 'Italic', action: 'italic', keys: ['I'], icon: ItalicIcon },
   { label: 'Underline', action: 'underline', keys: ['U'], icon: UnderlineIcon },
   { label: 'Strikethrough', action: 'strikethrough', keys: ['Shift', 'X'], icon: StrikethroughIcon },
-  // Hidden for now
-  // { label: 'Subscript', action: 'subscript', icon: SubscriptIcon },
-  // Hidden for now
-  // { label: 'Superscript', action: 'superscript', icon: SuperscriptIcon },
-  // Hidden for now
-  // { label: 'Mark', action: 'mark', icon: MarkIcon },
+  // { label: 'Subscript', action: 'subscript', icon: SubscriptIcon }, // Hidden for now
+  // { label: 'Superscript', action: 'superscript', icon: SuperscriptIcon }, // Hidden for now
+  // { label: 'Mark', action: 'mark', icon: MarkIcon }, // Hidden for now
   { label: 'Code', action: 'code', keys: ['Shift', 'C'], icon: CodeIcon },
 ]
 
@@ -246,7 +245,6 @@ const templateOptions: TemplateOption[] = [
 onMounted(() => {
   // If the screen size decreases and the user is in `split` mode, turn on edit mode
   adjustSplitMode()
-
 })
 </script>
 
