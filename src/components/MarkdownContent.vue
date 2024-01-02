@@ -231,8 +231,8 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       @include toolbar-button;
       color: var(--kui-color-text-neutral-weak, $kui-color-text-neutral-weak);
       position: absolute;
-      right: 4px;
-      top: 4px;
+      right: 2px;
+      top: 2px;
     }
 
     .line.highlighted {
