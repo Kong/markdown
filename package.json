@@ -50,13 +50,13 @@
     "commit": "cz"
   },
   "peerDependencies": {
-    "vue": "^3.3.8"
+    "vue": "^3.3.13"
   },
   "dependencies": {
     "@kong/icons": "^1.8.8",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.7.0",
-    "html-format": "^1.1.2",
+    "html-format": "^1.1.5",
     "markdown-it": "^14.0.0",
     "markdown-it-abbr": "^2.0.0",
     "markdown-it-anchor": "^8.6.7",
@@ -87,7 +87,7 @@
     "@types/markdown-it-attrs": "^4.1.3",
     "@types/markdown-it-emoji": "^2.0.4",
     "@types/markdown-it-footnote": "^3.0.3",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
@@ -102,7 +102,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.4.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.19.2",
@@ -123,10 +123,10 @@
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
     "typescript": "^5.3.3",
-    "vite": "^5.0.9",
+    "vite": "^5.0.10",
     "vitest": "1.0.4",
-    "vue": "^3.3.11",
-    "vue-tsc": "^1.8.25"
+    "vue": "^3.3.13",
+    "vue-tsc": "^1.8.26"
   },
   "repository": {
     "type": "git",
