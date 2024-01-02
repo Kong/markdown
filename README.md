@@ -143,7 +143,7 @@ A slot for providing editor actions to the markdown component, shown at the far-
 
 The default slot provides `Save` and `Cancel` buttons as well as two methods, `save` and `cancel`, to trigger the built-in actions from your own component. Here's an example:
 
-```vue
+```html
 <MarkdownUi
   v-model="content"
   editable
@@ -187,7 +187,7 @@ When the `edit` button (native, or custom) is clicked, the component will automa
 > [!NOTE]
 > The `editable` prop must be set to `true` to enable this slot.
 
-```vue
+```html
 <MarkdownUi
   v-model="content"
   editable
