@@ -40,7 +40,6 @@ export default function useMarkdownIt() {
         level: 2,
         slugify: s => slugify(s),
         permalink: anchor.permalink.ariaHidden({
-          // &#128279
           placement: 'before',
           class: 'header-anchor', // The class applied to the anchor tag; allows for styling
           // Utilize an SVG icon instead of a `#` string

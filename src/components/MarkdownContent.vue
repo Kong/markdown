@@ -166,18 +166,18 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       margin: var(--kui-space-70, $kui-space-70) var(--kui-space-0, $kui-space-0);
     }
 
-    ul {
+    ul, ol {
       margin: var(--kui-space-0, $kui-space-0) var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
       padding-left: var(--kui-space-70, $kui-space-70);
-    }
 
-    ol {
-      margin: var(--kui-space-0, $kui-space-0) var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
-      padding-left: var(--kui-space-70, $kui-space-70);
-    }
+      // Remove the margin for a nested list
+      ul, ol {
+        margin: var(--kui-space-0, $kui-space-0);
+      }
 
-    li {
-      margin-bottom: var(--kui-space-20, $kui-space-20);
+      li {
+        margin-bottom: var(--kui-space-20, $kui-space-20);
+      }
     }
 
     blockquote {
