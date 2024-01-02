@@ -93,7 +93,10 @@
             v-if="editable && currentMode === 'read'"
             class="edit-button"
           >
-            <slot name="edit">
+            <slot
+              :edit="edit"
+              name="edit"
+            >
               <ToolbarButton
                 appearance="primary"
                 aria-label="Edit markdown document"
@@ -140,27 +143,22 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  /** Is the markdown document able to be edited by the user. Defaults to `false`. */
+  editable: {
+    type: Boolean,
+    default: false,
+  },
   /** The mode used when the component initializes, one of 'read', 'edit', 'split', 'preview' */
   mode: {
     type: String as PropType<MarkdownMode>,
     default: 'read',
     validator: (mode: string): boolean => ['read', 'edit', 'split', 'preview'].includes(mode),
   },
-  /** Optionally show the markdown editor */
-  editable: {
-    type: Boolean,
-    default: false,
-  },
-  /** The number of spaces to insert on tab. Defaults to 2, max of 10 */
+  /** The number of spaces to insert on tab. Defaults to 2, max of 6 */
   tabSize: {
     type: Number,
     default: 2,
     validator: (size: number): boolean => size >= 2 && size <= 6,
-  },
-  /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
-  mermaid: {
-    type: Boolean,
-    default: true,
   },
   /** The theme used when the component initializes, one of 'light' or 'dark'. Defaults to 'light' */
   theme: {
@@ -168,8 +166,8 @@ const props = defineProps({
     default: 'light',
     validator: (theme: string): boolean => ['light', 'dark'].includes(theme),
   },
-  /** The max height of the editor when not being displayed fullscreen. Defaults to 300, Minimum of 100. */
-  editorMaxHeight: {
+  /** The max height of the component when not being displayed fullscreen. Defaults to 300, Minimum of 100. */
+  maxHeight: {
     type: Number,
     default: 300,
     validator: (height: number): boolean => height >= 100,
@@ -184,14 +182,19 @@ const props = defineProps({
     type: Number,
     default: 1001,
   },
+  /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
+  mermaid: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const emit = defineEmits<{
   (e: 'update:modelValue', rawMarkdown: string): void
-  (e: 'mode', mode: MarkdownMode): void
-  (e: 'fullscreen', active: boolean): void
   (e: 'save', rawMarkdown: string): void
   (e: 'cancel'): void
+  (e: 'mode', mode: MarkdownMode): void
+  (e: 'fullscreen', active: boolean): void
 }>()
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
@@ -485,7 +488,7 @@ onUnmounted(() => {
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
 const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - ${KUI_SPACE_60})`)
-const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}px`)
+const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 </script>
 
 <style lang="scss" scoped>
@@ -542,7 +545,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   &.mode-edit,
   &.mode-split {
     .markdown-panes {
-      height: v-bind('markdownEditorMaxHeight'); // max-height in edit and split modes
+      height: v-bind('markdownPanesMaxHeight'); // max-height in edit and split modes
     }
   }
 

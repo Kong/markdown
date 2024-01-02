@@ -23,6 +23,11 @@
             Toolbar
           </button>
         </template> -->
+        <!-- <template #edit="{ edit }">
+          <button @click="edit">
+            Custom edit
+          </button>
+        </template> -->
       </MarkdownUi>
     </main>
   </div>
