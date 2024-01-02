@@ -207,7 +207,8 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
     }
 
     // Inline code within the content area
-    p code {
+    p code,
+    td code {
       background: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
       border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
       color: $kui-color-text;
