@@ -12,6 +12,7 @@ export default mergeConfig(viteConfig, defineConfig({
       './sandbox/**',
       'node_modules',
     ],
+    setupFiles: ['./vitest.setup.ts'],
     deps: {
       optimizer: {
         web: {

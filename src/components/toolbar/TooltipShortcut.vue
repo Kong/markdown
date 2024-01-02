@@ -3,15 +3,19 @@
     v-if="text"
     class="tooltip-shortcut"
   >
-    <div>{{ text }}</div>
+    <div data-testid="shortcut-text">
+      {{ text }}
+    </div>
     <div
       v-if="keys.length"
       class="keys"
+      data-testid="keys"
     >
       <kbd
         :aria-label="isMac ? 'Command' : 'Control'"
         class="keyboard-button meta-key"
         :class="{ 'mac': isMac }"
+        data-testid="meta-key"
       />
       <kbd
         v-for="key in keys"
