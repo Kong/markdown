@@ -180,6 +180,14 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       }
     }
 
+    ul {
+      list-style: disc;
+    }
+
+    ol {
+      list-style: decimal;
+    }
+
     blockquote {
       border-left: var(--kui-border-width-30, $kui-border-width-30) solid var(--kui-color-border, $kui-color-border);
       color: var(--kui-color-text-neutral, $kui-color-text-neutral);
