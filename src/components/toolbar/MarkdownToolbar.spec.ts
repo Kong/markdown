@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import MarkdownToolbar from './MarkdownToolbar.vue'
 import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
-import type { MarkdownMode } from '@/types'
+import type { MarkdownMode, FormatOption, TemplateOption } from '@/types'
 
 // Provide data to be received in the `setup` function via `inject`
 // Defaults are provided
@@ -19,6 +19,23 @@ const setProvideData = (
   [FULLSCREEN_INJECTION_KEY]: ref(fullscreen),
   [HTML_PREVIEW_INJECTION_KEY]: ref(htmlPreview),
 })
+
+const formatOptions: Partial<FormatOption>[] = [
+  { label: 'Bold', action: 'bold', keys: ['B'] },
+  { label: 'Italic', action: 'italic', keys: ['I'] },
+  { label: 'Underline', action: 'underline', keys: ['U'] },
+  { label: 'Strikethrough', action: 'strikethrough', keys: ['Shift', 'X'] },
+  { label: 'Code', action: 'code', keys: ['Shift', 'C'] },
+]
+
+const templateOptions: Partial<TemplateOption>[] = [
+  { label: 'Unordered List', action: 'unordered-list' },
+  { label: 'Ordered List', action: 'ordered-list' },
+  { label: 'Tasklist', action: 'task' },
+  { label: 'Codeblock', action: 'codeblock' },
+  { label: 'Table', action: 'table' },
+  { label: 'Blockquote', action: 'blockquote' },
+]
 
 describe('<MarkdownToolbar />', () => {
   describe('visibility', () => {
@@ -90,6 +107,66 @@ describe('<MarkdownToolbar />', () => {
         expect(clickEvent).toHaveLength(1)
         expect(clickEvent[0]).toEqual(['split'])
       })
+    })
+
+    describe('format-selection', () => {
+      // Loop through the format options
+      for (const option of formatOptions) {
+        it(`emits the '${option.action}' payload when the '${option.label}' button is clicked`, async () => {
+          const wrapper = await mount(MarkdownToolbar, {
+            global: {
+              provide: setProvideData({
+                mode: 'edit',
+                editable: true,
+              }),
+            },
+          })
+
+          expect(wrapper.findTestId(`format-option-${option.action}`).isVisible()).toBe(true)
+
+          // Click the button
+          await wrapper.findTestId(`format-option-${option.action}`).trigger('click')
+
+          // Ensure the event was emitted
+          expect(wrapper.emitted()).toHaveProperty('format-selection')
+
+          // Grab the emitted event
+          const clickEvent = wrapper.emitted('format-selection') || []
+
+          expect(clickEvent).toHaveLength(1)
+          expect(clickEvent[0]).toEqual([option.action])
+        })
+      }
+    })
+
+    describe('insert-template', () => {
+      // Loop through the template options
+      for (const option of templateOptions) {
+        it(`emits the '${option.action}' payload when the '${option.label}' button is clicked`, async () => {
+          const wrapper = await mount(MarkdownToolbar, {
+            global: {
+              provide: setProvideData({
+                mode: 'edit',
+                editable: true,
+              }),
+            },
+          })
+
+          expect(wrapper.findTestId(`template-option-${option.action}`).isVisible()).toBe(true)
+
+          // Click the button
+          await wrapper.findTestId(`template-option-${option.action}`).trigger('click')
+
+          // Ensure the event was emitted
+          expect(wrapper.emitted()).toHaveProperty('insert-template')
+
+          // Grab the emitted event
+          const clickEvent = wrapper.emitted('insert-template') || []
+
+          expect(clickEvent).toHaveLength(1)
+          expect(clickEvent[0]).toEqual([option.action])
+        })
+      }
     })
 
     describe('toggle-fullscreen', () => {
