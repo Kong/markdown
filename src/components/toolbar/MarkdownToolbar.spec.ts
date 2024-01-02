@@ -14,7 +14,7 @@ const setProvideData = (
   { mode?: MarkdownMode, editable?: boolean, fullscreen?: boolean, htmlPreview?: boolean },
 ) => ({
   // Bind the Symbol() as dynamic keys <https://test-utils.vuejs.org/api/#global-provide>
-  [MODE_INJECTION_KEY]: ref(mode),
+  [MODE_INJECTION_KEY]: ref(mode), // Note: split mode will be automatically switched to edit basd on the viewport
   [EDITABLE_INJECTION_KEY]: ref(editable),
   [FULLSCREEN_INJECTION_KEY]: ref(fullscreen),
   [HTML_PREVIEW_INJECTION_KEY]: ref(htmlPreview),
@@ -76,6 +76,52 @@ describe('<MarkdownToolbar />', () => {
         }
       })
     }
+  })
+
+  describe('toolbar-buttons', () => {
+    // Loop through the iterable buttons
+    for (const button of [...formatOptions, ...templateOptions]) {
+      it(`'${button.label}' button is visible`, async () => {
+        const wrapper = await mount(MarkdownToolbar, {
+          global: {
+            provide: setProvideData({
+              mode: 'edit',
+              editable: true,
+            }),
+          },
+        })
+
+        expect(wrapper.find(`[data-testid$="-option-${button.action}"]`).isVisible()).toBe(true)
+      })
+    }
+
+    // Now test the standalone buttons
+
+    it("'Fullscreen' button is visible", async () => {
+      const wrapper = await mount(MarkdownToolbar, {
+        global: {
+          provide: setProvideData({
+            mode: 'edit',
+            editable: true,
+          }),
+        },
+      })
+
+      expect(wrapper.findTestId('toggle-fullscreen').isVisible()).toBe(true)
+    })
+
+    it("'HTML Preview' button is visible", async () => {
+      const wrapper = await mount(MarkdownToolbar, {
+        global: {
+          provide: setProvideData({
+            mode: 'preview', // must be in preview or split mode
+            editable: true,
+          }),
+        },
+      })
+
+      expect(wrapper.findTestId('toggle-html-preview').isVisible()).toBe(true)
+    })
   })
 
   describe('emit events', () => {
@@ -207,7 +253,7 @@ describe('<MarkdownToolbar />', () => {
         const wrapper = await mount(MarkdownToolbar, {
           global: {
             provide: setProvideData({
-              mode: 'preview',
+              mode: 'preview', // must be in preview or split mode
               editable: true,
               htmlPreview: false,
             }),
