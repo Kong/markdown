@@ -7,33 +7,47 @@
       <div
         v-if="editable && mode !== 'read'"
         class="button-group"
+        role="radiogroup"
       >
-        <button
-          :class="{ 'active': mode === 'edit' }"
+        <label
+          :id="`editor-mode-options-${uniqueId}`"
+          class="sr-only"
+        >Select the editor mode</label>
+        <ToolbarButton
+          :aria-checked="mode === 'edit'"
+          :aria-labelledby="`editor-mode-options-${uniqueId}`"
+          :class="['edit', { 'active': mode === 'edit' }]"
           :disabled="mode === 'edit'"
-          :tabindex="0"
+          :icon="false"
+          role="radio"
           type="button"
           @click.prevent="changeMode('edit')"
         >
           Edit
-        </button>
-        <button
+        </ToolbarButton>
+        <ToolbarButton
+          :aria-checked="mode === 'split'"
+          :aria-labelledby="`editor-mode-options-${uniqueId}`"
           class="mode-split-button"
-          :class="{ 'active': mode === 'split' }"
-          :tabindex="0"
+          :class="['split', { 'active': mode === 'split' }]"
+          :icon="false"
+          role="radio"
           type="button"
           @click.prevent="changeMode('split')"
         >
           Split
-        </button>
-        <button
-          :class="{ 'active': mode === 'preview' }"
-          :tabindex="0"
+        </ToolbarButton>
+        <ToolbarButton
+          :aria-checked="mode === 'preview'"
+          :aria-labelledby="`editor-mode-options-${uniqueId}`"
+          :class="['preview', { 'active': mode === 'preview' }]"
+          :icon="false"
+          role="radio"
           type="button"
           @click.prevent="changeMode('preview')"
         >
           Preview
-        </button>
+        </ToolbarButton>
       </div>
 
       <template v-if="editable && !['preview', 'read'].includes(mode)">
@@ -52,7 +66,6 @@
           <ToolbarButton
             :aria-label="option.label"
             :data-testid="`format-option-${option.action}`"
-            :tabindex="0"
             @click.prevent="emit('format-selection', option.action)"
           >
             <component
@@ -76,7 +89,6 @@
           <ToolbarButton
             :aria-label="option.label"
             :data-testid="`template-option-${option.action}`"
-            :tabindex="0"
             @click.prevent="emit('insert-template', option.action)"
           >
             <component
@@ -103,7 +115,6 @@
         <ToolbarButton
           :aria-label="fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'"
           data-testid="toggle-fullscreen"
-          :tabindex="0"
           @click.prevent="toggleFullscreen"
         >
           <component
@@ -124,7 +135,6 @@
         <ToolbarButton
           :aria-label="htmlPreview ? 'Toggle markdown Preview' : 'Toggle HTML Preview'"
           data-testid="toggle-html-preview"
-          :tabindex="0"
           @click.prevent="toggleHtmlPreview"
         >
           <component
@@ -136,10 +146,16 @@
       </InfoTooltip>
     </div>
     <div
-      class="actions"
-      data-testid="actions"
+      class="toolbar-right"
+      data-testid="slot-toolbar-right"
     >
-      <slot name="actions" />
+      <slot name="toolbar-right" />
+    </div>
+    <div
+      class="editor-actions"
+      data-testid="slot-editor-actions"
+    >
+      <slot name="editor-actions" />
     </div>
   </div>
 </template>
@@ -147,7 +163,7 @@
 <script setup lang="ts">
 import { inject, ref, onMounted, watch } from 'vue'
 import type { Ref } from 'vue'
-import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY } from '@/injection-keys'
+import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, UNIQUE_ID_INJECTION_KEY } from '@/injection-keys'
 import { useMediaQuery } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
@@ -156,7 +172,9 @@ import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
+import { v4 as uuidv4 } from 'uuid'
 
+const uniqueId: Ref<String> = inject(UNIQUE_ID_INJECTION_KEY, ref(uuidv4()))
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 const fullscreen: Ref<boolean> = inject(FULLSCREEN_INJECTION_KEY, ref(false))
@@ -233,6 +251,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/mixins";
+
 .markdown-ui-toolbar {
   align-items: center;
   background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);
@@ -258,28 +278,35 @@ onMounted(() => {
     }
   }
 
-  // TODO: Replace with tabs
   .button-group {
     align-items: center;
     display: flex;
 
-    button {
-      border: 0;
-      border-right: 1px solid $kui-color-border;
-      cursor: pointer;
-      padding: var(--kui-space-20, $kui-space-20) var(--kui-space-30, $kui-space-30);
+    :deep(.toolbar-button) {
+      border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
 
-      &:disabled {
-        cursor: not-allowed;
+      &.edit {
+        border-bottom-right-radius: $kui-border-radius-0;
+        border-top-right-radius: $kui-border-radius-0;
       }
 
-      &:last-of-type {
+      &.split {
+        border-left: 0;
+        border-radius: $kui-border-radius-0;
         border-right: 0;
       }
 
-      &.active {
-        background: $kui-color-background-primary;
-        color: $kui-color-text-inverse;
+      &.preview {
+        border-bottom-left-radius: $kui-border-radius-0;
+        border-top-left-radius: $kui-border-radius-0;
+      }
+
+      &.active,
+      &.active:hover {
+        background: var(--kui-color-background-primary, $kui-color-background-primary);
+        border-color: var(--kui-color-border-primary, $kui-color-border-primary);
+        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+        cursor: pointer;
       }
     }
   }
@@ -293,10 +320,15 @@ onMounted(() => {
   }
 
   .toolbar-left,
-  .actions {
+  .toolbar-right,
+  .editor-actions {
     align-items: center;
     display: flex;
     gap: var(--kui-space-20, $kui-space-20);
+  }
+
+  .toolbar-right {
+    margin-left: auto;
   }
 
   .toolbar-divider {
@@ -309,5 +341,9 @@ onMounted(() => {
   .button-icon {
     pointer-events: none;
   }
+}
+
+.sr-only {
+  @include sr-only;
 }
 </style>

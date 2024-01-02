@@ -13,7 +13,12 @@
         @save="contentSaved"
         @update:model-value="contentUpdated"
       >
-        <!-- <template #actions="{ save }">
+        <!-- <template #toolbar-right>
+          <button>
+            Custom button
+          </button>
+        </template> -->
+        <!-- <template #editor-actions="{ save }">
           <button @click="save">
             Toolbar
           </button>
@@ -76,5 +81,9 @@ onBeforeMount(async () => {
 <style lang="scss" scoped>
 .sandbox-container {
   padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
+}
+
+button {
+  white-space: nowrap;
 }
 </style>

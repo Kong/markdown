@@ -2,6 +2,7 @@
   <button
     class="toolbar-button"
     :class="[{ 'has-text': !icon }, appearance]"
+    tabindex="0"
     type="button"
   >
     <slot name="default" />

@@ -5,18 +5,32 @@
     class="kong-ui-public-markdown-ui"
     :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
   >
+    <div
+      v-if="editable && currentMode !== 'read'"
+      class="toolbar-overlay"
+      :class="{ 'left': !arrivedState.left }"
+    />
+    <div
+      v-if="editable && currentMode !== 'read'"
+      class="toolbar-overlay"
+      :class="{ 'right': !arrivedState.right }"
+    />
     <MarkdownToolbar
       v-if="editable && currentMode !== 'read'"
+      ref="toolbar"
       @change-mode="(mode: MarkdownMode) => currentMode = mode"
       @format-selection="formatSelection"
       @insert-template="insertTemplate"
       @toggle-fullscreen="toggleFullscreen"
       @toggle-html-preview="toggleHtmlPreview"
     >
-      <template #actions>
+      <template #toolbar-right>
+        <slot name="toolbar-right" />
+      </template>
+      <template #editor-actions>
         <slot
           :cancel="cancel"
-          name="actions"
+          name="editor-actions"
           :save="save"
         >
           <template
@@ -110,9 +124,9 @@ import MarkdownToolbar from '@/components/toolbar/MarkdownToolbar.vue'
 import MarkdownContent from '@/components/MarkdownContent.vue'
 import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import composables from '@/composables'
-import { TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
+import { UNIQUE_ID_INJECTION_KEY, TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
-import { useMediaQuery } from '@vueuse/core'
+import { useMediaQuery, useScroll } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
@@ -190,6 +204,7 @@ const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
 const tabSize = computed((): number => props.tabSize)
 
 // Provide values to child components
+provide(UNIQUE_ID_INJECTION_KEY, computed((): string => uniqueId))
 provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
@@ -430,6 +445,10 @@ watch(() => props.theme, async (theme: 'light' | 'dark') => {
   }
 })
 
+const toolbar = ref<HTMLElement | null>(null)
+// Track the scroll position of the toolbar to show/hide the `.toolbar-overlay`
+const { arrivedState } = useScroll(toolbar)
+
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, tabSize, emulateInputEvent)
 
@@ -477,7 +496,36 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
   gap: var(--kui-space-50, $kui-space-50);
   margin-bottom: var(--kui-space-70, $kui-space-70);
   padding-bottom: var(--kui-space-50, $kui-space-50);
+  position: relative;
   width: 100%;
+
+  .toolbar-overlay {
+    bottom: 0;
+    content: '';
+    display: none;
+    height: calc(v-bind('TOOLBAR_HEIGHT') + 1px);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 20px;
+
+    // Show an overlay transparency while the toolbar is scrollable
+    @media (max-width: ($kui-breakpoint-phablet - 1px)) {
+      display: block;
+    }
+
+    &.left {
+      background: linear-gradient(to right, rgba(#000, 0.1), rgba(#000, 0));
+      border-top-left-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+      left: 0;
+    }
+
+    &.right {
+      background: linear-gradient(to right, rgba(#000, 0), rgba(#000, 0.1));
+      border-top-right-radius: var(--kui-border-radius-40, $kui-border-radius-40);
+      right: 0;
+    }
+  }
 
   .markdown-panes {
     box-sizing: border-box;
@@ -509,8 +557,7 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
 
     // Fullscreen mode only available when editing
     &.fullscreen {
-      border-bottom-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
-      border-bottom-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+      border-radius: var(--kui-border-radius-0, $kui-border-radius-0);
       bottom: 0;
       height: 100%;
       left: 0;
@@ -524,6 +571,16 @@ const markdownEditorMaxHeight = computed((): string => `${props.editorMaxHeight}
       .markdown-panes {
         height: v-bind('fullscreenMarkdownPanesHeight');
         padding-bottom: var(--kui-space-50, $kui-space-50);
+      }
+
+      .toolbar-overlay {
+        &.left {
+          border-top-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+        }
+
+        &.right {
+          border-top-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+        }
       }
 
       :deep(.markdown-ui-toolbar) {

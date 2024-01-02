@@ -1,4 +1,5 @@
 // NOTE: Do not export these injection keys from the package
+export const UNIQUE_ID_INJECTION_KEY = Symbol('The unique id that prefixes all identifiers within a single instance of the component')
 export const TEXTAREA_ID_INJECTION_KEY = Symbol('Textarea unique id')
 export const MODE_INJECTION_KEY = Symbol('Markdown component mode')
 export const EDITABLE_INJECTION_KEY = Symbol('Is the markdown component editable')
