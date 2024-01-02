@@ -11,7 +11,7 @@ describe('<InfoTooltip />', () => {
 
     const wrapper = await mount(InfoTooltip, {
       slots: {
-        default: () => h('button', {}, slotContent),
+        default: h('button', {}, slotContent),
       },
     })
 
@@ -35,7 +35,7 @@ describe('<InfoTooltip />', () => {
           text: tooltip,
         },
         slots: {
-          default: () => h('button', {}, slotContent),
+          default: h('button', {}, slotContent),
         },
       })
 
@@ -55,7 +55,7 @@ describe('<InfoTooltip />', () => {
           text: tooltip,
         },
         slots: {
-          default: () => h('button', {}, slotContent),
+          default: h('button', {}, slotContent),
         },
       })
 
@@ -77,8 +77,8 @@ describe('<InfoTooltip />', () => {
 
       const wrapper = await mount(InfoTooltip, {
         slots: {
-          default: () => h('button', {}, slotContent),
-          tooltip: () => h('div', {}, tooltip),
+          default: h('button', {}, slotContent),
+          tooltip: h('div', {}, tooltip),
         },
       })
 
@@ -95,8 +95,8 @@ describe('<InfoTooltip />', () => {
 
       const wrapper = await mount(InfoTooltip, {
         slots: {
-          default: () => h('button', {}, slotContent),
-          tooltip: () => h('div', {}, tooltip),
+          default: h('button', {}, slotContent),
+          tooltip: h('div', {}, tooltip),
         },
       })
 

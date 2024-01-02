@@ -249,7 +249,7 @@ describe('<MarkdownToolbar />', () => {
             }),
           },
           slots: {
-            'editor-actions': () => [
+            'editor-actions': [
               h('button', { 'data-testid': 'save' }, saveButtonText),
               h('button', { 'data-testid': 'cancel' }, cancelButtonText),
             ],
@@ -278,7 +278,7 @@ describe('<MarkdownToolbar />', () => {
             }),
           },
           slots: {
-            'toolbar-right': () => h('button', { 'data-testid': 'custom' }, buttonText),
+            'toolbar-right': h('button', { 'data-testid': 'custom' }, buttonText),
           },
         })
 

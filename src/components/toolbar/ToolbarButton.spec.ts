@@ -11,7 +11,7 @@ describe('<ToolbarButton />', () => {
 
     const wrapper = await mount(ToolbarButton, {
       slots: {
-        default: () => h('button', {}, slotContent),
+        default: h('button', {}, slotContent),
       },
     })
 
@@ -33,7 +33,7 @@ describe('<ToolbarButton />', () => {
           icon: false,
         },
         slots: {
-          default: () => h('button', {}, slotContent),
+          default: h('button', {}, slotContent),
         },
       })
 
@@ -53,7 +53,7 @@ describe('<ToolbarButton />', () => {
           appearance: 'primary',
         },
         slots: {
-          default: () => h('button', {}, slotContent),
+          default: h('button', {}, slotContent),
         },
       })
 
