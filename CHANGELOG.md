@@ -1,3 +1,10 @@
+# [1.0.0-alpha.18](https://github.com/Kong/markdown/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2024-01-02)
+
+
+### Bug Fixes
+
+* list-style ([fd4eb69](https://github.com/Kong/markdown/commit/fd4eb69a9343ddf8e212c4f80525287200d73cfb))
+
 # [1.0.0-alpha.17](https://github.com/Kong/markdown/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2024-01-02)
 
 
