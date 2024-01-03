@@ -4,7 +4,7 @@
     :id="componentContainerId"
     ref="markdownComponent"
     class="kong-ui-public-markdown-ui"
-    :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
+    :class="[`mode-${currentMode}`, `theme-${activeTheme}`, { 'fullscreen': isFullscreen }]"
   >
     <div
       v-if="editable && currentMode !== 'read'"

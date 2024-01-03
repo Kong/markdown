@@ -240,8 +240,8 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       @include toolbar-button;
       color: var(--kui-color-text-neutral-weak, $kui-color-text-neutral-weak);
       position: absolute;
-      right: 2px;
-      top: 2px;
+      right: 3px; // one extra pixel to line up the border radius gap
+      top: 3px; // one extra pixel to line up the border radius gap
     }
 
     .line.highlighted {
