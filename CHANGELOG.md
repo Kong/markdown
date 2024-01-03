@@ -1,3 +1,10 @@
+# [1.0.0-alpha.22](https://github.com/Kong/markdown/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2024-01-03)
+
+
+### Bug Fixes
+
+* copy button dark ([679f1f4](https://github.com/Kong/markdown/commit/679f1f4c7d4cd976309095ff6445feb04c095a5e))
+
 # [1.0.0-alpha.21](https://github.com/Kong/markdown/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2024-01-03)
 
 
