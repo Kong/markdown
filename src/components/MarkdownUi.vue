@@ -2,6 +2,7 @@
   <div
     v-if="ready"
     :id="componentContainerId"
+    ref="markdownComponent"
     class="kong-ui-public-markdown-ui"
     :class="[`mode-${currentMode}`, { 'fullscreen': isFullscreen }]"
   >
@@ -129,7 +130,7 @@ import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import composables from '@/composables'
 import { UNIQUE_ID_INJECTION_KEY, TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
-import { useMediaQuery, useScroll } from '@vueuse/core'
+import { useMediaQuery, useScroll, useEventListener } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
 import formatHtml from 'html-format'
@@ -196,6 +197,9 @@ const emit = defineEmits<{
   (e: 'mode', mode: MarkdownMode): void
   (e: 'fullscreen', active: boolean): void
 }>()
+
+// Initialize the template ref
+const markdownComponent = ref(null)
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
 
@@ -304,22 +308,6 @@ const updateMermaid = async () => {
   }
 }
 
-/** Copy the contents of the code block to the clipboard */
-const copyCodeBlock = async (e: any): Promise<void> => {
-  try {
-    e.preventDefault()
-    if (navigator?.clipboard?.writeText) {
-      const copyText = e.target?.dataset?.copytext || ''
-      if (copyText) {
-        await navigator.clipboard.writeText(copyText)
-        e?.target?.blur()
-      }
-    }
-  } catch (err) {
-    console.warn('Could not copy text to clipboard', err)
-  }
-}
-
 // When the textarea `input` event is triggered, or "faked" by other editor methods, update the Vue refs and rendered markdown
 const onContentEdit = (event: TextAreaInputEvent, emitEvent = true): void => {
   // Update the ref immediately
@@ -335,8 +323,6 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
 
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh again
 
-  updateCodeCopyClickEvents(true)
-
   // Emit the updated content if `emitEvent` is not false
   if (emitEvent) {
     emit('update:modelValue', rawMarkdown.value)
@@ -347,18 +333,6 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
   // Re-render any `.mermaid` containers
   await updateMermaid()
 }, EDITOR_DEBOUNCE_TIMEOUT)
-
-const updateCodeCopyClickEvents = (enable = true): void => {
-  // Bind click events to code copy blocks
-  Array.from([...document.querySelectorAll(`#${componentContainerId.value} .kong-markdown-code-block-copy[data-copytext]`)]).forEach((el: Element) => {
-    if (enable) {
-      el.removeEventListener('click', copyCodeBlock)
-      el.addEventListener('click', copyCodeBlock)
-    } else {
-      el.removeEventListener('click', copyCodeBlock)
-    }
-  })
-}
 
 /**
  * Emulate an `input` event when injecting content into the textarea
@@ -373,8 +347,6 @@ const emulateInputEvent = (emitEvent = true): void => {
 
   // Trigger the update
   onContentEdit(event, emitEvent)
-
-  updateCodeCopyClickEvents(true)
 }
 
 // Initialize rawMarkdown.value with the props.modelValue content
@@ -452,6 +424,28 @@ const toolbar = ref<HTMLElement | null>(null)
 // Track the scroll position of the toolbar to show/hide the `.toolbar-overlay`
 const { arrivedState } = useScroll(toolbar)
 
+// Copy the contents of the code block to the clipboard
+const copyCodeBlock = async (e: any): Promise<void> => {
+  try {
+    // If not a `.kong-markdown-code-block-copy[data-copytext]` element, exit early
+    if (!e.target?.classList?.contains('kong-markdown-code-block-copy') || !e.target?.dataset?.copytext) {
+      return
+    }
+
+    e.preventDefault()
+
+    if (navigator?.clipboard?.writeText) {
+      const copyText = e.target?.dataset?.copytext || ''
+      if (copyText) {
+        await navigator.clipboard.writeText(copyText)
+        e?.target?.blur()
+      }
+    }
+  } catch (err) {
+    console.warn('Could not copy text to clipboard', err)
+  }
+}
+
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, tabSize, emulateInputEvent)
 
@@ -469,6 +463,9 @@ onBeforeMount(async () => {
 onMounted(async () => {
   ready.value = true
 
+  // bind code copy button click events
+  useEventListener(markdownComponent, 'click', copyCodeBlock)
+
   initializeMermaid()
 
   if (currentMode.value === 'split') {
@@ -481,9 +478,6 @@ onMounted(async () => {
 onUnmounted(() => {
   // Remove scrolling event listeners
   destroySyncScroll()
-
-  // Unbind click events
-  updateCodeCopyClickEvents(false)
 })
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.

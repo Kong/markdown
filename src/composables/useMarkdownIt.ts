@@ -100,10 +100,13 @@ export default function useMarkdownIt() {
     // Configure custom code blocks
     const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
     md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
-      // Strip out quote characters
-      const content = tokens[idx].content
+      const content: string = tokens[idx].content
+        // Strip out double-quote characters
         .replaceAll('"', '&quot;')
+        // Strip out single-quote characters
         .replaceAll("'", '&apos;')
+        // Remove a trailing new line character, if it exists
+        .replace(/\n$/, '')
       const originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
 
       if (content.length === 0) {
