@@ -205,6 +205,7 @@ const { init: initMarkdownIt, md } = composables.useMarkdownIt()
 
 // Generate a unique id to handle mutiple components on the same page
 const uniqueId = uuidv4()
+// Bind the unique ids to differentiate between potential multiple components on a page
 const componentContainerId = computed((): string => `markdown-ui-${uniqueId}`)
 const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
 const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
