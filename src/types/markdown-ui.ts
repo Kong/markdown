@@ -44,3 +44,6 @@ export interface TemplateOption {
 export interface TextAreaInputEvent {
   target: Pick<HTMLTextAreaElement, 'value'>
 }
+
+/** The color theme of the component */
+export type Theme = 'light' | 'dark'

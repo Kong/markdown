@@ -102,7 +102,7 @@ The number of spaces to insert when a user tabs within the textarea. Defaults to
 - required: `false`
 - default: `'light'`
 
-The theme used when the component initializes, one of `'light'` or `'dark'`. Defaults to `'light'`.
+The theme used when the component initializes, one of `'light'` or `'dark'`. Defaults to the user's browser's preferred color scheme.
 
 #### `maxHeight`
 

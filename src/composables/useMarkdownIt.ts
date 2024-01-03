@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import useShikiji from '@/composables/useShikiji'
 import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
+import type { Theme } from '@/types'
 
 // markdown-it
 import MarkdownIt from 'markdown-it'
@@ -24,7 +25,7 @@ const md = ref()
 
 export default function useMarkdownIt() {
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
-  const init = async (theme: 'light' | 'dark' = 'light'): Promise<void> => {
+  const init = async (theme: Theme = 'light'): Promise<void> => {
     const { MarkdownItShikiji } = useShikiji()
 
     md.value = MarkdownIt({

@@ -130,9 +130,9 @@ import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import composables from '@/composables'
 import { UNIQUE_ID_INJECTION_KEY, TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
-import { useMediaQuery, useScroll, useEventListener } from '@vueuse/core'
+import { useMediaQuery, useScroll, useEventListener, usePreferredColorScheme } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
-import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent } from '@/types'
+import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme } from '@/types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { EditIcon } from '@kong/icons'
@@ -161,11 +161,11 @@ const props = defineProps({
     default: 2,
     validator: (size: number): boolean => size >= 2 && size <= 6,
   },
-  /** The theme used when the component initializes, one of 'light' or 'dark'. Defaults to 'light' */
+  /** The theme used when the component initializes, one of 'light' or 'dark'. Defaults to the user's browser's preferred color scheme. */
   theme: {
-    type: String as PropType<'light' | 'dark'>,
-    default: 'light',
-    validator: (theme: string): boolean => ['light', 'dark'].includes(theme),
+    type: String as PropType<Theme>,
+    default: '',
+    validator: (theme: string): boolean => ['', 'light', 'dark'].includes(theme),
   },
   /** The max height of the component when not being displayed fullscreen. Defaults to 300, Minimum of 100. */
   maxHeight: {
@@ -210,13 +210,17 @@ const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
 const scrollableClass = computed((): string => `scrollable-${uniqueId}`)
 const tabSize = computed((): number => props.tabSize)
 
+const preferredColorScheme = usePreferredColorScheme()
+// Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
+const activeTheme = ref<Theme>(props.theme ? props.theme : (preferredColorScheme.value === 'dark' ? preferredColorScheme.value : 'light'))
+
 // Provide values to child components
 provide(UNIQUE_ID_INJECTION_KEY, computed((): string => uniqueId))
 provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
 provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
 provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
 provide(FULLSCREEN_INJECTION_KEY, computed((): boolean => isFullscreen.value))
-provide(THEME_INJECTION_KEY, computed((): 'light' | 'dark' => props.theme))
+provide(THEME_INJECTION_KEY, computed((): Theme => activeTheme.value))
 provide(HTML_PREVIEW_INJECTION_KEY, computed((): boolean => htmlPreview.value))
 
 const { debounce } = composables.useDebounce()
@@ -402,19 +406,19 @@ const initializeMermaid = (): void => {
       securityLevel: 'strict',
       fontFamily: KUI_FONT_FAMILY_TEXT,
       altFontFamily: KUI_FONT_FAMILY_CODE,
-      theme: props.theme === 'light' ? 'default' : 'dark',
+      theme: activeTheme.value === 'light' ? 'default' : 'dark',
     })
   }
 }
 
-watch(() => props.theme, async (theme: 'light' | 'dark') => {
+watch(() => props.theme, async (theme: Theme) => {
   if (['light', 'dark'].includes(theme)) {
+    // Update the ref
+    activeTheme.value = theme
     // Update the Shikiji theme
-    await initMarkdownIt(props.theme)
-
+    await initMarkdownIt(activeTheme.value)
     // Update the mermaid theme
     initializeMermaid()
-
     // Trigger a re-render
     emulateInputEvent()
   }
@@ -451,7 +455,7 @@ composables.useKeyboardShortcuts(textareaId.value, rawMarkdown, tabSize, emulate
 
 onBeforeMount(async () => {
   // Initialize markdown-it
-  await initMarkdownIt(props.theme)
+  await initMarkdownIt(activeTheme.value)
 
   // Render the markdown
   markdownHtml.value = getHtmlFromMarkdown(props.modelValue)
