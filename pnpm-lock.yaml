@@ -80,8 +80,8 @@ devDependencies:
     specifier: ^1.5.5
     version: 1.5.5
   '@kong/design-tokens':
-    specifier: ^1.12.3
-    version: 1.12.3
+    specifier: ^1.12.4
+    version: 1.12.4
   '@semantic-release/changelog':
     specifier: ^6.0.3
     version: 6.0.3(semantic-release@22.0.12)
@@ -822,8 +822,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@kong/design-tokens@1.12.3:
-    resolution: {integrity: sha512-9g42/oKt8MvXi5ihl7tjayL1sgZ6rNgloye+Bt27h+cB6cJb860+xIF3YvEASncaWuKM0IEYB8gq7dPjBKkZNA==}
+  /@kong/design-tokens@1.12.4:
+    resolution: {integrity: sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==}
     dev: true
 
   /@kong/icons@1.8.8(vue@3.4.3):
