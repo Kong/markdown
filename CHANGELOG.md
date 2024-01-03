@@ -1,3 +1,10 @@
+# [1.0.0-alpha.21](https://github.com/Kong/markdown/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2024-01-03)
+
+
+### Features
+
+* use preferred color scheme ([5fa230b](https://github.com/Kong/markdown/commit/5fa230b2086141a7c21cac2e24e8866f7f32e9ec))
+
 # [1.0.0-alpha.20](https://github.com/Kong/markdown/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2024-01-03)
 
 
