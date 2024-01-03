@@ -266,6 +266,7 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       border-spacing: 0;
       color: var(--kui-color-text, $kui-color-text);
       font-size: var(--kui-font-size-30, $kui-font-size-30);
+      margin-bottom: var(--kui-space-70, $kui-space-70);
 
       thead th {
         background-color: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
