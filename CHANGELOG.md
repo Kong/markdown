@@ -1,3 +1,10 @@
+# [1.0.0-alpha.20](https://github.com/Kong/markdown/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2024-01-03)
+
+
+### Bug Fixes
+
+* copy to clipboard ([6a33cd6](https://github.com/Kong/markdown/commit/6a33cd69a559c0a981f5db29e53610bb5eeed9ae))
+
 # [1.0.0-alpha.19](https://github.com/Kong/markdown/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2024-01-02)
 
 
