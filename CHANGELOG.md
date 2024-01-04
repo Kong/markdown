@@ -1,3 +1,10 @@
+# [1.0.0-alpha.25](https://github.com/Kong/markdown/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2024-01-04)
+
+
+### Bug Fixes
+
+* remove comments ([6803204](https://github.com/Kong/markdown/commit/680320498a63c5b20a35a00380f95b12cba7c51f))
+
 # 1.0.0-alpha.1 (2024-01-04)
 
 
