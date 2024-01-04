@@ -1,5 +1,3 @@
-// Vitest unit test spec file
-
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'

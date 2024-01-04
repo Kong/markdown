@@ -1,5 +1,3 @@
-// Vitest unit test spec file
-
 import { describe, it, expect } from 'vitest'
 import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
