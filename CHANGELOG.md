@@ -14,6 +14,19 @@
 # 1.0.0-alpha.1 (2024-01-04)
 
 
+### Bug Fixes
+
+* update package version ([8384d6b](https://github.com/Kong/markdown/commit/8384d6bea0dc20ad9f4cc0bc80d91a2b7f0f8acb))
+
+
+### Features
+
+* alpha branch ([8860869](https://github.com/Kong/markdown/commit/8860869a93e367adfe03e63862c506980a2dd59c))
+* initial commit :rocket: ([8fe75b2](https://github.com/Kong/markdown/commit/8fe75b2d974aba055c7bdc726292616924a663b0))
+
+# 1.0.0-alpha.1 (2024-01-04)
+
+
 ### Features
 
 * alpha branch ([8860869](https://github.com/Kong/markdown/commit/8860869a93e367adfe03e63862c506980a2dd59c))
