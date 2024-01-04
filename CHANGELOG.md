@@ -6,6 +6,14 @@
 * alpha branch ([8860869](https://github.com/Kong/markdown/commit/8860869a93e367adfe03e63862c506980a2dd59c))
 * initial commit :rocket: ([8fe75b2](https://github.com/Kong/markdown/commit/8fe75b2d974aba055c7bdc726292616924a663b0))
 
+# 1.0.0-alpha.1 (2024-01-04)
+
+
+### Features
+
+* alpha branch ([8860869](https://github.com/Kong/markdown/commit/8860869a93e367adfe03e63862c506980a2dd59c))
+* initial commit :rocket: ([8fe75b2](https://github.com/Kong/markdown/commit/8fe75b2d974aba055c7bdc726292616924a663b0))
+
 # [1.0.0-alpha.24](https://github.com/Kong/markdown/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2024-01-04)
 
 
