@@ -2,16 +2,16 @@ import { vi, describe, it, expect, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import MarkdownUi from './MarkdownUi.vue'
-import { InlineFormatWrapper } from '@/constants'
+import { InlineFormatWrapper, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET } from '@kong/design-tokens'
-import type { Theme } from '@/types'
+import type { Theme, MarkdownTemplate } from '@/types'
 
 // Default markdown content
 const defaultText = 'Markdown Content'
 const defaultContent = `# ${defaultText}`
 
 /**
- * The markdown content takes roughly 400ms to initialize `markdown-it` and render, so await this function in each test immediately after calling `mount()` that is not in `edit` mode.
+ * The markdown content takes roughly 400ms to initialize `markdown-it` and render, so await this function in each test immediately after calling `mount()` that is not in `edit` mode. **Important**: you must provide at least 1 initial character in the editor for this to properly resolve.
  * @param wrapper The component wrapper
  * @example await waitForMarkdownRender(wrapper)
  */
@@ -486,6 +486,84 @@ describe('<MarkdownUi />', () => {
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
           // @ts-ignore - referencing enum properties
           expect(wrapper.emitted(eventName)![0]).toEqual([`${textStart}${InlineFormatWrapper[format]}${textMiddle}${InlineFormatWrapper[format]}${textEnd}`])
+        })
+      }
+    })
+
+    describe('template buttons', () => {
+      // Loop through enabled template buttons
+      const templates: MarkdownTemplate[] = ['table', 'codeblock', 'task', 'unordered-list', 'ordered-list', 'blockquote']
+      for (const template of templates) {
+        it(`inserts a '${template}' template`, async () => {
+          const wrapper = mount(MarkdownUi, {
+            props: {
+              mode: 'split',
+              editable: true,
+              modelValue: defaultContent,
+            },
+          })
+
+          await waitForMarkdownRender(wrapper)
+
+          expect(wrapper.findTestId('toolbar').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          // Expect text
+          expect(wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.value).toEqual(defaultContent)
+          // Ensure markdown is rendered into tags and content
+          expect(wrapper.findTestId('markdown-content').find('h1').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('h1').text()).toEqual(defaultText)
+
+          // Clear the textarea
+          await wrapper.findTestId('markdown-editor-textarea').setValue('')
+
+          // Click the insert template button
+          await wrapper.findTestId(`template-option-${template}`).trigger('click')
+
+          // Verify event is emitted
+          const eventName = 'update:modelValue'
+          await waitForEmittedEvent(wrapper, eventName)
+
+          expect(wrapper.emitted(eventName) || []).toHaveLength(1)
+
+          let templateText: string = ''
+          let markdownSelector: string = ''
+          switch (template) {
+            case 'table':
+              templateText = MARKDOWN_TEMPLATE_TABLE
+              markdownSelector = 'table'
+              break
+            case 'codeblock':
+              templateText = MARKDOWN_TEMPLATE_CODEBLOCK
+              markdownSelector = 'pre'
+              break
+            case 'task':
+              templateText = MARKDOWN_TEMPLATE_TASK
+              // List doesn't receive the `.contains-task-list` class until content is added
+              markdownSelector = 'ul'
+              break
+            case 'unordered-list':
+              templateText = MARKDOWN_TEMPLATE_UL
+              markdownSelector = 'ul'
+              break
+            case 'ordered-list':
+              templateText = MARKDOWN_TEMPLATE_OL
+              markdownSelector = 'ol'
+              break
+            case 'blockquote':
+              templateText = MARKDOWN_TEMPLATE_BLOCKQUOTE
+              markdownSelector = 'blockquote'
+              break
+          }
+
+          // Assert template is included in emitted content
+          expect(wrapper.emitted(eventName)![0]).toEqual([templateText])
+
+          // Ensure template is in editor
+          expect(wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.value).toEqual(templateText)
+
+          // Ensure template is rendered as HTML
+          expect(wrapper.findTestId('markdown-content').find(markdownSelector).isVisible()).toBe(true)
         })
       }
     })
