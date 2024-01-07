@@ -1,3 +1,10 @@
+# [1.0.0-alpha.26](https://github.com/Kong/markdown/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2024-01-07)
+
+
+### Features
+
+* download document ([934651e](https://github.com/Kong/markdown/commit/934651ee8acdcb9b97618314618ccaa0a86ca52e))
+
 # [1.0.0-alpha.25](https://github.com/Kong/markdown/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2024-01-04)
 
 
