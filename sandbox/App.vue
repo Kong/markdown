@@ -7,7 +7,7 @@
       <MarkdownUi
         v-model="content"
         downloadable
-        :editable="editable"
+        editable
         mode="split"
         @cancel="cancelEdit"
         @mode="modeChanged"
@@ -43,8 +43,6 @@
 import { onBeforeMount, ref } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
-
-const editable = ref<boolean>(true)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contentUpdated = (markdown: string) => {

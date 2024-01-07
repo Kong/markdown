@@ -82,7 +82,7 @@
         >
           <div class="content-buttons">
             <div
-              v-if="currentMode === 'read' && downloadable"
+              v-if="currentMode === 'read' && !!rawMarkdown?.length && downloadable"
               class="download-button"
             >
               <slot
@@ -662,6 +662,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
   .markdown-preview {
     background-color: var(--kui-color-background, $kui-color-background);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
+    min-height: v-bind('TOOLBAR_HEIGHT');
     position: relative;
 
     .content-buttons {
