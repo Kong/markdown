@@ -1,3 +1,10 @@
+# [1.0.0-alpha.27](https://github.com/Kong/markdown/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2024-01-07)
+
+
+### Bug Fixes
+
+* min height ([3d32693](https://github.com/Kong/markdown/commit/3d32693b10898fe887dd89a637681649e3959392))
+
 # [1.0.0-alpha.26](https://github.com/Kong/markdown/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2024-01-07)
 
 
