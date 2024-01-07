@@ -257,7 +257,7 @@ describe('<MarkdownUi />', () => {
       // Ensure the copy text is empty before clicking the copy button
       expect(copiedText.value).toEqual('')
 
-      await wrapper.findTestId('copy-code-button').trigger('click')
+      await wrapper.findTestId('copy-code-button').element.click()
 
       // Verify the text was copied
       expect(copiedText.value).toEqual(codeContent)
@@ -287,7 +287,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('edit').isVisible()).toBe(true)
 
       // Click the Edit button
-      await wrapper.findTestId('edit').trigger('click')
+      await wrapper.findTestId('edit').element.click()
 
       // Mode event should be emitted
       expect(wrapper.emitted()).toHaveProperty('mode')
@@ -317,7 +317,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('preview-mode-button').isVisible()).toBe(true)
 
       // Click the Edit mode button
-      await wrapper.findTestId('edit-mode-button').trigger('click')
+      await wrapper.findTestId('edit-mode-button').element.click()
 
       // Mode event should be emitted again
       expect(wrapper.emitted('mode') || []).toHaveLength(2)
@@ -331,7 +331,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('edit').exists()).toBe(false)
 
       // Click the Preview mode button
-      await wrapper.findTestId('preview-mode-button').trigger('click')
+      await wrapper.findTestId('preview-mode-button').element.click()
 
       // Mode event should be emitted again
       expect(wrapper.emitted('mode') || []).toHaveLength(3)
@@ -344,7 +344,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('markdown-editor-textarea').exists()).toBe(false)
 
       // Click the Save button
-      await wrapper.findTestId('save').trigger('click')
+      await wrapper.findTestId('save').element.click()
 
       expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
       // Ensure markdown is rendered into tags and content
@@ -387,7 +387,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('toggle-fullscreen').isVisible()).toBe(true)
 
       // Click the Fullscreen button
-      await wrapper.findTestId('toggle-fullscreen').trigger('click')
+      await wrapper.findTestId('toggle-fullscreen').element.click()
 
       // Ensure the event was emitted
       expect(wrapper.emitted()).toHaveProperty('fullscreen')
@@ -429,7 +429,7 @@ describe('<MarkdownUi />', () => {
       expect(wrapper.findTestId('toggle-html-preview').isVisible()).toBe(true)
 
       // Click the Fullscreen button
-      await wrapper.findTestId('toggle-html-preview').trigger('click')
+      await wrapper.findTestId('toggle-html-preview').element.click()
 
       // Ensure the wrapper class is added
       expect(wrapper.findTestId('markdown-content').classes('html-preview')).toBe(true)
@@ -477,7 +477,7 @@ describe('<MarkdownUi />', () => {
           wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionEnd = textStart.length + textMiddle.length
 
           // Click the formatting button
-          await wrapper.findTestId(`format-option-${format}`).trigger('click')
+          await wrapper.findTestId(`format-option-${format}`).element.click()
 
           // Verify event is emitted
           const eventName = 'update:modelValue'
@@ -518,7 +518,7 @@ describe('<MarkdownUi />', () => {
           await wrapper.findTestId('markdown-editor-textarea').setValue('')
 
           // Click the insert template button
-          await wrapper.findTestId(`template-option-${template}`).trigger('click')
+          await wrapper.findTestId(`template-option-${template}`).element.click()
 
           // Verify event is emitted
           const eventName = 'update:modelValue'

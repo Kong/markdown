@@ -155,7 +155,7 @@ describe('<MarkdownToolbar />', () => {
         expect(wrapper.findTestId('split-mode-button').isVisible()).toBe(true)
 
         // Click the Split mode button
-        await wrapper.findTestId('split-mode-button').trigger('click')
+        await wrapper.findTestId('split-mode-button').element.click()
 
         // Ensure the event was emitted
         expect(wrapper.emitted()).toHaveProperty('change-mode')
@@ -184,7 +184,7 @@ describe('<MarkdownToolbar />', () => {
           expect(wrapper.findTestId(`format-option-${option.action}`).isVisible()).toBe(true)
 
           // Click the button
-          await wrapper.findTestId(`format-option-${option.action}`).trigger('click')
+          await wrapper.findTestId(`format-option-${option.action}`).element.click()
 
           // Ensure the event was emitted
           expect(wrapper.emitted()).toHaveProperty('format-selection')
@@ -214,7 +214,7 @@ describe('<MarkdownToolbar />', () => {
           expect(wrapper.findTestId(`template-option-${option.action}`).isVisible()).toBe(true)
 
           // Click the button
-          await wrapper.findTestId(`template-option-${option.action}`).trigger('click')
+          await wrapper.findTestId(`template-option-${option.action}`).element.click()
 
           // Ensure the event was emitted
           expect(wrapper.emitted()).toHaveProperty('insert-template')
@@ -246,7 +246,7 @@ describe('<MarkdownToolbar />', () => {
         expect(wrapper.findTestId('toggle-fullscreen').isVisible()).toBe(true)
 
         // Click the Fullscreen button
-        await wrapper.findTestId('toggle-fullscreen').trigger('click')
+        await wrapper.findTestId('toggle-fullscreen').element.click()
 
         // Ensure the event was emitted
         expect(wrapper.emitted()).toHaveProperty('toggle-fullscreen')
@@ -277,7 +277,7 @@ describe('<MarkdownToolbar />', () => {
         expect(wrapper.findTestId('toggle-html-preview').isVisible()).toBe(true)
 
         // Click the Fullscreen button
-        await wrapper.findTestId('toggle-html-preview').trigger('click')
+        await wrapper.findTestId('toggle-html-preview').element.click()
 
         // Ensure the event was emitted
         expect(wrapper.emitted()).toHaveProperty('toggle-html-preview')
