@@ -6,6 +6,7 @@
       <p>Mollitia aspernatur itaque mollitia suscipit adipisci consectetur error quis. Pariatur et magni mollitia quia. Ut sit quos.</p>
       <MarkdownUi
         v-model="content"
+        downloadable
         :editable="editable"
         mode="split"
         @cancel="cancelEdit"

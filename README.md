@@ -73,6 +73,20 @@ In order to utilize the `edit`, `split`, and `preview` modes, this `editable` pr
 > [!NOTE]
 > If the `editable` prop is set to `false`, it will override the `mode` and force into read-only mode.
 
+#### `downloadable`
+
+- type: `Boolean`
+- default: `false`
+
+Is the user allowed to download the document. Defaults to `false`.
+
+#### `filename`
+
+- type: `String`
+- default: `'document'`
+
+The markdown document filename used when downloaded.
+
 #### `mode`
 
 - type: `'read' | 'edit' | 'split' | 'preview'`
@@ -184,17 +198,23 @@ A slot for providing a custom element (i.e. `button`) that enables the `Edit` mo
 
 When the `edit` button (native, or custom) is clicked, the component will automatically determine whether to enable `edit` or `split` mode based on the browser's viewport width. On larger screens, the editor will launch in `split` mode.
 
+#### `download`
+
+A slot for providing a custom element (i.e. `button`) that triggers the `Download` functionality within the component. The slot exposes the `download` method to trigger the built-in function.
+
+When the `download` button (native, or custom) is clicked, the component will download the document to the user's computer.
+
 > [!NOTE]
-> The `editable` prop must be set to `true` to enable this slot.
+> The `downloadable` prop must be set to `true` to enable this slot.
 
 ```html
 <MarkdownUi
   v-model="content"
-  editable
+  downloadable
 >
-  <template #edit="{ edit }">
-    <!-- Call the provided `edit` method when custom button is clicked -->
-    <button @click="edit">Custom edit button</button>
+  <template #download="{ download }">
+    <!-- Call the provided `download` method when custom button is clicked -->
+    <button @click="download">Download the doc</button>
   </template>
 </MarkdownUi>
 ```

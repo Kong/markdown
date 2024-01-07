@@ -80,29 +80,55 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
-          <div
-            v-if="editable && currentMode === 'read'"
-            class="edit-button"
-          >
-            <slot
-              :edit="edit"
-              name="edit"
+          <div class="content-buttons">
+            <div
+              v-if="currentMode === 'read' && downloadable"
+              class="download-button"
             >
-              <ToolbarButton
-                appearance="primary"
-                aria-label="Edit markdown document"
-                data-testid="edit"
-                :icon="false"
-                :tabindex="0"
-                @click="edit"
+              <slot
+                :download="download"
+                name="download"
               >
-                <EditIcon
-                  decorative
-                  :size="KUI_ICON_SIZE_30"
-                />
-                Edit
-              </ToolbarButton>
-            </slot>
+                <ToolbarButton
+                  appearance="primary"
+                  aria-label="Download markdown document"
+                  data-testid="download"
+                  :icon="false"
+                  :tabindex="0"
+                  @click="download"
+                >
+                  <ArrowDownIcon
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                  Download
+                </ToolbarButton>
+              </slot>
+            </div>
+            <div
+              v-if="currentMode === 'read' && editable"
+              class="edit-button"
+            >
+              <slot
+                :edit="edit"
+                name="edit"
+              >
+                <ToolbarButton
+                  appearance="primary"
+                  aria-label="Edit markdown document"
+                  data-testid="edit"
+                  :icon="false"
+                  :tabindex="0"
+                  @click="edit"
+                >
+                  <EditIcon
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                  Edit
+                </ToolbarButton>
+              </slot>
+            </div>
           </div>
           <MarkdownContent
             :class="{ 'html-preview': htmlPreview }"
@@ -128,7 +154,7 @@ import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme } from '@/types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { EditIcon } from '@kong/icons'
+import { EditIcon, ArrowDownIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
@@ -141,6 +167,16 @@ const props = defineProps({
   editable: {
     type: Boolean,
     default: false,
+  },
+  /** Is the markdown document able to be edited by the user. Defaults to `false`. */
+  downloadable: {
+    type: Boolean,
+    default: false,
+  },
+  /** The markdown document filename used when downloaded. */
+  filename: {
+    type: String,
+    default: 'document',
   },
   /** The mode used when the component initializes, one of 'read', 'edit', 'split', 'preview' */
   mode: {
@@ -287,13 +323,13 @@ const insertTemplate = (template: MarkdownTemplate): void => {
 const htmlPreview = ref<boolean>(false)
 
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
-watchEffect(() => {
+watchEffect((): void => {
   if (htmlPreview.value) {
     markdownPreviewHtml.value = md.value?.render('```html' + NEW_LINE_CHARACTER + formatHtml(markdownHtml.value, ' '.repeat(tabSize.value)) + NEW_LINE_CHARACTER + '```')
   }
 })
 
-const updateMermaid = async () => {
+const updateMermaid = async (): Promise<void> => {
   if (props.mermaid) {
     // Scope the query selector to this instance of the markdown component (unique container id)
     const mermaidNodes = `#${componentContainerId.value} .markdown-content-container .mermaid`
@@ -303,6 +339,33 @@ const updateMermaid = async () => {
         suppressErrors: true,
       })
     }
+  }
+}
+
+const download = (): void => {
+  try {
+    const blob = new Blob([rawMarkdown.value], { type: 'text/markdown;charset=utf-8' })
+    const data = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = data
+    link.download = `${props.filename.replace(/(\.md)+$/g, '')}.md`
+
+    // link.click() doesn't work in Firefox
+    link.dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      }),
+    )
+    // For Firefox it is necessary to delay revoking the ObjectURL
+    setTimeout(() => {
+      window.URL.revokeObjectURL(data)
+      link.remove()
+    }, 100)
+
+  } catch (err) {
+    console.warn('download', err)
   }
 }
 
@@ -601,10 +664,14 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
     position: relative;
 
-    .edit-button {
+    .content-buttons {
+      align-items: center;
+      display: flex;
+      gap: var(--kui-space-20, $kui-space-20);
+      justify-content: flex-end;
       position: absolute;
-      right: 4px;
-      top: 4px;
+      right: 6px;
+      top: 6px;
     }
   }
 
