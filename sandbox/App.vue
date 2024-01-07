@@ -24,6 +24,11 @@
             Toolbar
           </button>
         </template> -->
+        <!-- <template #download="{ download }">
+          <button @click="download">
+            Custom download
+          </button>
+        </template> -->
         <!-- <template #edit="{ edit }">
           <button @click="edit">
             Custom edit

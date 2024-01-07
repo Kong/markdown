@@ -20,7 +20,7 @@ export default function useKeyboardShortcuts(
 ) {
   // The document.activeElement
   const activeElement = useActiveElement()
-  const textareaIsActive = computed((): boolean => activeElement.value?.id === textareaRef.value.id)
+  const textareaIsActive = computed((): boolean => !!activeElement.value?.id && activeElement.value?.id === textareaRef.value?.id)
   const { toggleInlineFormatting, insertNewLine, getTextSelection, selectedText, toggleTab } = useMarkdownActions(textareaRef, rawMarkdown)
 
   const getFormatForKeyEvent = (evt: any): InlineFormat | undefined => {
