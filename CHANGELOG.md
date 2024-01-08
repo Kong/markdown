@@ -1,3 +1,10 @@
+# [1.0.0-alpha.28](https://github.com/Kong/markdown/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2024-01-08)
+
+
+### Features
+
+* publish sandbox to github pages ([687f91f](https://github.com/Kong/markdown/commit/687f91f3b579b4307fe02c1daba7480acde46981))
+
 # [1.0.0-alpha.27](https://github.com/Kong/markdown/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2024-01-07)
 
 
