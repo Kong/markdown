@@ -1,3 +1,15 @@
+# [1.0.0-alpha.29](https://github.com/Kong/markdown/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2024-01-08)
+
+
+### Bug Fixes
+
+* switch mermaid theme ([ab48adc](https://github.com/Kong/markdown/commit/ab48adc5c6733c2858972b367daef6f2483e08f6))
+
+
+### Reverts
+
+* remove mermaid prop ([e8297b2](https://github.com/Kong/markdown/commit/e8297b2fa71537eadb6fd81ca94779c4499d0348))
+
 # [1.0.0-alpha.28](https://github.com/Kong/markdown/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2024-01-08)
 
 
