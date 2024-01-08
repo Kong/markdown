@@ -1,40 +1,32 @@
 <template>
   <div class="sandbox-container">
     <main>
-      <h3>This is an example of a page</h3>
-      <p>This is more content on the page.</p>
-      <p>Mollitia aspernatur itaque mollitia suscipit adipisci consectetur error quis. Pariatur et magni mollitia quia. Ut sit quos.</p>
+      <div class="page-header">
+        <h1><code>@kong/markdown</code></h1>
+        <a
+          href="https://github.com/Kong/markdown"
+          target="_blank"
+        >GitHub Docs</a>
+      </div>
+      <p>This page contains a static markdown document as well as an interactive markdown editor.</p>
+      <p v-if="mode === 'read'">
+        Begin by clicking the <b>Edit</b> button on the right.
+      </p>
+      <p v-else>
+        Make changes to the document and see the rendered markdown in the preview pane. For a better editing experience, try enabling the <b>Fullscreen</b> editor.
+      </p>
+      <hr>
       <MarkdownUi
         v-model="content"
         downloadable
         editable
-        mode="split"
+        filename="example-document"
+        :mode="mode"
         @cancel="cancelEdit"
         @mode="modeChanged"
         @save="contentSaved"
         @update:model-value="contentUpdated"
-      >
-        <!-- <template #toolbar-right>
-          <button>
-            Custom button
-          </button>
-        </template> -->
-        <!-- <template #editor-actions="{ save }">
-          <button @click="save">
-            Toolbar
-          </button>
-        </template> -->
-        <!-- <template #download="{ download }">
-          <button @click="download">
-            Custom download
-          </button>
-        </template> -->
-        <!-- <template #edit="{ edit }">
-          <button @click="edit">
-            Custom edit
-          </button>
-        </template> -->
-      </MarkdownUi>
+      />
     </main>
   </div>
 </template>
@@ -49,9 +41,10 @@ const contentUpdated = (markdown: string) => {
   console.log('content updated')
 }
 
-const modeChanged = (mode: string) => {
-  console.log('mode', mode)
-  if (mode === 'edit' || mode === 'split') {
+const mode = ref<string>('read')
+const modeChanged = (m: string) => {
+  mode.value = m
+  if (mode.value === 'edit' || mode.value === 'split') {
     originalContent.value = content.value
     console.log('begin editing')
   }
@@ -89,10 +82,43 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .sandbox-container {
-  padding: var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
+  font-family: $kui-font-family-text;
+  padding: var(--kui-space-70, $kui-space-70);
+}
+
+.page-header {
+  align-items: baseline;
+  display: flex;
+  gap: $kui-space-70;
+  margin-bottom: $kui-space-70;
+
+  h1 {
+    margin-bottom: $kui-space-0;
+    margin-top: $kui-space-0;
+  }
+
+  a {
+    color: $kui-color-text-primary;
+    display: inline-block;
+    text-decoration: none;
+
+    &:hover {
+      color: $kui-color-text-primary-stronger;
+    }
+
+    &:active {
+      color: $kui-color-text-primary-strongest;
+    }
+  }
 }
 
 button {
   white-space: nowrap;
+}
+
+hr {
+  background: $kui-color-background-disabled;
+  margin: $kui-space-70 $kui-space-0;
+  width: 100%;
 }
 </style>

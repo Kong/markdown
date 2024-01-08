@@ -348,7 +348,7 @@ const download = (): void => {
     const data = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = data
-    link.download = `${props.filename.replace(/(\.md)+$/g, '')}.md`
+    link.download = `${props.filename.replace(/ /g, '-').replace(/[^-+.a-zA-Z0-9_]/g, '').replace(/(\.md)+$/g, '')}.md`
 
     // link.click() doesn't work in Firefox
     link.dispatchEvent(
