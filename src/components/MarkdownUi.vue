@@ -458,7 +458,7 @@ const initializeMermaid = (): void => {
       securityLevel: 'strict',
       fontFamily: KUI_FONT_FAMILY_TEXT,
       altFontFamily: KUI_FONT_FAMILY_CODE,
-      theme: activeTheme.value === 'light' ? 'default' : 'dark',
+      theme: activeTheme.value === 'light' ? 'default' : 'base',
     })
   }
 }
