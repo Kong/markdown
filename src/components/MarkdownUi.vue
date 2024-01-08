@@ -212,11 +212,6 @@ const props = defineProps({
     type: Number,
     default: 1001,
   },
-  /** MermaidJs is heavy; allow it opting-out by passing false. Defaults to true. */
-  mermaid: {
-    type: Boolean,
-    default: true,
-  },
 })
 
 const emit = defineEmits<{
@@ -330,10 +325,10 @@ watchEffect((): void => {
 })
 
 const updateMermaid = async (): Promise<void> => {
-  if (props.mermaid) {
+  if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function') {
     // Scope the query selector to this instance of the markdown component (unique container id)
     const mermaidNodes = `#${componentContainerId.value} .markdown-content-container .mermaid`
-    if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.run === 'function' && document.querySelector(mermaidNodes)) {
+    if (document.querySelector(mermaidNodes)) {
       await MermaidJs.run({
         querySelector: mermaidNodes,
         suppressErrors: true,
@@ -457,7 +452,7 @@ const save = (): void => {
 }
 
 const initializeMermaid = (): void => {
-  if (props.mermaid && typeof MermaidJs !== 'undefined' && typeof MermaidJs?.initialize === 'function') {
+  if (typeof MermaidJs !== 'undefined' && typeof MermaidJs?.initialize === 'function') {
     MermaidJs?.initialize({
       startOnLoad: false,
       securityLevel: 'strict',

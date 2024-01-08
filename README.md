@@ -142,13 +142,6 @@ When the editor is in fullscreen, the top offset, in pixels.
 
 The `z-index` of the component when in fullscreen. Defaults to `1001`.
 
-#### `mermaid`
-
-- type: `Boolean`
-- default: `true`
-
-MermaidJs is a bit heavy when parsing the document nodes; set to `false` to opt-out of rendering Mermaid diagrams within code blocks. Defaults to `true`.
-
 ### Slots
 
 #### `editor-actions`
