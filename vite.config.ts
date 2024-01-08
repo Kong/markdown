@@ -35,7 +35,7 @@ export default defineConfig({
     },
   },
   // TODO: If deploying to GitHub pages, enable this line
-  // base: process.env.USE_SANDBOX ? '/markdown/' : '/',
+  base: process.env.USE_SANDBOX ? '/markdown/' : '/',
   build: {
     lib: process.env.USE_SANDBOX
       ? undefined
