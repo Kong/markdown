@@ -97,7 +97,7 @@
                   :tabindex="0"
                   @click="download"
                 >
-                  <ArrowDownIcon
+                  <DownloadIcon
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
@@ -154,7 +154,7 @@ import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme } from '@/types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { EditIcon, ArrowDownIcon } from '@kong/icons'
+import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 
 const props = defineProps({
