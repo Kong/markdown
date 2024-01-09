@@ -169,11 +169,11 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
 
     ul, ol {
       margin: var(--kui-space-0, $kui-space-0) var(--kui-space-0, $kui-space-0) var(--kui-space-70, $kui-space-70);
-      padding-left: var(--kui-space-70, $kui-space-70);
 
       // Remove the margin for a nested list
       ul, ol {
-        margin: var(--kui-space-0, $kui-space-0);
+        margin: var(--kui-space-20, $kui-space-20) var(--kui-space-0, $kui-space-0) var(--kui-space-0, $kui-space-0) var(--kui-space-0, $kui-space-0);
+        padding-left: var(--kui-space-90, $kui-space-90); // to prevent being cut off
       }
 
       li {
