@@ -1,3 +1,10 @@
+# [1.0.0-alpha.31](https://github.com/Kong/markdown/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2024-01-09)
+
+
+### Bug Fixes
+
+* list display ([cbf75e5](https://github.com/Kong/markdown/commit/cbf75e585ac1ec623360f6eceed79cabc992bb70))
+
 # [1.0.0-alpha.30](https://github.com/Kong/markdown/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2024-01-09)
 
 
