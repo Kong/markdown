@@ -2,7 +2,7 @@ import { vi, describe, it, expect, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import MarkdownUi from './MarkdownUi.vue'
-import { InlineFormatWrapper, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE } from '@/constants'
+import { InlineFormatWrapper, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, MARKDOWN_TEMPLATE_LINK } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET } from '@kong/design-tokens'
 import type { Theme, MarkdownTemplate } from '@/types'
 
@@ -486,8 +486,164 @@ describe('<MarkdownUi />', () => {
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
           // @ts-ignore - referencing enum properties
           expect(wrapper.emitted(eventName)![0]).toEqual([`${textStart}${InlineFormatWrapper[format]}${textMiddle}${InlineFormatWrapper[format]}${textEnd}`])
+
+          let htmlTag: string = ''
+
+          switch (format) {
+            case 'bold':
+              htmlTag = 'strong'
+              break
+            case 'italic':
+              htmlTag = 'em'
+              break
+            case 'underline':
+              htmlTag = 'ins'
+              break
+            case 'strikethrough':
+              htmlTag = 's'
+              break
+            case 'subscript':
+              htmlTag = 'sub'
+              break
+            case 'superscript':
+              htmlTag = 'sup'
+              break
+            case 'code':
+              htmlTag = 'code'
+              break
+          }
+
+          expect(wrapper.findTestId('markdown-content').find(htmlTag).isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find(htmlTag).text()).toContain(textMiddle)
         })
       }
+
+      describe('formats text as links', () => {
+        it('inserts the link template at the cursor position when clicked', async () => {
+          const content = 'This is a sentence of text.'
+          const wrapper = mount(MarkdownUi, {
+            props: {
+              mode: 'split',
+              editable: true,
+              modelValue: content,
+            },
+          })
+
+          await waitForMarkdownRender(wrapper)
+
+          expect(wrapper.findTestId('toolbar').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          // Both panes should be visible
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.value).toEqual(content)
+
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').text()).toEqual(content)
+
+          await wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.focus()
+
+          // Move the cursor
+          wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionEnd = 5 // place the cursor after the first word
+
+          // Click the formatting button
+          await wrapper.findTestId('format-option-link').element.click()
+
+          // Verify event is emitted
+          const eventName = 'update:modelValue'
+          await waitForEmittedEvent(wrapper, eventName)
+
+          expect(wrapper.emitted(eventName) || []).toHaveLength(1)
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '')])
+        })
+
+        it('wraps the selected text with the link template', async () => {
+          const linkText = 'link'
+          const content = `This ${linkText} is in the middle.`
+          const wrapper = mount(MarkdownUi, {
+            props: {
+              mode: 'split',
+              editable: true,
+              modelValue: content,
+            },
+          })
+
+          await waitForMarkdownRender(wrapper)
+
+          expect(wrapper.findTestId('toolbar').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          // Both panes should be visible
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.value).toEqual(content)
+
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').text()).toEqual(content)
+
+          await wrapper.findTestId('markdown-editor-textarea').setValue(content)
+          await wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.focus()
+
+          // Select the text `link`
+          const selectStart = 5
+          wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionStart = selectStart
+          wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionEnd = selectStart + linkText.length
+
+          // Click the formatting button
+          await wrapper.findTestId('format-option-link').element.click()
+
+          // Verify event is emitted
+          const eventName = 'update:modelValue'
+          await waitForEmittedEvent(wrapper, eventName)
+
+          expect(wrapper.emitted(eventName) || []).toHaveLength(1)
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, linkText)])
+        })
+
+        it('wraps the selected URL with the link template', async () => {
+          const linkUrl = 'https://github.com/Kong/markdown'
+          const content = `This ${linkUrl} is in the middle.`
+          const wrapper = mount(MarkdownUi, {
+            props: {
+              mode: 'split',
+              editable: true,
+              modelValue: content,
+            },
+          })
+
+          await waitForMarkdownRender(wrapper)
+
+          expect(wrapper.findTestId('toolbar').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          // Both panes should be visible
+          expect(wrapper.findTestId('markdown-editor-textarea').isVisible()).toBe(true)
+          expect(wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.value).toEqual(content)
+
+          expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').isVisible()).toBe(true)
+          expect(wrapper.findTestId('markdown-content').find('p').text()).toEqual(content)
+
+          await wrapper.findTestId('markdown-editor-textarea').setValue(content)
+          await wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.focus()
+
+          // Select the text `link`
+          const selectStart = 5
+          wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionStart = selectStart
+          wrapper.findTestId<'textarea'>('markdown-editor-textarea').element.selectionEnd = selectStart + linkUrl.length
+
+          // Click the formatting button
+          await wrapper.findTestId('format-option-link').element.click()
+
+          // Verify event is emitted
+          const eventName = 'update:modelValue'
+          await waitForEmittedEvent(wrapper, eventName)
+
+          expect(wrapper.emitted(eventName) || []).toHaveLength(1)
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '').replace(/url/, linkUrl)])
+        })
+      })
     })
 
     describe('template buttons', () => {

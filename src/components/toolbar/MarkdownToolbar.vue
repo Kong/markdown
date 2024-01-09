@@ -183,7 +183,7 @@ import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, Markdown
 import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
-import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
+import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, LinkIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
 import { v4 as uuidv4 } from 'uuid'
 
 const uniqueId: Ref<String> = inject(UNIQUE_ID_INJECTION_KEY, ref(uuidv4()))
@@ -246,6 +246,7 @@ const formatOptions: FormatOption[] = [
   // { label: 'Superscript', action: 'superscript', icon: SuperscriptIcon }, // Hidden for now
   // { label: 'Mark', action: 'mark', icon: MarkIcon }, // Hidden for now
   { label: 'Code', action: 'code', keys: ['Shift', 'C'], icon: CodeIcon },
+  { label: 'Link', action: 'link', icon: LinkIcon },
 ]
 
 const templateOptions: TemplateOption[] = [

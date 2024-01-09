@@ -53,7 +53,7 @@
     "vue": "^3.3.13"
   },
   "dependencies": {
-    "@kong/icons": "^1.8.9",
+    "@kong/icons": "^1.8.10",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.7.0",
     "html-format": "^1.1.5",

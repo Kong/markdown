@@ -24,6 +24,7 @@ const formatOptions: Partial<FormatOption>[] = [
   { label: 'Underline', action: 'underline', keys: ['U'] },
   { label: 'Strikethrough', action: 'strikethrough', keys: ['Shift', 'X'] },
   { label: 'Code', action: 'code', keys: ['Shift', 'C'] },
+  { label: 'Link', action: 'link' },
 ]
 
 const templateOptions: Partial<TemplateOption>[] = [

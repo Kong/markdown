@@ -18,6 +18,7 @@ export type InlineFormat =
   | 'superscript'
   | 'mark'
   | 'code'
+  | 'link'
 
 export interface FormatOption {
   label: string

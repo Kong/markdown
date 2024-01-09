@@ -298,11 +298,15 @@ const markdownHtml = ref<string>('')
 // A ref to store the preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
-const { toggleInlineFormatting, insertMarkdownTemplate } = composables.useMarkdownActions(textarea, rawMarkdown)
+const { toggleInlineFormatting, insertMarkdownTemplate, insertLink } = composables.useMarkdownActions(textarea, rawMarkdown)
 
 // When the user toggles inline formatting
 const formatSelection = (format: InlineFormat): void => {
-  toggleInlineFormatting(format)
+  if (format === 'link') {
+    insertLink()
+  } else {
+    toggleInlineFormatting(format)
+  }
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
