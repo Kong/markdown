@@ -1,3 +1,10 @@
+# [1.0.0-alpha.30](https://github.com/Kong/markdown/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2024-01-09)
+
+
+### Bug Fixes
+
+* mobile button layout ([c878507](https://github.com/Kong/markdown/commit/c87850768dc0db3df98b97bda28af2467f09b340))
+
 # [1.0.0-alpha.29](https://github.com/Kong/markdown/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2024-01-08)
 
 
