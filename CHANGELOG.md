@@ -1,3 +1,10 @@
+# [1.0.0-alpha.33](https://github.com/Kong/markdown/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2024-01-09)
+
+
+### Features
+
+* links ([e3a9db5](https://github.com/Kong/markdown/commit/e3a9db51a84a605202da3c168c4fc25b82bede2e))
+
 # [1.0.0-alpha.32](https://github.com/Kong/markdown/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2024-01-09)
 
 
