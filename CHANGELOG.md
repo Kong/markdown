@@ -1,3 +1,10 @@
+# [1.0.0-alpha.32](https://github.com/Kong/markdown/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2024-01-09)
+
+
+### Bug Fixes
+
+* completed tasks ([09d7b46](https://github.com/Kong/markdown/commit/09d7b468de271646df4a2fe899ebaf1753d1e751))
+
 # [1.0.0-alpha.31](https://github.com/Kong/markdown/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2024-01-09)
 
 
