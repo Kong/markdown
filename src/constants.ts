@@ -34,6 +34,7 @@ export const MARKDOWN_TEMPLATE_TABLE =
 
 /** The markdown template for a task. Ensure trailing space remains */
 export const MARKDOWN_TEMPLATE_TASK = '- [ ] '
+export const MARKDOWN_TEMPLATE_TASK_COMPLETED = '- [x] '
 
 /** The markdown template for an unordered list. Ensure trailing space remains */
 export const MARKDOWN_TEMPLATE_UL = '- '

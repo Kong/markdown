@@ -1,6 +1,6 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, NEW_LINE_CHARACTER } from '@/constants'
+import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_TASK_COMPLETED, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, NEW_LINE_CHARACTER } from '@/constants'
 import type { InlineFormat, MarkdownTemplate } from '@/types'
 
 /**
@@ -464,14 +464,22 @@ export default function useMarkdownActions(
           }
         } else {
           // All other templates (other than ordered list)
-          if (lastLine.trimStart().startsWith(template)) {
+
+          // Check if completed task item
+          const isCompletedTask = template === MARKDOWN_TEMPLATE_TASK && lastLine.trimStart().toLowerCase().startsWith(MARKDOWN_TEMPLATE_TASK_COMPLETED.toLowerCase())
+
+          if (lastLine.trimStart().startsWith(template) || isCompletedTask) {
             templateLength = template.length
             // If the last list item is empty, remove the template instead
             if (lastLine.trimStart() === template) {
               removeNewLineTemplate = true
             } else {
               // Add a new line appended with the same template with indentation, if applicable
-              newLineContent += lastLine.split(template)[0] + template
+              if (isCompletedTask) {
+                newLineContent += lastLine.toLowerCase().split(MARKDOWN_TEMPLATE_TASK_COMPLETED.toLowerCase())[0] + template
+              } else {
+                newLineContent += lastLine.split(template)[0] + template
+              }
             }
             // We found a match, so exit the loop
             break
