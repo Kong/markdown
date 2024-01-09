@@ -88,13 +88,20 @@ onBeforeMount(async () => {
 
 .page-header {
   align-items: baseline;
-  display: flex;
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 
+  @media (min-width: $kui-breakpoint-mobile) {
+    display: flex;
+  }
+
   h1 {
-    margin-bottom: $kui-space-0;
+    margin-bottom: $kui-space-20;
     margin-top: $kui-space-0;
+
+    @media (min-width: $kui-breakpoint-mobile) {
+      margin-bottom: $kui-space-0;
+    }
   }
 
   a {

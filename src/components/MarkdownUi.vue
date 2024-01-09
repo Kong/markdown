@@ -101,7 +101,7 @@
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
-                  Download
+                  <span class="content-button-text">Download</span>
                 </ToolbarButton>
               </slot>
             </div>
@@ -125,7 +125,7 @@
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
-                  Edit
+                  <span class="content-button-text">Edit</span>
                 </ToolbarButton>
               </slot>
             </div>
@@ -660,6 +660,10 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     min-height: v-bind('TOOLBAR_HEIGHT');
     position: relative;
 
+    @media (min-width: $kui-breakpoint-phablet) {
+      padding-top: 0;
+    }
+
     .content-buttons {
       align-items: center;
       display: flex;
@@ -668,6 +672,14 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       position: absolute;
       right: 6px;
       top: 6px;
+
+      .content-button-text {
+        display: none;
+
+        @media (min-width: $kui-breakpoint-mobile) {
+          display: inline-block;
+        }
+      }
     }
   }
 
