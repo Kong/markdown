@@ -659,7 +659,6 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
   }
 
   .markdown-preview {
-    background-color: var(--kui-color-background, $kui-color-background);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
     min-height: v-bind('TOOLBAR_HEIGHT');
     position: relative;
@@ -765,6 +764,11 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
         &:hover {
           border-color: var(--kui-color-border, $kui-color-border);
         }
+      }
+
+      textarea.markdown-editor-textarea {
+        background: var(--kui-color-background-inverse, #292D3E); // custom background color
+        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
       }
     }
   }
