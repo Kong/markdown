@@ -1,3 +1,17 @@
+# [1.0.0-alpha.34](https://github.com/Kong/markdown/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2024-01-10)
+
+
+### Bug Fixes
+
+* color theme ([fbad8e8](https://github.com/Kong/markdown/commit/fbad8e89d49992f0faf1c9bf98e8b5f3a31b5a22))
+
+
+### Features
+
+* dark mode ([915ea98](https://github.com/Kong/markdown/commit/915ea98d2d22fdb5d5c8cc9a123859319ea72493))
+* dark mode ([32f6222](https://github.com/Kong/markdown/commit/32f62222327b0c9af83188aae26d695ab6172419))
+* dark mode ([175a9b3](https://github.com/Kong/markdown/commit/175a9b3b7b5fdfd7e2cd58e44b04031e7db93aa0))
+
 # [1.0.0-alpha.33](https://github.com/Kong/markdown/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2024-01-09)
 
 
