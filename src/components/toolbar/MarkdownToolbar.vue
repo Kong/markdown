@@ -3,6 +3,7 @@
     v-if="editable && mode !== 'read'"
     ref="toolbar"
     class="markdown-ui-toolbar"
+    :class="`theme-${activeTheme}`"
     data-testid="toolbar"
   >
     <div
@@ -175,11 +176,11 @@
 <script setup lang="ts">
 import { inject, ref, onMounted, watch } from 'vue'
 import type { Ref } from 'vue'
-import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, UNIQUE_ID_INJECTION_KEY } from '@/injection-keys'
+import { MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, THEME_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, UNIQUE_ID_INJECTION_KEY } from '@/injection-keys'
 import { useMediaQuery, useScroll } from '@vueuse/core'
 import { TOOLBAR_HEIGHT } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate } from '@/types'
+import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, MarkdownTemplate, Theme } from '@/types'
 import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
@@ -189,6 +190,7 @@ import { v4 as uuidv4 } from 'uuid'
 const uniqueId: Ref<String> = inject(UNIQUE_ID_INJECTION_KEY, ref(uuidv4()))
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
+const activeTheme: Ref<Theme> = inject(THEME_INJECTION_KEY, ref('light'))
 const fullscreen: Ref<boolean> = inject(FULLSCREEN_INJECTION_KEY, ref(false))
 const htmlPreview: Ref<boolean> = inject(HTML_PREVIEW_INJECTION_KEY, ref(false))
 
@@ -354,6 +356,48 @@ onMounted(() => {
 
   .button-icon {
     pointer-events: none;
+  }
+
+  // Dark theme styles
+  &.theme-dark {
+    background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
+    /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
+    border-bottom-color: var(--kui-color-background-neutral, $kui-color-background-neutral);
+    /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
+    border-top-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
+
+    .toolbar-divider {
+      background-color: var(--kui-color-background-neutral-stronger, $kui-color-background-neutral-stronger);
+    }
+
+    :deep() {
+      .toolbar-button {
+        color: var(--kui-color-text-neutral-weak, $kui-color-text-neutral-weak);
+
+        &:hover:not(:disabled):not(:focus):not(:active) {
+          background-color: var(--kui-color-background-neutral-stronger, $kui-color-background-neutral-stronger);
+          color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+        }
+
+        &:focus {
+          background-color: var(--kui-color-background-neutral-stronger, $kui-color-background-neutral-stronger);
+          color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+        }
+
+        &:active {
+          background-color: var(--kui-color-background-neutral, $kui-color-background-neutral);
+        }
+      }
+
+      .button-group .toolbar-button.active {
+        border-color: var(--kui-color-border, $kui-color-border);
+      }
+
+      .tooltip-content {
+        background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
+        border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
+      }
+    }
   }
 }
 

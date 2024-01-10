@@ -651,6 +651,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     flex: 1; // Each column takes up equal width
     flex-direction: column;
     overflow-y: auto;
+    scrollbar-width: thin;
     width: 100%;
 
     @media (min-width: $kui-breakpoint-phablet) {
@@ -659,6 +660,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
   }
 
   .markdown-preview {
+    background-color: var(--kui-color-background, $kui-color-background);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
     min-height: v-bind('TOOLBAR_HEIGHT');
     position: relative;
@@ -705,7 +707,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     background-color: var(--kui-color-background, $kui-color-background);
     border: 0;
     border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
-    box-shadow: var(--kui-shadow-border, $kui-shadow-border); // Ensure the padding is calculated in the element's width
+    box-shadow: var(--kui-shadow-border, $kui-shadow-border);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
     color: var(--kui-color-text, $kui-color-text);
     cursor: text;
@@ -754,21 +756,62 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
   // Dark theme styles
   &.theme-dark {
-    :deep() {
-      .download-button .toolbar-button,
-      .edit-button .toolbar-button {
-        background: var(--kui-color-background-transparent, $kui-color-background-transparent);
-        border-color: var(--kui-color-border, $kui-color-border);
-        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+    &.mode-edit,
+    &.mode-split,
+    &.mode-preview {
+      background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
+    }
 
-        &:hover {
-          border-color: var(--kui-color-border, $kui-color-border);
-        }
+    .markdown-preview,
+    textarea.markdown-editor-textarea {
+      background-color: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+    }
+
+    textarea.markdown-editor-textarea {
+      color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+
+      &:hover,
+      &:focus {
+        box-shadow: var(--kui-shadow-border, $kui-shadow-border);
       }
+    }
 
-      textarea.markdown-editor-textarea {
-        background: var(--kui-color-background-inverse, #292D3E); // custom background color
-        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+    :deep() {
+      .toolbar-button {
+         &:focus-visible {
+          border-color: var(--kui-color-border, $kui-color-border);
+          box-shadow: none;
+        }
+
+        &.primary {
+          background: var(--kui-color-background-transparent, $kui-color-background-transparent);
+          border-color: var(--kui-color-border, $kui-color-border);
+          color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+
+          &:hover:not(:disabled):not(:focus):not(:active) {
+            background-color: var(--kui-color-background-transparent, $kui-color-background-neutral-strong);
+            border-color: var(--kui-color-border, $kui-color-border);
+            color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+          }
+
+          &:focus-visible {
+            background-color: var(--kui-color-background-neutral-strong, $kui-color-background-neutral-strong);
+          }
+
+          &:active {
+            background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral);
+          }
+        }
+
+        &.secondary.has-text {
+          color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+
+          &.active {
+            border-bottom-color: var(--kui-color-border, $kui-color-border);
+            border-top-color: var(--kui-color-border, $kui-color-border);
+          }
+        }
+
       }
     }
   }
