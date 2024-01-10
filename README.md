@@ -24,10 +24,9 @@ Kong's open-source markdown renderer and live editor.
 
 - [X] Utilize design tokens
 - [X] Add new icons for toolbar
-- [ ] Possibly export separate bundles for syntax highlighting options
-- [ ] Document theming instructions
-- [ ] Light / Dark mode
+- [X] Light / Dark mode
 - [X] Default styles for markdown HTML elements
+- [ ] Possibly export separate bundles for syntax highlighting options
 
 ## Usage
 
@@ -114,24 +113,19 @@ The number of spaces to insert when a user tabs within the textarea. Defaults to
 
 - type: `'light' | 'dark'`
 - required: `false`
-- default: `'light'`
+- default: `''`
 
-The theme used when the component initializes, one of `'light'` or `'dark'`. Defaults to the user's browser's preferred color scheme.
+The theme used when the component initializes, one of `'light'` or `'dark'`. Defaults to the user's browser's preferred color scheme (recommended).
 
 To customize the colors for a specific theme, you may provide values for the underlying CSS custom properties, scoped to the container.
 
-For example, if you want to change the background color in `light` mode:
+For example, if you want to change the rendered markdown document's background color:
 
 ```css
-.markdown-content.theme-light {
+.theme-light .markdown-content {
   --kui-color-background: #eee;
 }
-```
-
-If you want to change the background color in `dark` mode:
-
-```css
-.markdown-content.theme-dark {
+.theme-dark .markdown-content {
   --kui-color-background-inverse: #292D3E;
 }
 ```
