@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@kong/icons':
-    specifier: ^1.8.10
-    version: 1.8.10(vue@3.4.3)
+    specifier: ^1.8.11
+    version: 1.8.11(vue@3.4.3)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -889,11 +889,11 @@ packages:
     resolution: {integrity: sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==}
     dev: true
 
-  /@kong/icons@1.8.10(vue@3.4.3):
-    resolution: {integrity: sha512-t/LhFqjLMJvbl0qC5X8oQumduuD4ye4Lpyf+zGIcKxbTb+H41d6CV1kdGDJ5obWDrl4n2Zdv4ahWvrd+PnKDLA==}
+  /@kong/icons@1.8.11(vue@3.4.3):
+    resolution: {integrity: sha512-1WQqPZEvXMnrgRWcm1P3wIYohNAHTwLKCsze6GztrBO54GHfRFn+qZidDt019pUq2Swa+gmWFWUdhBWOMOXfvA==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
-      vue: ^3.4.0
+      vue: '>= 3.3.4 < 4'
     dependencies:
       vue: 3.4.3(typescript@5.3.3)
     dev: false
