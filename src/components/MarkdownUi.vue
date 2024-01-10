@@ -752,5 +752,21 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       }
     }
   }
+
+  // Dark theme styles
+  &.theme-dark {
+    :deep() {
+      .download-button .toolbar-button,
+      .edit-button .toolbar-button {
+        background: var(--kui-color-background-transparent, $kui-color-background-transparent);
+        border-color: var(--kui-color-border, $kui-color-border);
+        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+
+        &:hover {
+          border-color: var(--kui-color-border, $kui-color-border);
+        }
+      }
+    }
+  }
 }
 </style>

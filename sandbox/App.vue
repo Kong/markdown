@@ -22,6 +22,7 @@
         editable
         filename="example-document"
         :mode="mode"
+        theme="dark"
         @cancel="cancelEdit"
         @mode="modeChanged"
         @save="contentSaved"

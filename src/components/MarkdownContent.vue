@@ -2,7 +2,7 @@
   <!-- eslint-disable vue/no-v-html -->
   <div
     class="markdown-content"
-    :class="`mode-${mode}`"
+    :class="[`mode-${mode}`, `theme-${activeTheme}`]"
     data-testid="markdown-content"
     v-html="markdownContent"
   />
@@ -12,10 +12,11 @@
 <script setup lang="ts">
 import { ref, watch, inject } from 'vue'
 import type { Ref } from 'vue'
-import { MODE_INJECTION_KEY } from '@/injection-keys'
-import type { MarkdownMode } from '@/types'
+import { MODE_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
+import type { MarkdownMode, Theme } from '@/types'
 
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
+const activeTheme: Ref<Theme> = inject(THEME_INJECTION_KEY, ref('light'))
 
 const props = defineProps({
   content: {
@@ -39,14 +40,18 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
 
 // Markdown Preview content styles
 .markdown-content {
+  background: var(--kui-color-background, $kui-color-background);
   color: var(--kui-color-text, $kui-color-text);
   flex: 1;
   font-family: var(--kui-font-family-text, $kui-font-family-text);
   font-size: var(--kui-font-size-30, $kui-font-size-30);
+  -webkit-font-smoothing: antialiased;
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
   padding: var(--kui-space-40, $kui-space-40) var(--kui-space-70, $kui-space-70);
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
   word-wrap: break-word;
 
   &.mode-read {
@@ -109,6 +114,7 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       position: relative;
 
       a.header-anchor {
+        fill: var(--kui-color-text, $kui-color-text);
         font-size: var(--kui-font-size-30, $kui-font-size-30);
         left: 0;
         line-height: 1;
@@ -212,7 +218,7 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
     td code {
       background: var(--kui-color-background-neutral-weaker, $kui-color-background-neutral-weaker);
       border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
-      color: $kui-color-text;
+      color: var(--kui-color-text, $kui-color-text);
       font-size: var(--kui-font-size-30, $kui-font-size-30);
       padding: var(--kui-space-10, $kui-space-10) var(--kui-space-20, $kui-space-20);
       white-space: break-spaces;
@@ -293,6 +299,46 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
     .mermaid {
       svg {
         max-width: 100%;
+      }
+    }
+  }
+
+  // Dark theme styles
+  &.theme-dark {
+    :deep() {
+      background: var(--kui-color-background-inverse, #292D3E);
+      color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+
+      a {
+        color: color.adjust($color: $kui-color-text-primary, $lightness: 20%);
+
+        &:hover {
+          color: color.adjust($color: $kui-color-text-primary, $lightness: 10%);
+        }
+
+        &.header-anchor {
+          fill: var(--kui-color-text-inverse, $kui-color-text-inverse);
+        }
+      }
+
+      h1, h2, h3, h4, h5, h6,
+      p code,
+      td code,
+      table {
+        color: var(--kui-color-text-inverse, $kui-color-text-inverse);
+      }
+
+      thead th {
+        background-color: var(--kui-color-background-neutral-strong, $kui-color-background-neutral-strong);
+      }
+
+      p code,
+      td code {
+        background: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
+      }
+
+      .line.highlighted {
+        background-color: rgba(0, 0, 0, 0.5);
       }
     }
   }

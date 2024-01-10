@@ -118,6 +118,24 @@ The number of spaces to insert when a user tabs within the textarea. Defaults to
 
 The theme used when the component initializes, one of `'light'` or `'dark'`. Defaults to the user's browser's preferred color scheme.
 
+To customize the colors for a specific theme, you may provide values for the underlying CSS custom properties, scoped to the container.
+
+For example, if you want to change the background color in `light` mode:
+
+```css
+.markdown-content.theme-light {
+  --kui-color-background: #eee;
+}
+```
+
+If you want to change the background color in `dark` mode:
+
+```css
+.markdown-content.theme-dark {
+  --kui-color-background-inverse: #292D3E;
+}
+```
+
 #### `maxHeight`
 
 - type: `Number`
