@@ -150,6 +150,7 @@ import composables from '@/composables'
 import { UNIQUE_ID_INJECTION_KEY, TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY, EDITABLE_INJECTION_KEY, FULLSCREEN_INJECTION_KEY, HTML_PREVIEW_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
 import { useMediaQuery, useEventListener, usePreferredColorScheme } from '@vueuse/core'
+import type { ColorSchemeType } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme } from '@/types'
 import formatHtml from 'html-format'
@@ -229,7 +230,7 @@ const markdownComponent = ref<HTMLDivElement | null>(null)
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
 
 // Generate a unique id to handle mutiple components on the same page
-const uniqueId = uuidv4()
+const uniqueId: string = uuidv4()
 // Bind the unique ids to differentiate between potential multiple components on a page
 const componentContainerId = computed((): string => `markdown-ui-${uniqueId}`)
 const textareaId = computed((): string => `markdown-ui-textarea-${uniqueId}`)
@@ -238,20 +239,24 @@ const tabSize = computed((): number => props.tabSize)
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
-const activeTheme = ref<Theme>(props.theme ? props.theme : (preferredColorScheme.value === 'dark' ? preferredColorScheme.value : 'light'))
-
-// Provide values to child components
-provide(UNIQUE_ID_INJECTION_KEY, computed((): string => uniqueId))
-provide(TEXTAREA_ID_INJECTION_KEY, computed((): string => textareaId.value))
-provide(MODE_INJECTION_KEY, computed((): MarkdownMode => currentMode.value))
-provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
-provide(FULLSCREEN_INJECTION_KEY, computed((): boolean => isFullscreen.value))
-provide(THEME_INJECTION_KEY, computed((): Theme => activeTheme.value))
-provide(HTML_PREVIEW_INJECTION_KEY, computed((): boolean => htmlPreview.value))
+const activeTheme = computed(():Theme => props.theme ? props.theme : (preferredColorScheme.value === 'dark' ? preferredColorScheme.value : 'light'))
 
 // Set the currentMode when the component mounts.
 // props.editable will override the `props.mode`
 const currentMode = ref<MarkdownMode>(['edit', 'split', 'preview'].includes(props.mode) && props.editable ? props.mode : 'read')
+// Is fullscreen enabled
+const isFullscreen = ref<boolean>(false)
+// When true, show the HTML preview instead of the rendered markdown preview
+const htmlPreview = ref<boolean>(false)
+
+// Provide values to child components
+provide(UNIQUE_ID_INJECTION_KEY, uniqueId)
+provide(TEXTAREA_ID_INJECTION_KEY, textareaId)
+provide(MODE_INJECTION_KEY, currentMode)
+provide(EDITABLE_INJECTION_KEY, computed((): boolean => props.editable))
+provide(FULLSCREEN_INJECTION_KEY, isFullscreen)
+provide(THEME_INJECTION_KEY, activeTheme)
+provide(HTML_PREVIEW_INJECTION_KEY, htmlPreview)
 
 const { initializeSyncScroll, destroySyncScroll } = composables.useSyncScroll(scrollableClass)
 const { debounce } = composables.useDebounce()
@@ -317,9 +322,6 @@ const insertTemplate = (template: MarkdownTemplate): void => {
   // Emulate an `input` event to trigger an update
   emulateInputEvent()
 }
-
-/** When true, show the HTML preview instead of the rendered markdown preview */
-const htmlPreview = ref<boolean>(false)
 
 // If the htmlPreview is enabled, pass the generated HTML through the markdown renderer and output the syntax-highlighted result
 watchEffect((): void => {
@@ -424,7 +426,6 @@ const toggleHtmlPreview = (): void => {
 }
 
 // Toggle the fullscreen editor
-const isFullscreen = ref<boolean>(false)
 const fullscreenOffsetTop = computed((): string => `${props.fullscreenOffsetTop}px`)
 const toggleFullscreen = (): void => {
   isFullscreen.value = !isFullscreen.value
@@ -467,17 +468,13 @@ const initializeMermaid = (): void => {
   }
 }
 
-watch(() => props.theme, async (theme: Theme) => {
-  if (['light', 'dark'].includes(theme)) {
-    // Update the ref
-    activeTheme.value = theme
-    // Update the Shikiji theme
-    await initMarkdownIt(activeTheme.value)
-    // Update the mermaid theme
-    initializeMermaid()
-    // Trigger a re-render
-    emulateInputEvent()
-  }
+watch(activeTheme, async (theme: Theme) => {
+  // Update the Shikiji theme
+  await initMarkdownIt(theme)
+  // Update the mermaid theme
+  initializeMermaid()
+  // Trigger a re-render
+  emulateInputEvent()
 })
 
 // Copy the contents of the code block to the clipboard
