@@ -45,7 +45,6 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
   flex: 1;
   font-family: var(--kui-font-family-text, $kui-font-family-text);
   font-size: var(--kui-font-size-30, $kui-font-size-30);
-  -webkit-font-smoothing: antialiased;
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
