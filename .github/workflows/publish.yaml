@@ -49,6 +49,7 @@ jobs:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
 
   deploy-github-pages:
+    name: Deploy GitHub Pages
     # TODO: Change to `main` once `alpha` branch is merged
     if: ${{ github.ref == 'refs/heads/alpha' }}
     needs: [publish]
