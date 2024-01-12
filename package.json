@@ -114,7 +114,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.69.5",
     "semantic-release": "^22.0.12",
-    "shikiji": "^0.9.17",
+    "shikiji": "^0.9.19",
     "stylelint": "^16.1.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.0.0",
