@@ -1,3 +1,11 @@
+# [1.0.0-alpha.36](https://github.com/Kong/markdown/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2024-01-12)
+
+
+### Bug Fixes
+
+* **deps:** udpate shikiji ([493ef6f](https://github.com/Kong/markdown/commit/493ef6ffdbbf2b0ab8a891e64330005ab3d7cc91))
+* renovate config ([0d42bbb](https://github.com/Kong/markdown/commit/0d42bbb1db59f98cc0efce64784458714c75a220))
+
 # [1.0.0-alpha.35](https://github.com/Kong/markdown/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2024-01-12)
 
 
