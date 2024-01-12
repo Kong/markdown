@@ -16,6 +16,19 @@
         "engines"
       ],
       "enabled": false
+    },
+    {
+      "automerge": true,
+      "groupName": "all shikiji dependencies",
+      "groupSlug": "all-shikiji-dependencies",
+      "matchPackagePatterns": [
+        "^(.*)?shikiji"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "major"
+      ]
     }
   ]
 }
