@@ -69,7 +69,7 @@
     "markdown-it-sub": "^2.0.0",
     "markdown-it-sup": "^2.0.0",
     "markdown-it-task-lists": "^2.1.1",
-    "markdown-it-textual-uml": "^0.16.0",
+    "markdown-it-textual-uml": "^0.17.1",
     "mermaid": "^10.6.1",
     "uuid": "^9.0.1"
   },
