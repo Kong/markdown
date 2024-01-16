@@ -1,3 +1,11 @@
+# [1.0.0-alpha.37](https://github.com/Kong/markdown/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2024-01-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.8.12 ([#23](https://github.com/Kong/markdown/issues/23)) ([8bb60d4](https://github.com/Kong/markdown/commit/8bb60d49181eed2a492b2d73928f312f61c068fa))
+* **deps:** update dependency markdown-it-textual-uml to ^0.17.1 ([#26](https://github.com/Kong/markdown/issues/26)) ([38c4b22](https://github.com/Kong/markdown/commit/38c4b22e25576377a864deee17f27db29339d48b))
+
 # [1.0.0-alpha.36](https://github.com/Kong/markdown/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2024-01-12)
 
 
