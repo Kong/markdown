@@ -106,7 +106,7 @@
     "eslint-plugin-n": "^16.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.19.2",
-    "jsdom": "^23.0.1",
+    "jsdom": "^23.1.0",
     "markdown-it-shikiji": "^0.9.19",
     "postcss": "^8.4.32",
     "postcss-html": "^1.5.0",
@@ -182,7 +182,7 @@
   },
   "volta": {
     "node": "20.10.0",
-    "pnpm": "8.13.1"
+    "pnpm": "8.14.0"
   },
   "config": {
     "commitizen": {
