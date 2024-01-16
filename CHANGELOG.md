@@ -1,3 +1,10 @@
+# [1.0.0-alpha.38](https://github.com/Kong/markdown/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2024-01-16)
+
+
+### Bug Fixes
+
+* remove border color ([44e2605](https://github.com/Kong/markdown/commit/44e26054d3ead1c46020474b7f6996aad0bcf2bb))
+
 # [1.0.0-alpha.37](https://github.com/Kong/markdown/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2024-01-16)
 
 
