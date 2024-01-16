@@ -363,8 +363,6 @@ onMounted(() => {
     background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
     /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
     border-bottom-color: var(--kui-color-background-neutral, $kui-color-background-neutral);
-    /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
-    border-top-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
 
     .toolbar-divider {
       background-color: var(--kui-color-background-neutral-stronger, $kui-color-background-neutral-stronger);
