@@ -54,8 +54,8 @@ dependencies:
     specifier: ^2.1.1
     version: 2.1.1
   markdown-it-textual-uml:
-    specifier: ^0.16.0
-    version: 0.16.0
+    specifier: ^0.17.1
+    version: 0.17.1
   mermaid:
     specifier: ^10.6.1
     version: 10.6.1
@@ -5143,8 +5143,12 @@ packages:
     resolution: {integrity: sha512-TxFAc76Jnhb2OUu+n3yz9RMu4CwGfaT788br6HhEDlvWfdeJcLUsxk1Hgw2yJio0OXsxv7pyIPmvECY7bMbluA==}
     dev: false
 
-  /markdown-it-textual-uml@0.16.0:
-    resolution: {integrity: sha512-SvdttrRCpNFD8Sz6NvG3vtJOgk3PaQ0c90GKgqVqB/R0jmWB3cpr/O6xpoJs2vdhOANqCZ+fDLtj7o1wXwGwZA==}
+  /markdown-it-textual-uml@0.17.1:
+    resolution: {integrity: sha512-Ym/xQ4TV4N3eiRMVoiKBCCMmWXSvc9WdWpWi5m+5JBQVukY+D7tPbuR4LcdKEJ9vFch/XlDefifyRheirqlRqQ==}
+    dependencies:
+      mermaid: 10.6.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /markdown-it@14.0.0:
