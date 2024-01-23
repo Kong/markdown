@@ -2,9 +2,6 @@
   "extends": [
     "github>Kong/public-shared-renovate:kong-frontend-config.json"
   ],
-  "baseBranches": [
-    "alpha"
-  ],
   "packageRules": [
     {
       "groupName": "node engines range",
@@ -16,6 +13,14 @@
         "engines"
       ],
       "enabled": false
+    },
+    {
+      "automerge": true,
+      "groupName": "all shikiji dependencies",
+      "groupSlug": "all-shikiji-dependencies",
+      "matchPackagePatterns": [
+        "^(.*)?shikiji"
+      ]
     }
   ]
 }
