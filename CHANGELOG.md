@@ -1,3 +1,12 @@
+# 1.0.0 (2024-01-23)
+
+
+### Features
+
+* create component package ([#19](https://github.com/Kong/markdown/issues/19)) ([a55d63c](https://github.com/Kong/markdown/commit/a55d63cf07a41be8f088ba2acc4e3f44fe415c9d)), closes [#16](https://github.com/Kong/markdown/issues/16)
+* initial commit :rocket: ([8fe75b2](https://github.com/Kong/markdown/commit/8fe75b2d974aba055c7bdc726292616924a663b0))
+* trigger release ([958b6f7](https://github.com/Kong/markdown/commit/958b6f7a2f5b065f3833cbdf19ec93a2c9bfbc53))
+
 # [1.0.0-alpha.39](https://github.com/Kong/markdown/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2024-01-23)
 
 
