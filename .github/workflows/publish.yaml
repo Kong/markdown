@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - alpha
-      - beta
 
 jobs:
   run-tests:
@@ -50,8 +48,7 @@ jobs:
 
   deploy-github-pages:
     name: Deploy GitHub Pages
-    # TODO: Change to `main` once `alpha` branch is merged
-    if: ${{ github.ref == 'refs/heads/alpha' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [publish]
     environment:
       name: github-pages

@@ -2,9 +2,6 @@
   "extends": [
     "github>Kong/public-shared-renovate:kong-frontend-config.json"
   ],
-  "baseBranches": [
-    "alpha"
-  ],
   "packageRules": [
     {
       "groupName": "node engines range",
