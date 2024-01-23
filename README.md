@@ -22,11 +22,7 @@ Kong's open-source markdown renderer and live editor.
 
 ## TODO
 
-- [X] Utilize design tokens
-- [X] Add new icons for toolbar
-- [X] Light / Dark mode
-- [X] Default styles for markdown HTML elements
-- [ ] Possibly export separate bundles for syntax highlighting options
+- [ ] Optimize exports via separate bundles for syntax highlighting options
 
 ## Usage
 
