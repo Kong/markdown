@@ -1,3 +1,10 @@
+# [1.0.0-alpha.39](https://github.com/Kong/markdown/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2024-01-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.8.13 ([#30](https://github.com/Kong/markdown/issues/30)) ([78ea236](https://github.com/Kong/markdown/commit/78ea2369d8e297cb6f9902950ae31ba932eaacdf))
+
 # [1.0.0-alpha.38](https://github.com/Kong/markdown/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2024-01-16)
 
 
