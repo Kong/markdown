@@ -1,5 +1,8 @@
 <template>
-  <div class="sandbox-container">
+  <div
+    class="sandbox-container"
+    :class="[activeTheme]"
+  >
     <main>
       <div class="page-header">
         <h1><code>@kong/markdown</code></h1>
@@ -32,9 +35,14 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
+import { usePreferredColorScheme } from '@vueuse/core'
+
+const preferredColorScheme = usePreferredColorScheme()
+// Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
+const activeTheme = computed(() => preferredColorScheme.value === 'dark' ? preferredColorScheme.value : 'light')
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contentUpdated = (markdown: string) => {
@@ -82,8 +90,19 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .sandbox-container {
+  background: $kui-color-background;
+  color: $kui-color-text;
   font-family: $kui-font-family-text;
   padding: var(--kui-space-70, $kui-space-70);
+
+  &.dark {
+    background: color.adjust($kui-color-background-neutral-strongest, $lightness: 5%);
+    color: $kui-color-text-inverse;
+  }
+}
+
+body:has(.sandbox-container.dark) {
+  background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
 }
 
 .page-header {
