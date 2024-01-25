@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Kong/markdown/compare/v1.0.0...v1.0.1) (2024-01-25)
+
+
+### Bug Fixes
+
+* sandbox background ([b6a5e3a](https://github.com/Kong/markdown/commit/b6a5e3a1dba369bce02ac5a21e847921915389cd))
+
 # 1.0.0 (2024-01-23)
 
 
