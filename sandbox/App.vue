@@ -101,8 +101,11 @@ onBeforeMount(async () => {
   }
 }
 
-body:has(.sandbox-container.dark) {
-  background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+html,
+body {
+  &:has(.sandbox-container.dark) {
+    background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+  }
 }
 
 .page-header {
