@@ -88,6 +88,16 @@ onBeforeMount(async () => {
 })
 </script>
 
+<style lang="scss">
+// Unscoped styles
+html,
+body {
+  &:has(.sandbox-container.dark) {
+    background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .sandbox-container {
   background: $kui-color-background;
@@ -98,13 +108,18 @@ onBeforeMount(async () => {
   &.dark {
     background: color.adjust($kui-color-background-neutral-strongest, $lightness: 5%);
     color: $kui-color-text-inverse;
-  }
-}
 
-html,
-body {
-  &:has(.sandbox-container.dark) {
-    background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+    a {
+      color: color.adjust($color: $kui-color-text-primary, $lightness: 20%);
+
+      &:hover {
+        color: color.adjust($color: $kui-color-text-primary, $lightness: 10%);
+      }
+
+      &.header-anchor {
+        fill: var(--kui-color-text-inverse, $kui-color-text-inverse);
+      }
+    }
   }
 }
 
