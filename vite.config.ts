@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import vue from '@vitejs/plugin-vue'
 import path, { join } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -17,6 +18,7 @@ const buildVisualizerPlugin = process.env.BUILD_VISUALIZER
 export default defineConfig({
   plugins: [
     vue(),
+    VueDevTools(),
   ],
   resolve: {
     alias: {
