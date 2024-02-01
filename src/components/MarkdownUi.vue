@@ -673,6 +673,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       position: absolute;
       right: 6px;
       top: 6px;
+      z-index: 2;
 
       .content-button-text {
         display: none;

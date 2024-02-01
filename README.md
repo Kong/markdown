@@ -38,6 +38,24 @@ pnpm add @kong/markdown
 yarn add @kong/markdown
 ```
 
+```html
+<template>
+  <MarkdownUi
+    v-model="content"
+    editable
+    filename="example-document"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MarkdownUi } from '@kong/markdown'
+import '@kong/markdown/dist/style.css'
+
+const content = ref<string>('# This is my markdown content')
+</script>
+```
+
 ### Notes
 
 By default, the editor does not handle the Tab key unless there is an active text selection within the `textarea`. This isn't an oversight —- it is an intentional decision to make the default configuration pass the ["no keyboard trap"](https://www.w3.org/TR/WCAG21/#no-keyboard-trap) criterion of the W3C Web Content Accessibility Guidelines.
@@ -159,18 +177,26 @@ A slot for providing editor actions to the markdown component, shown at the far-
 The default slot provides `Save` and `Cancel` buttons as well as two methods, `save` and `cancel`, to trigger the built-in actions from your own component. Here's an example:
 
 ```html
-<MarkdownUi
-  v-model="content"
-  editable
-  @save="saveChanges"
->
-  <template #editor-actions="{ save }">
-    <!-- Call the provided `save` method when custom button is clicked -->
-    <button @click="save">Upload document</button>
-  </template>
-</MarkdownUi>
+<template>
+  <MarkdownUi
+    v-model="content"
+    editable
+    @save="saveChanges"
+  >
+    <template #editor-actions="{ save }">
+      <!-- Call the provided `save` method when custom button is clicked -->
+      <button @click="save">Upload document</button>
+    </template>
+  </MarkdownUi>
+</template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { MarkdownUi } from '@kong/markdown'
+import '@kong/markdown/dist/style.css'
+
+const content = ref<string>('')
+
 // When the `@save` event is emitted, POST the markdown content to the API
 const saveChanges = async (markdownContent: string): Promise<void> => {
   try {
