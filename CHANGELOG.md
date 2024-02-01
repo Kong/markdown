@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Kong/markdown/compare/v1.0.2...v1.0.3) (2024-02-01)
+
+
+### Bug Fixes
+
+* z-index and docs ([cdc8e3e](https://github.com/Kong/markdown/commit/cdc8e3e6baddc2e65f71c1ca220cafe792c65548))
+
 ## [1.0.2](https://github.com/Kong/markdown/compare/v1.0.1...v1.0.2) (2024-01-25)
 
 
