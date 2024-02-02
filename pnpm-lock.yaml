@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@kong/icons':
-    specifier: ^1.8.13
-    version: 1.8.13(vue@3.4.14)
+    specifier: ^1.8.14
+    version: 1.8.14(vue@3.4.14)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -80,8 +80,8 @@ devDependencies:
     specifier: ^1.5.6
     version: 1.6.0
   '@kong/design-tokens':
-    specifier: ^1.12.4
-    version: 1.12.4
+    specifier: ^1.12.7
+    version: 1.12.7
   '@semantic-release/changelog':
     specifier: ^6.0.3
     version: 6.0.3(semantic-release@22.0.12)
@@ -1163,12 +1163,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@kong/design-tokens@1.12.4:
-    resolution: {integrity: sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==}
+  /@kong/design-tokens@1.12.7:
+    resolution: {integrity: sha512-gyUX+1hDUtgvMZgNvPxTrIF6lD5x2bd+qMx8EATQ9FE+naaMHvP+dFp6jmHAEVwY4yQrCWv6e4Et4UOG2XSuFA==}
     dev: true
 
-  /@kong/icons@1.8.13(vue@3.4.14):
-    resolution: {integrity: sha512-ZALSRHW/vfimcpwu4D17Qosq+o5quYG6QB55by5aljtTDb7DNCjbnU1RIfevQXHGuRSoW3D+9y5gm+2aRBibRQ==}
+  /@kong/icons@1.8.14(vue@3.4.14):
+    resolution: {integrity: sha512-nJUTtLpqelKCTY8lS8VByWaHYUq1CuB5cBUX/q2FEDu5o6IKH/B7fEDQpb/pB1lLRYTqZXneHR/lGYjxy4u8eQ==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       vue: '>= 3.3.4 < 4'
