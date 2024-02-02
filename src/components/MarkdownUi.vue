@@ -670,6 +670,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       display: flex;
       gap: var(--kui-space-20, $kui-space-20);
       justify-content: flex-end;
+      line-height: normal;
       position: absolute;
       right: 6px;
       top: 6px;

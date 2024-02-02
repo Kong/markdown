@@ -280,6 +280,7 @@ onMounted(() => {
   gap: var(--kui-space-70, $kui-space-70);
   height: v-bind('TOOLBAR_HEIGHT');
   justify-content: space-between;
+  line-height: normal;
   min-height: v-bind('TOOLBAR_HEIGHT');
   padding-left: var(--kui-space-50, $kui-space-50);
   padding-right: var(--kui-space-50, $kui-space-50);
