@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/Kong/markdown/compare/v1.0.3...v1.0.4) (2024-02-02)
+
+
+### Bug Fixes
+
+* line-height ([7597697](https://github.com/Kong/markdown/commit/75976979b5f0dab737532c46d2327f0f51108ebf))
+
 ## [1.0.3](https://github.com/Kong/markdown/compare/v1.0.2...v1.0.3) (2024-02-01)
 
 
