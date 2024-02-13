@@ -54,8 +54,10 @@
   },
   "dependencies": {
     "@kong/icons": "^1.8.14",
+    "@mdit-vue/plugin-frontmatter": "^2.0.0",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.7.1",
+    "buffer": "^6.0.3",
     "html-format": "^1.1.6",
     "markdown-it": "^14.0.0",
     "markdown-it-abbr": "^2.0.0",
@@ -80,6 +82,7 @@
     "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
     "@evilmartians/lefthook": "^1.5.6",
     "@kong/design-tokens": "^1.12.7",
+    "@mdit-vue/types": "^2.0.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@shikijs/markdown-it": "^1.1.2",

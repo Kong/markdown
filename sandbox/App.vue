@@ -20,7 +20,7 @@
       </p>
       <hr>
       <MarkdownUi
-        v-model="content"
+        v-model="editorContent"
         downloadable
         editable
         filename="example-document"
@@ -28,6 +28,7 @@
         @cancel="cancelEdit"
         @mode="modeChanged"
         @save="contentSaved"
+        @update:frontmatter="frontmatterUpdated"
         @update:model-value="contentUpdated"
       />
     </main>
@@ -45,27 +46,31 @@ const preferredColorScheme = usePreferredColorScheme()
 const activeTheme = computed(() => preferredColorScheme.value === 'dark' ? preferredColorScheme.value : 'light')
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const contentUpdated = (markdown: string) => {
+const contentUpdated = (content: string) => {
   console.log('content updated')
+}
+
+const frontmatterUpdated = (frontmatter: Record<string, any> | undefined) => {
+  console.log('frontmatter updated', frontmatter)
 }
 
 const mode = ref<string>('read')
 const modeChanged = (m: string) => {
   mode.value = m
   if (mode.value === 'edit' || mode.value === 'split') {
-    originalContent.value = content.value
+    originalContent.value = editorContent.value
     console.log('begin editing')
   }
 }
 
 const cancelEdit = () => {
-  content.value = originalContent.value
+  editorContent.value = originalContent.value
   console.log('canceled')
 }
 
-const contentSaved = (markdown: string) => {
-  originalContent.value = content.value
-  console.log('saved! %o', markdown)
+const contentSaved = ({ content, frontmatter }: any) => {
+  originalContent.value = editorContent.value
+  console.log('saved! %o', content, frontmatter)
 }
 
 const mockMarkdownResponse = async (): Promise<Record<string, any>> => {
@@ -75,7 +80,7 @@ const mockMarkdownResponse = async (): Promise<Record<string, any>> => {
 }
 
 const originalContent = ref<string>('')
-const content = ref<string>('')
+const editorContent = ref<string>('')
 
 onBeforeMount(async () => {
   // Simulate fetching the document
@@ -84,7 +89,7 @@ onBeforeMount(async () => {
   // Store the original content in case the user cancels
   originalContent.value = markdownContent
   // Copy the content for editing
-  content.value = originalContent.value
+  editorContent.value = originalContent.value
 })
 </script>
 

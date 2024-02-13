@@ -9,6 +9,7 @@ import abbreviation from 'markdown-it-abbr'
 import anchor from 'markdown-it-anchor'
 import attrs from 'markdown-it-attrs'
 import deflist from 'markdown-it-deflist'
+import { frontmatterPlugin } from '@mdit-vue/plugin-frontmatter'
 // @ts-ignore - export does exist
 import { full as emoji } from 'markdown-it-emoji'
 import footnote from 'markdown-it-footnote'
@@ -19,6 +20,7 @@ import superscript from 'markdown-it-sup'
 import tasklists from 'markdown-it-task-lists'
 import markdownItTextualUml from 'markdown-it-textual-uml'
 import slugify from '@sindresorhus/slugify'
+import { Buffer } from 'buffer'
 
 // MarkdownIt instance
 const md = ref()
@@ -27,6 +29,9 @@ export default function useMarkdownIt() {
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
   const init = async (theme: Theme = 'light'): Promise<void> => {
     const { MarkdownItShiki } = useShiki()
+
+    // @ts-ignore
+    window.Buffer = Buffer
 
     md.value = MarkdownIt({
       html: false, // Keep disabled to prevent XSS
@@ -65,6 +70,13 @@ export default function useMarkdownIt() {
       .use(tasklists, {
         label: true,
         enabled: false, // Not enabled since checking the box doesn't update the markdown
+      })
+      .use(frontmatterPlugin, {
+        // options
+        grayMatterOptions: {
+          language: 'yaml',
+        },
+        renderExcerpt: false,
       })
 
     // disable converting email to link
