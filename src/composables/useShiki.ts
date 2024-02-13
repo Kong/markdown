@@ -188,7 +188,7 @@ export default function useShiki() {
       loadWasm: getWasm,
     })
 
-    return fromHighlighter(highlighter, {
+    return fromHighlighter(highlighter as any, {
       theme: theme === 'light' ? 'material-theme-lighter' : 'material-theme-palenight',
     })
   }
