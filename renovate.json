@@ -16,10 +16,10 @@
     },
     {
       "automerge": true,
-      "groupName": "all shikiji dependencies",
-      "groupSlug": "all-shikiji-dependencies",
+      "groupName": "all shiki dependencies",
+      "groupSlug": "all-shiki-dependencies",
       "matchPackagePatterns": [
-        "^(.*)?shikiji"
+        "^(.*)?shiki"
       ]
     }
   ]
