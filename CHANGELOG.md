@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Kong/markdown/compare/v1.0.4...v1.1.0) (2024-02-13)
+
+
+### Features
+
+* **shiki:** switch to official shiki package ([#40](https://github.com/Kong/markdown/issues/40)) ([23c98dd](https://github.com/Kong/markdown/commit/23c98dd72e85eeb35b4d0c02ece7c27e95a1a01f))
+
 ## [1.0.4](https://github.com/Kong/markdown/compare/v1.0.3...v1.0.4) (2024-02-02)
 
 
