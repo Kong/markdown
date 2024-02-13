@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Kong/markdown/compare/v1.1.0...v1.2.0) (2024-02-13)
+
+
+### Features
+
+* parse frontmatter ([#41](https://github.com/Kong/markdown/issues/41)) ([80e0fd2](https://github.com/Kong/markdown/commit/80e0fd20ac9c564ed1ebc0354a012dc08328f3eb))
+
 # [1.1.0](https://github.com/Kong/markdown/compare/v1.0.4...v1.1.0) (2024-02-13)
 
 
