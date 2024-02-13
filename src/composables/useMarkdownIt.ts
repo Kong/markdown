@@ -30,7 +30,7 @@ export default function useMarkdownIt() {
   const init = async (theme: Theme = 'light'): Promise<void> => {
     const { MarkdownItShiki } = useShiki()
 
-    // @ts-ignore
+    // @ts-ignore - Polyfill for Buffer in the browser environment
     window.Buffer = Buffer
 
     md.value = MarkdownIt({
