@@ -151,11 +151,12 @@ import { UNIQUE_ID_INJECTION_KEY, TEXTAREA_ID_INJECTION_KEY, MODE_INJECTION_KEY,
 import { EDITOR_DEBOUNCE_TIMEOUT, TOOLBAR_HEIGHT, NEW_LINE_CHARACTER } from '@/constants'
 import { useMediaQuery, useEventListener, usePreferredColorScheme } from '@vueuse/core'
 import { v4 as uuidv4 } from 'uuid'
-import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme } from '@/types'
+import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme, Frontmatter, EmitUpdatePayload } from '@/types'
 import formatHtml from 'html-format'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
+import type { MarkdownItEnv } from '@mdit-vue/types'
 
 const props = defineProps({
   /** The markdown content */
@@ -216,7 +217,8 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', rawMarkdown: string): void
-  (e: 'save', rawMarkdown: string): void
+  (e: 'update:frontmatter', frontmatter: Frontmatter | undefined): void
+  (e: 'save', { content, frontmatter }: EmitUpdatePayload): void
   (e: 'cancel'): void
   (e: 'mode', mode: MarkdownMode): void
   (e: 'fullscreen', active: boolean): void
@@ -292,11 +294,21 @@ watch(currentMode, async (mode: MarkdownMode): Promise<void> => {
 
 // Get rendered markdown
 const getHtmlFromMarkdown = (content: string): string => {
-  return md.value?.render(content)
+  const env: MarkdownItEnv = {}
+
+  const rendered = md.value?.render(content, env)
+
+  // Update the frontmatter
+  frontmatter.value = env.frontmatter
+
+  // Return the rendered content
+  return rendered
 }
 
 // Initialize a ref to store the KTextArea value with prop content
 const rawMarkdown = ref<string>(props.modelValue)
+// A ref to store the processed frontmatter
+const frontmatter = ref<Frontmatter | undefined>()
 // A ref to store the processed markdown output
 const markdownHtml = ref<string>('')
 // A ref to store the preview HTML (if user enables it in the toolbar)
@@ -387,6 +399,7 @@ const debouncedUpdateContent = debounce(async (emitEvent = true): Promise<void> 
   // Emit the updated content if `emitEvent` is not false
   if (emitEvent) {
     emit('update:modelValue', rawMarkdown.value)
+    emit('update:frontmatter', frontmatter.value)
   }
 
   await nextTick() // **MUST** await nextTick for the virtual DOM to refresh
@@ -451,7 +464,10 @@ const cancel = (): void => {
 
 // Handle the user clicking the `save` button
 const save = (): void => {
-  emit('save', rawMarkdown.value)
+  emit('save', {
+    content: rawMarkdown.value,
+    frontmatter: frontmatter.value,
+  })
   currentMode.value = 'read'
 }
 

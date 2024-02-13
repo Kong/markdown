@@ -255,9 +255,23 @@ Emitted when the user modifies the raw markdown content in the editor. The event
 > [!NOTE]
 > The `update:modelValue` event is debounced as the user is typing.
 
+#### `update:frontmatter`
+
+Emitted when the user modifies the raw markdown content in the editor and the internal frontmatter, if present, changes. The event contains a payload `Record<string, any>` of the document's YAML frontmatter.
+
+> [!NOTE]
+> The `update:frontmatter` event is debounced as the user is typing.
+
 #### `save`
 
-Emitted whenever the user triggers the `save` toolbar action. The event contains a payload `string` of the raw markdown content.
+Emitted whenever the user triggers the `save` toolbar action. The event emits a payload with the following interface:
+
+```typescript
+interface EmitUpdatePayload {
+  content: string
+  frontmatter: Frontmatter | undefined
+}
+```
 
 #### `cancel`
 
