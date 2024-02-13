@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import useShikiji from '@/composables/useShikiji'
+import useShiki from '@/composables/useShiki'
 import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
 import type { Theme } from '@/types'
 
@@ -26,7 +26,7 @@ const md = ref()
 export default function useMarkdownIt() {
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
   const init = async (theme: Theme = 'light'): Promise<void> => {
-    const { MarkdownItShikiji } = useShikiji()
+    const { MarkdownItShiki } = useShiki()
 
     md.value = MarkdownIt({
       html: false, // Keep disabled to prevent XSS
@@ -36,7 +36,7 @@ export default function useMarkdownIt() {
       typographer: true, // Enable some language-neutral replacement + quotes beautification
       quotes: '“”‘’',
     })
-      .use(await MarkdownItShikiji(theme))
+      .use(await MarkdownItShiki(theme))
       .use(anchor, {
         level: 2,
         slugify: s => slugify(s),
