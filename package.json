@@ -55,9 +55,13 @@
   "dependencies": {
     "@kong/icons": "^1.8.14",
     "@mdit-vue/plugin-frontmatter": "^2.0.0",
+    "@nuxtjs/mdc": "^0.5.0",
+    "@shikijs/rehype": "^1.1.7",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.7.1",
     "buffer": "^6.0.3",
+    "destr": "^2.0.3",
+    "hast-util-to-string": "^3.0.0",
     "html-format": "^1.1.6",
     "markdown-it": "^14.0.0",
     "markdown-it-abbr": "^2.0.0",
@@ -73,6 +77,9 @@
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-textual-uml": "^0.17.1",
     "mermaid": "^10.7.0",
+    "property-information": "^6.4.1",
+    "scule": "^1.3.0",
+    "unist-util-visit": "^5.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

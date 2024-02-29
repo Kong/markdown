@@ -19,6 +19,12 @@
         Make changes to the document and see the rendered markdown in the preview pane. For a better editing experience, try enabling the <b>Fullscreen</b> editor.
       </p>
       <hr>
+      <Suspense>
+        <MDCRenderer
+          :body="body"
+          :data="body"
+        />
+      </Suspense>
       <MarkdownUi
         v-model="editorContent"
         downloadable
@@ -40,6 +46,11 @@ import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 import { usePreferredColorScheme } from '@vueuse/core'
+import MdcTabs from '../src/mdc/MdcTabs.vue'
+import { parseMarkdown } from '@nuxtjs/mdc/dist/runtime/parser/index'
+import rehypeHighlight from '../src/mdc/shiki-rehype'
+const data = ref(null)
+const body = ref(null)
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
@@ -70,6 +81,7 @@ const cancelEdit = () => {
 
 const contentSaved = ({ content, frontmatter }: any) => {
   originalContent.value = editorContent.value
+  updateRenderer(editorContent.value)
   console.log('saved! %o', content, frontmatter)
 }
 
@@ -82,10 +94,27 @@ const mockMarkdownResponse = async (): Promise<Record<string, any>> => {
 const originalContent = ref<string>('')
 const editorContent = ref<string>('')
 
+const updateRenderer = async (markdownContent: string) => {
+  const mdcTree = await parseMarkdown(markdownContent, {
+    rehype: {
+      plugins: {
+        shikiji: {
+          instance: rehypeHighlight,
+          options: {
+            theme: 'material-theme',
+          },
+        },
+      },
+    },
+  })
+
+  data.value = mdcTree.data
+  body.value = mdcTree.body
+}
 onBeforeMount(async () => {
   // Simulate fetching the document
   const { content: markdownContent } = await mockMarkdownResponse()
-
+  await updateRenderer(markdownContent)
   // Store the original content in case the user cancels
   originalContent.value = markdownContent
   // Copy the content for editing

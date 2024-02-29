@@ -20,10 +20,17 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
+  define: {
+    'process.dev': JSON.stringify(''),
+    'process.env': JSON.stringify({}),
+  },
   resolve: {
     alias: {
       // Alias src directory for imports
       '@': path.resolve(__dirname, './src/'),
+      '#mdc-imports': path.resolve(__dirname, './mdc-imports.js'),
+      '#mdc-configs': path.resolve(__dirname, './mdc-imports.js'),
+      '#mdc-highlighter': path.resolve(__dirname, './mdc-imports.js'),
     },
   },
   css: {
@@ -50,7 +57,7 @@ export default defineConfig({
     minify: true,
     sourcemap: true,
     rollupOptions: {
-      external: process.env.USE_SANDBOX ? undefined : ['vue'],
+      external: process.env.USE_SANDBOX ? ['#mdc-highlighter'] : ['vue', '#mdc-highlighter'],
       output: process.env.USE_SANDBOX
         ? undefined
         : {
