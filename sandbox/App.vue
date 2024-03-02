@@ -22,7 +22,7 @@
       <Suspense>
         <MDCRenderer
           :body="body"
-          :data="body"
+          :data="data"
         />
       </Suspense>
       <MarkdownUi
