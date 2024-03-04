@@ -46,7 +46,6 @@ import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 import { usePreferredColorScheme } from '@vueuse/core'
-import MdcTabs from '../src/mdc/MdcTabs.vue'
 import { parseMarkdown } from '@nuxtjs/mdc/dist/runtime/parser/index'
 import rehypeHighlight from '../src/mdc/shiki-rehype'
 const data = ref(null)
