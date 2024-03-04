@@ -24,6 +24,10 @@ export default defineConfig({
     alias: {
       // Alias src directory for imports
       '@': path.resolve(__dirname, './src/'),
+      '#imports': path.resolve(__dirname, './stub-mdc-imports.js'),
+      '#mdc-imports': path.resolve(__dirname, './stub-mdc-imports.js'),
+      '#mdc-configs': path.resolve(__dirname, './stub-mdc-imports.js'),
+      '#mdc-highlighter': path.resolve(__dirname, './stub-mdc-imports.js'),
     },
   },
   css: {

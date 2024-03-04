@@ -19,6 +19,13 @@
         Make changes to the document and see the rendered markdown in the preview pane. For a better editing experience, try enabling the <b>Fullscreen</b> editor.
       </p>
       <hr>
+      <Suspense>
+        <MDCRenderer
+          v-if="body"
+          :body="body"
+          :data="data"
+        />
+      </Suspense>
       <MarkdownUi
         v-model="editorContent"
         downloadable
@@ -40,6 +47,18 @@ import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 import { usePreferredColorScheme } from '@vueuse/core'
+import { MDCRenderer, parseMarkdown, rehypeHighlight, createShikiHighlighter } from '@nuxtjs/mdc/runtime'
+// shiki imports
+import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
+import HtmlLang from 'shiki/langs/html.mjs'
+import MdcLang from 'shiki/langs/mdc.mjs'
+import TsLang from 'shiki/langs/typescript.mjs'
+import VueLang from 'shiki/langs/vue.mjs'
+import ScssLang from 'shiki/langs/scss.mjs'
+import YamlLang from 'shiki/langs/yaml.mjs'
+
+const data = ref<Record<string, any> | null>(null)
+const body = ref<Record<string, any> | null>(null)
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
@@ -68,8 +87,41 @@ const cancelEdit = () => {
   console.log('canceled')
 }
 
+const updateRenderer = async (markdownContent: string) => {
+  const mdcTree = await parseMarkdown(markdownContent, {
+    rehype: {
+      plugins: {
+        shikiji: {
+          instance: rehypeHighlight,
+          options: {
+            theme: 'material-theme-palenight',
+            highlighter: createShikiHighlighter({
+              bundledThemes: {
+                'material-theme-palenight': MaterialThemePalenight,
+              },
+              bundledLangs: {
+                html: HtmlLang,
+                mdc: MdcLang,
+                vue: VueLang,
+                yml: YamlLang,
+                scss: ScssLang,
+                ts: TsLang,
+                typescript: TsLang,
+              },
+            }),
+          },
+        },
+      },
+    },
+  })
+  // Update refs
+  data.value = mdcTree.data
+  body.value = mdcTree.body
+}
+
 const contentSaved = ({ content, frontmatter }: any) => {
   originalContent.value = editorContent.value
+  updateRenderer(editorContent.value)
   console.log('saved! %o', content, frontmatter)
 }
 
@@ -85,6 +137,8 @@ const editorContent = ref<string>('')
 onBeforeMount(async () => {
   // Simulate fetching the document
   const { content: markdownContent } = await mockMarkdownResponse()
+
+  await updateRenderer(markdownContent)
 
   // Store the original content in case the user cancels
   originalContent.value = markdownContent
