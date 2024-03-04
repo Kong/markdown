@@ -91,7 +91,7 @@ tabs:
   - key: mac
     title: Mac
     copyText: This is how you run the script on a Mac
-    - key: windows
+  - key: windows
     title: Windows
     copyText: This is how you run the script on a Windows machine
 ---
