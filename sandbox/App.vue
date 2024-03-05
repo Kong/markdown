@@ -21,9 +21,9 @@
       <hr>
       <Suspense>
         <MDCRenderer
-          v-if="body"
-          :body="body"
-          :data="data"
+          v-if="ast.body"
+          :body="ast.body"
+          :data="ast.data"
         />
       </Suspense>
       <MarkdownUi
@@ -57,8 +57,10 @@ import VueLang from 'shiki/langs/vue.mjs'
 import ScssLang from 'shiki/langs/scss.mjs'
 import YamlLang from 'shiki/langs/yaml.mjs'
 
-const data = ref<Record<string, any> | null>(null)
-const body = ref<Record<string, any> | null>(null)
+const ast = ref<{ data: Record<string, any> | null, body: Record<string, any> | null }>({
+  data: null,
+  body: null,
+})
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
@@ -88,7 +90,7 @@ const cancelEdit = () => {
 }
 
 const updateRenderer = async (markdownContent: string) => {
-  const mdcTree = await parseMarkdown(markdownContent, {
+  const { data, body } = await parseMarkdown(markdownContent, {
     rehype: {
       plugins: {
         shikiji: {
@@ -114,9 +116,10 @@ const updateRenderer = async (markdownContent: string) => {
       },
     },
   })
+
   // Update refs
-  data.value = mdcTree.data
-  body.value = mdcTree.body
+  ast.value.data = data
+  ast.value.body = body
 }
 
 const contentSaved = ({ content, frontmatter }: any) => {
