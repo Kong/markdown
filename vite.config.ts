@@ -54,7 +54,7 @@ export default defineConfig({
     minify: true,
     sourcemap: true,
     rollupOptions: {
-      external: process.env.USE_SANDBOX ? ['#mdc-highlighter'] : ['vue', '#mdc-highlighter'],
+      external: process.env.USE_SANDBOX ? undefined : ['vue'],
       output: process.env.USE_SANDBOX
         ? undefined
         : {
