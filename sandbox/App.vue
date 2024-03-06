@@ -21,7 +21,7 @@
       <hr>
       <Suspense>
         <MDCRenderer
-          v-if="ast.body"
+          v-if="ast?.body"
           :body="ast.body"
           :data="ast.data"
         />
@@ -47,20 +47,12 @@ import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 import { usePreferredColorScheme } from '@vueuse/core'
-import { MDCRenderer, parseMarkdown, rehypeHighlight, createShikiHighlighter } from '@nuxtjs/mdc/runtime'
-// shiki imports
-import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
-import HtmlLang from 'shiki/langs/html.mjs'
-import MdcLang from 'shiki/langs/mdc.mjs'
-import TsLang from 'shiki/langs/typescript.mjs'
-import VueLang from 'shiki/langs/vue.mjs'
-import ScssLang from 'shiki/langs/scss.mjs'
-import YamlLang from 'shiki/langs/yaml.mjs'
+import { MDCRenderer } from '@nuxtjs/mdc/runtime'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import composables from '../src/composables'
 
-const ast = ref<{ data: Record<string, any> | null, body: Record<string, any> | null }>({
-  data: null,
-  body: null,
-})
+const ast = ref<MDCParserResult | null>(null)
+const parse = composables.useMarkdownParser()
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
@@ -90,36 +82,9 @@ const cancelEdit = () => {
 }
 
 const updateRenderer = async (markdownContent: string) => {
-  const { data, body } = await parseMarkdown(markdownContent, {
-    rehype: {
-      plugins: {
-        shikiji: {
-          instance: rehypeHighlight,
-          options: {
-            theme: 'material-theme-palenight',
-            highlighter: createShikiHighlighter({
-              bundledThemes: {
-                'material-theme-palenight': MaterialThemePalenight,
-              },
-              bundledLangs: {
-                html: HtmlLang,
-                mdc: MdcLang,
-                vue: VueLang,
-                yml: YamlLang,
-                scss: ScssLang,
-                ts: TsLang,
-                typescript: TsLang,
-              },
-            }),
-          },
-        },
-      },
-    },
-  })
+  ast.value = await parse(markdownContent)
 
-  // Update refs
-  ast.value.data = data
-  ast.value.body = body
+  console.log('ast', ast.value)
 }
 
 const contentSaved = ({ content, frontmatter }: any) => {
