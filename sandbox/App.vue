@@ -19,6 +19,13 @@
         Make changes to the document and see the rendered markdown in the preview pane. For a better editing experience, try enabling the <b>Fullscreen</b> editor.
       </p>
       <hr>
+      <Suspense>
+        <MDCRenderer
+          v-if="ast?.body"
+          :body="ast.body"
+          :data="ast.data"
+        />
+      </Suspense>
       <MarkdownUi
         v-model="editorContent"
         downloadable
@@ -40,6 +47,12 @@ import { onBeforeMount, ref, computed } from 'vue'
 import { MarkdownUi } from '../src'
 import mockResponse from './mock-document-response'
 import { usePreferredColorScheme } from '@vueuse/core'
+import { MDCRenderer } from '@nuxtjs/mdc/runtime'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import composables from '../src/composables'
+
+const ast = ref<MDCParserResult | null>(null)
+const parse = composables.useMarkdownParser()
 
 const preferredColorScheme = usePreferredColorScheme()
 // Set the active theme from props.theme if set; otherwise use the user's browser's preferred color scheme
@@ -68,8 +81,15 @@ const cancelEdit = () => {
   console.log('canceled')
 }
 
+const updateRenderer = async (markdownContent: string) => {
+  ast.value = await parse(markdownContent)
+
+  console.log('ast', ast.value)
+}
+
 const contentSaved = ({ content, frontmatter }: any) => {
   originalContent.value = editorContent.value
+  updateRenderer(editorContent.value)
   console.log('saved! %o', content, frontmatter)
 }
 
@@ -85,6 +105,8 @@ const editorContent = ref<string>('')
 onBeforeMount(async () => {
   // Simulate fetching the document
   const { content: markdownContent } = await mockMarkdownResponse()
+
+  await updateRenderer(markdownContent)
 
   // Store the original content in case the user cancels
   originalContent.value = markdownContent
