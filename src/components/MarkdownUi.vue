@@ -80,55 +80,61 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
-          <div class="content-buttons">
-            <div
-              v-if="currentMode === 'read' && !!rawMarkdown?.length && downloadable"
-              class="download-button"
+          <div class="content-actions">
+            <slot
+              :download="currentMode === 'read' && !!rawMarkdown?.length && downloadable ? download : undefined"
+              :edit="currentMode === 'read' && editable ? edit : undefined"
+              name="content-actions"
             >
-              <slot
-                :download="download"
-                name="download"
+              <div
+                v-if="currentMode === 'read' && !!rawMarkdown?.length && downloadable"
+                class="download-button"
               >
-                <ToolbarButton
-                  appearance="primary"
-                  aria-label="Download markdown document"
-                  data-testid="download"
-                  :icon="false"
-                  :tabindex="0"
-                  @click="download"
+                <slot
+                  :download="download"
+                  name="download"
                 >
-                  <DownloadIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                  <span class="content-button-text">Download</span>
-                </ToolbarButton>
-              </slot>
-            </div>
-            <div
-              v-if="currentMode === 'read' && editable"
-              class="edit-button"
-            >
-              <slot
-                :edit="edit"
-                name="edit"
+                  <ToolbarButton
+                    appearance="primary"
+                    aria-label="Download markdown document"
+                    data-testid="download"
+                    :icon="false"
+                    :tabindex="0"
+                    @click="download"
+                  >
+                    <DownloadIcon
+                      decorative
+                      :size="KUI_ICON_SIZE_30"
+                    />
+                    <span class="content-button-text">Download</span>
+                  </ToolbarButton>
+                </slot>
+              </div>
+              <div
+                v-if="currentMode === 'read' && editable"
+                class="edit-button"
               >
-                <ToolbarButton
-                  appearance="primary"
-                  aria-label="Edit markdown document"
-                  data-testid="edit"
-                  :icon="false"
-                  :tabindex="0"
-                  @click="edit"
+                <slot
+                  :edit="edit"
+                  name="edit"
                 >
-                  <EditIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                  <span class="content-button-text">Edit</span>
-                </ToolbarButton>
-              </slot>
-            </div>
+                  <ToolbarButton
+                    appearance="primary"
+                    aria-label="Edit markdown document"
+                    data-testid="edit"
+                    :icon="false"
+                    :tabindex="0"
+                    @click="edit"
+                  >
+                    <EditIcon
+                      decorative
+                      :size="KUI_ICON_SIZE_30"
+                    />
+                    <span class="content-button-text">Edit</span>
+                  </ToolbarButton>
+                </slot>
+              </div>
+            </slot>
           </div>
           <MarkdownContent
             :class="{ 'html-preview': htmlPreview }"
@@ -681,7 +687,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       padding-top: 0;
     }
 
-    .content-buttons {
+    .content-actions {
       align-items: center;
       display: flex;
       gap: var(--kui-space-20, $kui-space-20);

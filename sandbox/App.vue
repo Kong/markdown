@@ -30,7 +30,13 @@
         @save="contentSaved"
         @update:frontmatter="frontmatterUpdated"
         @update:model-value="contentUpdated"
-      />
+      >
+        <template #content-actions="{ download, edit }">
+          <button @click="edit()">
+            Custom
+          </button>
+        </template>
+      </MarkdownUi>
     </main>
   </div>
 </template>

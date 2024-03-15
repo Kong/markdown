@@ -225,6 +225,10 @@ A slot for providing a custom element (i.e. `button`) that enables the `Edit` mo
 
 When the `edit` button (native, or custom) is clicked, the component will automatically determine whether to enable `edit` or `split` mode based on the browser's viewport width. On larger screens, the editor will launch in `split` mode.
 
+#### `content-actions`
+
+A slot for providing "floating actions" at the top right of the rendered markdown document. This slot also exposes the `edit` and `download` methods mentioned above.
+
 #### `download`
 
 A slot for providing a custom element (i.e. `button`) that triggers the `Download` functionality within the component. The slot exposes the `download` method to trigger the built-in function.
