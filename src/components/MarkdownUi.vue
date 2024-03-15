@@ -80,10 +80,13 @@
           class="markdown-content-container"
           data-testid="markdown-content-container"
         >
-          <div class="content-actions">
+          <div
+            v-if="currentMode === 'read'"
+            class="content-actions"
+          >
             <slot
-              :download="currentMode === 'read' && !!rawMarkdown?.length && downloadable ? download : undefined"
-              :edit="currentMode === 'read' && editable ? edit : undefined"
+              :download="!!rawMarkdown?.length && downloadable ? download : undefined"
+              :edit="editable ? edit : undefined"
               name="content-actions"
             >
               <div
