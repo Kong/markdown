@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/Kong/markdown/compare/v1.3.1...v1.3.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* tooltip font weight ([9b5b9fd](https://github.com/Kong/markdown/commit/9b5b9fdfe86a96192775ba7ca6afbbc01d4c77d0))
+
 ## [1.3.1](https://github.com/Kong/markdown/compare/v1.3.0...v1.3.1) (2024-03-18)
 
 
