@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Kong/markdown/compare/v1.3.0...v1.3.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* preview min-height ([b449599](https://github.com/Kong/markdown/commit/b449599ca0be8aca03209d5c12cb112739543b24))
+
 # [1.3.0](https://github.com/Kong/markdown/compare/v1.2.0...v1.3.0) (2024-03-18)
 
 
