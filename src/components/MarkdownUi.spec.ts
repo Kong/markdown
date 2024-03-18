@@ -1,6 +1,6 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import MarkdownUi from './MarkdownUi.vue'
 import { InlineFormatWrapper, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, MARKDOWN_TEMPLATE_LINK } from '@/constants'
 import { KUI_BREAKPOINT_PHABLET } from '@kong/design-tokens'
@@ -722,6 +722,32 @@ describe('<MarkdownUi />', () => {
           expect(wrapper.findTestId('markdown-content').find(markdownSelector).isVisible()).toBe(true)
         })
       }
+    })
+  })
+
+  describe('slots', () => {
+    it('displays slot content if provided', async () => {
+      const buttonText = 'Custom toolbar button'
+
+      const wrapper = mount(MarkdownUi, {
+        props: {
+          mode: 'read',
+          editable: true,
+          downloadable: true,
+          modelValue: defaultContent,
+        },
+        slots: {
+          'content-actions': h('button', { 'data-testid': 'custom' }, buttonText),
+        },
+      })
+
+      expect(wrapper.get('.content-actions').isVisible()).toBe(true)
+      // Slotted button
+      expect(wrapper.findTestId('custom').isVisible()).toBe(true)
+      expect(wrapper.findTestId('custom').text()).toEqual(buttonText)
+      // Default slot content should not exist
+      expect(wrapper.findTestId('download').exists()).toBe(false)
+      expect(wrapper.findTestId('edit').exists()).toBe(false)
     })
   })
 })
