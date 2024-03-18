@@ -683,7 +683,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
   .markdown-preview {
     background-color: var(--kui-color-background, $kui-color-background);
     box-sizing: border-box; // Ensure the padding is calculated in the element's width
-    min-height: v-bind('TOOLBAR_HEIGHT');
+    min-height: calc(v-bind('TOOLBAR_HEIGHT') + 4px);
     position: relative;
 
     @media (min-width: $kui-breakpoint-phablet) {
