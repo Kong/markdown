@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Kong/markdown/compare/v1.2.0...v1.3.0) (2024-03-18)
+
+
+### Features
+
+* content actions slot ([#51](https://github.com/Kong/markdown/issues/51)) ([b8aa3b0](https://github.com/Kong/markdown/commit/b8aa3b0c628397e4df89b18967821a8a643b407f))
+
 # [1.2.0](https://github.com/Kong/markdown/compare/v1.1.0...v1.2.0) (2024-02-13)
 
 
