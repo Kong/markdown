@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/Kong/markdown/compare/v1.3.2...v1.3.3) (2024-03-19)
+
+
+### Bug Fixes
+
+* **langs:** remove some languages ([#54](https://github.com/Kong/markdown/issues/54)) ([a4f6cc5](https://github.com/Kong/markdown/commit/a4f6cc5dff51a1da4f21c134777a9ffd1ab62309))
+
 ## [1.3.2](https://github.com/Kong/markdown/compare/v1.3.1...v1.3.2) (2024-03-18)
 
 
