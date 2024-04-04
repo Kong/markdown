@@ -7,6 +7,7 @@ jobs:
   commitlint:
     if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
