@@ -78,6 +78,7 @@ export default function useShiki() {
         // import('shiki/langs/hjson.mjs'),
         // import('shiki/langs/hlsl.mjs'),
         import('shiki/langs/html.mjs'),
+        import('shiki/langs/http.mjs'),
         // import('shiki/langs/imba.mjs'),
         import('shiki/langs/ini.mjs'),
         import('shiki/langs/java.mjs'),
