@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/Kong/markdown/compare/v1.3.3...v1.3.4) (2024-04-04)
+
+
+### Bug Fixes
+
+* **langs:** add http ([#58](https://github.com/Kong/markdown/issues/58)) ([98820c8](https://github.com/Kong/markdown/commit/98820c8b9fc959cc84135e29de66e03d3ac2d430))
+
 ## [1.3.3](https://github.com/Kong/markdown/compare/v1.3.2...v1.3.3) (2024-03-19)
 
 
