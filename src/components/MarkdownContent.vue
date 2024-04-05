@@ -1,11 +1,21 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
-  <div
+  <!-- <div
     class="markdown-content"
     :class="[`mode-${mode}`, `theme-${activeTheme}`]"
     data-testid="markdown-content"
     v-html="markdownContent"
-  />
+  /> -->
+  <Suspense>
+    <MDCRenderer
+      v-if="ast?.body"
+      :body="ast.body"
+      class="markdown-content"
+      :class="[`mode-${mode}`, `theme-${activeTheme}`]"
+      :data="ast.data"
+      data-testid="markdown-content"
+    />
+  </Suspense>
   <!-- eslint-enable vue/no-v-html -->
 </template>
 
@@ -14,6 +24,10 @@ import { ref, watch, inject } from 'vue'
 import type { Ref } from 'vue'
 import { MODE_INJECTION_KEY, THEME_INJECTION_KEY } from '@/injection-keys'
 import type { MarkdownMode, Theme } from '@/types'
+// MDC imports
+import MDCRenderer from '@nuxtjs/mdc/runtime/components/MDCRenderer.vue'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import useMarkdownParser from '../composables/useMarkdownParser'
 
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const activeTheme: Ref<Theme> = inject(THEME_INJECTION_KEY, ref('light'))
@@ -27,9 +41,14 @@ const props = defineProps({
 
 const markdownContent = ref<string>(props.content)
 
-watch(() => props.content, (content: string): void => {
+const ast = ref<MDCParserResult | null>(null)
+const parse = useMarkdownParser()
+
+watch(() => props.content, async (content: string): Promise<void> => {
   markdownContent.value = content
+  ast.value = await parse(markdownContent.value)
 }, { immediate: true })
+
 </script>
 
 <style lang="scss" scoped>

@@ -150,7 +150,7 @@
           </div>
           <MarkdownContent
             :class="{ 'html-preview': htmlPreview }"
-            :content="htmlPreview ? markdownPreviewHtml : markdownHtml"
+            :content="rawMarkdown"
           />
         </div>
       </div>
@@ -549,6 +549,12 @@ const initMonacoEditor = (): void => {
     value: rawMarkdown.value,
     language: 'markdown',
     theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
+    minimap: {
+      enabled: false,
+    },
+    renderWhitespace: 'boundary',
+    trimAutoWhitespace: true,
+    wordWrap: 'on',
   })
 
   // Update code ref when editor value changes
