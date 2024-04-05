@@ -54,7 +54,7 @@
         class="markdown-editor"
         data-testid="markdown-editor"
       >
-        <textarea
+        <!-- <textarea
           :id="textareaId"
           ref="textarea"
           autocapitalize="off"
@@ -68,6 +68,15 @@
           translate="no"
           :value="rawMarkdown"
           @input="$event => onContentEdit($event as any)"
+        /> -->
+        <div
+          :id="textareaId"
+          class="markdown-editor-textarea"
+          :class="[scrollableClass]"
+          data-testid="markdown-editor-textarea"
+          placeholder="Begin editing..."
+          spellcheck="false"
+          translate="no"
         />
       </div>
       <div
@@ -166,6 +175,7 @@ import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOIN
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 import type { MarkdownItEnv } from '@mdit-vue/types'
+import * as monaco from 'monaco-editor'
 
 const props = defineProps({
   /** The markdown content */
@@ -235,6 +245,7 @@ const emit = defineEmits<{
 
 // Initialize template refs
 const textarea = ref<HTMLTextAreaElement | null>(null)
+let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
 const markdownComponent = ref<HTMLDivElement | null>(null)
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
@@ -255,7 +266,7 @@ const activeTheme = computed(():Theme => props.theme ? props.theme : (preferredC
 // props.editable will override the `props.mode`
 const currentMode = ref<MarkdownMode>(['edit', 'split', 'preview'].includes(props.mode) && props.editable ? props.mode : 'read')
 // Is fullscreen enabled
-const isFullscreen = ref<boolean>(false)
+const isFullscreen = ref<boolean>(true)
 // When true, show the HTML preview instead of the rendered markdown preview
 const htmlPreview = ref<boolean>(false)
 
@@ -299,6 +310,12 @@ watch(currentMode, async (mode: MarkdownMode): Promise<void> => {
 
   // Re-synchronize the scroll containers
   initializeSyncScroll()
+
+  monacoEditor?.dispose()
+
+  if (['edit', 'split'].includes(mode)) {
+    initMonacoEditor()
+  }
 })
 
 // Get rendered markdown
@@ -526,6 +543,26 @@ const copyCodeBlock = async (e: any): Promise<void> => {
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textarea, rawMarkdown, tabSize, emulateInputEvent)
 
+const initMonacoEditor = (): void => {
+  // Create Monaco editor
+  monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
+    value: rawMarkdown.value,
+    language: 'markdown',
+    theme: 'vs-dark',
+  })
+
+  // Update code ref when editor value changes
+  monacoEditor.onDidChangeModelContent((e) => {
+    const event: TextAreaInputEvent = {
+      target: {
+        value: monacoEditor!.getValue(),
+      },
+    }
+    onContentEdit(event)
+    console.log('changed', event)
+  })
+}
+
 onMounted(async () => {
   // Initialize markdown-it
   await initMarkdownIt(activeTheme.value)
@@ -545,6 +582,10 @@ onMounted(async () => {
     await nextTick()
     // Synchronize the scroll containers
     initializeSyncScroll()
+  }
+
+  if (['edit', 'split'].includes(currentMode.value)) {
+    initMonacoEditor()
   }
 })
 
@@ -724,7 +765,8 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     flex-direction: column;
   }
 
-  textarea.markdown-editor-textarea {
+  // textarea.markdown-editor-textarea {
+  .markdown-editor-textarea {
     -webkit-appearance: none; // need this to allow box-shadow to apply on mobile
     appearance: none;
     background-color: var(--kui-color-background, $kui-color-background);
@@ -786,11 +828,13 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
     }
 
     .markdown-preview,
-    textarea.markdown-editor-textarea {
+    // textarea.markdown-editor-textarea {
+    .markdown-editor-textarea {
       background-color: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
     }
 
-    textarea.markdown-editor-textarea {
+    // textarea.markdown-editor-textarea {
+    .markdown-editor-textarea {
       color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
       &:hover,
