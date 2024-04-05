@@ -548,11 +548,11 @@ const initMonacoEditor = (): void => {
   monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
     value: rawMarkdown.value,
     language: 'markdown',
-    theme: 'vs-dark',
+    theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
   })
 
   // Update code ref when editor value changes
-  monacoEditor.onDidChangeModelContent((e) => {
+  monacoEditor.onDidChangeModelContent(() => {
     const event: TextAreaInputEvent = {
       target: {
         value: monacoEditor!.getValue(),
