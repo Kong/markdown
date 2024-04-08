@@ -54,7 +54,7 @@ const frontmatterUpdated = (frontmatter: Record<string, any> | undefined) => {
   console.log('frontmatter updated', frontmatter)
 }
 
-const mode = ref<string>('read')
+const mode = ref<string>('split')
 const modeChanged = (m: string) => {
   mode.value = m
   if (mode.value === 'edit' || mode.value === 'split') {
