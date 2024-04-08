@@ -1,21 +1,18 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
-  <!-- <div
+  <div
     class="markdown-content"
     :class="[`mode-${mode}`, `theme-${activeTheme}`]"
-    data-testid="markdown-content"
-    v-html="markdownContent"
-  /> -->
-  <Suspense>
-    <MDCRenderer
-      v-if="ast?.body"
-      :body="ast.body"
-      class="markdown-content"
-      :class="[`mode-${mode}`, `theme-${activeTheme}`]"
-      :data="ast.data"
-      data-testid="markdown-content"
-    />
-  </Suspense>
+  >
+    <Suspense>
+      <MDCRenderer
+        v-if="ast?.body"
+        :body="ast.body"
+        :data="ast.data"
+        data-testid="markdown-content"
+      />
+    </Suspense>
+  </div>
   <!-- eslint-enable vue/no-v-html -->
 </template>
 

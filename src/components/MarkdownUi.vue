@@ -175,7 +175,9 @@ import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOIN
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 import type { MarkdownItEnv } from '@mdit-vue/types'
+// Monaco Editor
 import * as monaco from 'monaco-editor'
+import { language as mdcLanguage } from '../mdc.tmLanguage'
 
 const props = defineProps({
   /** The markdown content */
@@ -544,18 +546,43 @@ const copyCodeBlock = async (e: any): Promise<void> => {
 composables.useKeyboardShortcuts(textarea, rawMarkdown, tabSize, emulateInputEvent)
 
 const initMonacoEditor = (): void => {
+  if (monacoEditor) {
+    monacoEditor.dispose()
+  }
+
   // Create Monaco editor
   monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
     value: rawMarkdown.value,
-    language: 'markdown',
+    language: 'mdc',
     theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
+    tabSize: 2,
+    wordWrap: 'on',
+    insertSpaces: true,
+    autoClosingQuotes: 'always',
+    detectIndentation: false,
+    renderWhitespace: 'boundary',
+    trimAutoWhitespace: true,
+    folding: false,
+    glyphMargin: false,
+    lineNumbersMinChars: 3,
+    overviewRulerLanes: 0,
     minimap: {
       enabled: false,
     },
-    renderWhitespace: 'boundary',
-    trimAutoWhitespace: true,
-    wordWrap: 'on',
   })
+
+  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+    ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+    noUnusedLocals: false,
+    noUnusedParameters: false,
+    allowUnreachableCode: true,
+    allowUnusedLabels: true,
+    strict: true,
+  })
+
+  monaco.languages.register({ id: 'mdc' })
+  // Register a tokens provider for the language
+  monaco.languages.setMonarchTokensProvider('mdc', mdcLanguage)
 
   // Update code ref when editor value changes
   monacoEditor.onDidChangeModelContent(() => {

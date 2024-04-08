@@ -181,6 +181,9 @@ devDependencies:
   jsdom:
     specifier: ^23.2.0
     version: 23.2.0
+  monaco-editor-core:
+    specifier: ^0.47.0
+    version: 0.47.0
   postcss:
     specifier: ^8.4.33
     version: 8.4.33
@@ -6986,6 +6989,10 @@ packages:
       pkg-types: 1.0.3
       ufo: 1.5.3
     dev: false
+
+  /monaco-editor-core@0.47.0:
+    resolution: {integrity: sha512-xho7dsmSYOIek6bkMKQApWHVyoOBQ1eaBIE6CIlER40paTN0r0efrig6Q9QkCacfzIuNNxNjyb1uMVoMpi8gcA==}
+    dev: true
 
   /monaco-editor@0.47.0:
     resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
