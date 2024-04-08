@@ -177,6 +177,11 @@ import MermaidJs from 'mermaid'
 import type { MarkdownItEnv } from '@mdit-vue/types'
 // Monaco Editor
 import * as monaco from 'monaco-editor'
+import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import { language as mdcLanguage } from '../mdc.tmLanguage'
 
 const props = defineProps({
@@ -550,6 +555,27 @@ const initMonacoEditor = (): void => {
     monacoEditor.dispose()
   }
 
+  // @ts-ignore
+  self.MonacoEnvironment = {
+    getWorker(_: any, label: string) {
+      if (label === 'json') {
+        return new JsonWorker()
+      }
+      if (label === 'css' || label === 'scss' || label === 'less') {
+        return new CssWorker()
+      }
+      if (label === 'html' || label === 'handlebars' || label === 'razor') {
+        return new HtmlWorker()
+      }
+      if (label === 'typescript' || label === 'javascript') {
+        return new TsWorker()
+      }
+      return new EditorWorker()
+    },
+  }
+
+  monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
+
   // Create Monaco editor
   monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
     value: rawMarkdown.value,
@@ -557,7 +583,7 @@ const initMonacoEditor = (): void => {
     theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
     tabSize: 2,
     wordWrap: 'on',
-    insertSpaces: true,
+    insertSpaces: true, // insert spaces when pressing Tab
     autoClosingQuotes: 'always',
     detectIndentation: false,
     renderWhitespace: 'boundary',
@@ -566,6 +592,7 @@ const initMonacoEditor = (): void => {
     glyphMargin: false,
     lineNumbersMinChars: 3,
     overviewRulerLanes: 0,
+    automaticLayout: true,
     minimap: {
       enabled: false,
     },
@@ -592,7 +619,6 @@ const initMonacoEditor = (): void => {
       },
     }
     onContentEdit(event)
-    console.log('changed', event)
   })
 }
 
