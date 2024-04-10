@@ -14,6 +14,9 @@ dependencies:
   '@nuxtjs/mdc':
     specifier: npm:@nuxtjs/mdc-edge@0.6.2-28517347.0c8167c
     version: /@nuxtjs/mdc-edge@0.6.2-28517347.0c8167c
+  '@nuxtlabs/monarch-mdc':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -1358,6 +1361,10 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: false
+
+  /@nuxtlabs/monarch-mdc@0.2.0:
+    resolution: {integrity: sha512-4WrLWfMqzQzkmQV3gWAK87ziLOHSnm3Bk69+q2VSLAnKWk6GUhBDW41ggq6/T3x0Bdo21lkaE3v6wdVnbFwPDw==}
     dev: false
 
   /@octokit/auth-token@4.0.0:

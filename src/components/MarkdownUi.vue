@@ -182,7 +182,8 @@ import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-import { language as mdcLanguage } from '../mdc.tmLanguage'
+// import { language as markdownLanguage } from '../mdc.tmLanguage'
+import { language as markdownLanguage } from '@nuxtlabs/monarch-mdc'
 
 const props = defineProps({
   /** The markdown content */
@@ -609,7 +610,7 @@ const initMonacoEditor = (): void => {
 
   monaco.languages.register({ id: 'mdc' })
   // Register a tokens provider for the language
-  monaco.languages.setMonarchTokensProvider('mdc', mdcLanguage)
+  monaco.languages.setMonarchTokensProvider('mdc', markdownLanguage)
 
   // Update code ref when editor value changes
   monacoEditor.onDidChangeModelContent(() => {

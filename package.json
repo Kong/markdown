@@ -56,6 +56,7 @@
     "@kong/icons": "^1.8.14",
     "@mdit-vue/plugin-frontmatter": "^2.0.0",
     "@nuxtjs/mdc": "npm:@nuxtjs/mdc-edge@0.6.2-28517347.0c8167c",
+    "@nuxtlabs/monarch-mdc": "^0.2.0",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.9.0",
     "buffer": "^6.0.3",
