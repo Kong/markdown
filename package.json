@@ -87,7 +87,7 @@
     "@semantic-release/git": "^10.0.1",
     "@shikijs/markdown-it": "^1.2.0",
     "@types/jsdom": "^21.1.6",
-    "@types/markdown-it": "^13.0.7",
+    "@types/markdown-it": "^14.0.0",
     "@types/markdown-it-attrs": "^4.1.3",
     "@types/markdown-it-emoji": "^2.0.4",
     "@types/markdown-it-footnote": "^3.0.3",
