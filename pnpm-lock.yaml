@@ -175,8 +175,8 @@ importers:
         specifier: ^9.22.0
         version: 9.22.0(eslint@8.57.0)
       jsdom:
-        specifier: ^23.2.0
-        version: 23.2.0
+        specifier: ^24.0.0
+        version: 24.0.0
       postcss:
         specifier: ^8.4.33
         version: 8.4.33
@@ -230,7 +230,7 @@ importers:
         version: 7.0.13(rollup@4.14.0)(vite@5.1.7(@types/node@20.11.5)(sass@1.71.1))
       vitest:
         specifier: 1.3.1
-        version: 1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@23.2.0)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@24.0.0)(sass@1.71.1)
       vue:
         specifier: ^3.4.12
         version: 3.4.14(typescript@5.3.3)
@@ -250,9 +250,6 @@ packages:
 
   '@antfu/utils@0.7.7':
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
-
-  '@asamuzakjp/dom-selector@2.0.2':
-    resolution: {integrity: sha512-x1KXOatwofR6ZAYzXRBL5wrdV0vwNxlTCK9NCuLqAzQYARqGcvFwiJA6A1ERuh+dgeA4Dxm3JBYictIes+SqUQ==}
 
   '@babel/code-frame@7.23.5':
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -1468,9 +1465,6 @@ packages:
 
   before-after-hook@2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
-
-  bidi-js@1.0.3:
-    resolution: {integrity: sha512-RKshQI1R3YQ+n9YJz2QQ147P66ELpa1FQEg20Dk8oW9t2KgLbpDLLp9aGZ7y8WHSshDknG0bknqGw5/tyCs5tw==}
 
   binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
@@ -2952,8 +2946,8 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
-  jsdom@23.2.0:
-    resolution: {integrity: sha512-L88oL7D/8ufIES+Zjz7v0aes+oBMh2Xnh3ygWvL0OaICOomKEPKuPnIfBJekiXr+BHbbMjrWn/xqrDQuxFTeyA==}
+  jsdom@24.0.0:
+    resolution: {integrity: sha512-UDS2NayCvmXSXVP6mpTj+73JnNQadZlr9N68189xib2tx5Mls7swlTNao26IoHv46BZJFvXygyRtyXd1feAk1A==}
     engines: {node: '>=18'}
     peerDependencies:
       canvas: ^2.11.2
@@ -3537,6 +3531,9 @@ packages:
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
+
+  nwsapi@2.2.9:
+    resolution: {integrity: sha512-2f3F0SEEer8bBu0dsNCFF50N0cTThV1nWFYcEYFZttdW0lDAoybv9cQoK7X7/68Z89S7FoRrVjP1LPX4XRf9vg==}
 
   object-inspect@1.13.1:
     resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
@@ -4820,12 +4817,6 @@ snapshots:
 
   '@antfu/utils@0.7.7': {}
 
-  '@asamuzakjp/dom-selector@2.0.2':
-    dependencies:
-      bidi-js: 1.0.3
-      css-tree: 2.3.1
-      is-potential-custom-element-name: 1.0.1
-
   '@babel/code-frame@7.23.5':
     dependencies:
       '@babel/highlight': 7.23.4
@@ -5861,7 +5852,7 @@ snapshots:
       pathe: 1.1.2
       picocolors: 1.0.0
       sirv: 2.0.4
-      vitest: 1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@23.2.0)(sass@1.71.1)
+      vitest: 1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@24.0.0)(sass@1.71.1)
 
   '@vitest/utils@1.3.1':
     dependencies:
@@ -6248,10 +6239,6 @@ snapshots:
   base64-js@1.5.1: {}
 
   before-after-hook@2.2.3: {}
-
-  bidi-js@1.0.3:
-    dependencies:
-      require-from-string: 2.0.2
 
   binary-extensions@2.2.0: {}
 
@@ -7923,9 +7910,8 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@23.2.0:
+  jsdom@24.0.0:
     dependencies:
-      '@asamuzakjp/dom-selector': 2.0.2
       cssstyle: 4.0.1
       data-urls: 5.0.0
       decimal.js: 10.4.3
@@ -7934,6 +7920,7 @@ snapshots:
       http-proxy-agent: 7.0.0
       https-proxy-agent: 7.0.2
       is-potential-custom-element-name: 1.0.1
+      nwsapi: 2.2.9
       parse5: 7.1.2
       rrweb-cssom: 0.6.0
       saxes: 6.0.0
@@ -8497,6 +8484,8 @@ snapshots:
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
+
+  nwsapi@2.2.9: {}
 
   object-inspect@1.13.1: {}
 
@@ -9641,7 +9630,7 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.71.1
 
-  vitest@1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@23.2.0)(sass@1.71.1):
+  vitest@1.3.1(@types/node@20.11.5)(@vitest/ui@1.3.1)(jsdom@24.0.0)(sass@1.71.1):
     dependencies:
       '@vitest/expect': 1.3.1
       '@vitest/runner': 1.3.1
@@ -9666,7 +9655,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.11.5
       '@vitest/ui': 1.3.1(vitest@1.3.1)
-      jsdom: 23.2.0
+      jsdom: 24.0.0
     transitivePeerDependencies:
       - less
       - lightningcss
