@@ -53,7 +53,7 @@
     "vue": ">= 3.3.13 < 4"
   },
   "dependencies": {
-    "@kong/icons": "^1.9.0",
+    "@kong/icons": "^1.9.1",
     "@mdit-vue/plugin-frontmatter": "^2.0.0",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^10.9.0",
