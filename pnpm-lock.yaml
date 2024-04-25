@@ -34,7 +34,7 @@ importers:
         version: 2.0.0
       markdown-it-anchor:
         specifier: ^8.6.7
-        version: 8.6.7(@types/markdown-it@13.0.7)(markdown-it@14.0.0)
+        version: 8.6.7(@types/markdown-it@14.0.1)(markdown-it@14.0.0)
       markdown-it-attrs:
         specifier: ^4.1.6
         version: 4.1.6(markdown-it@14.0.0)
@@ -106,8 +106,8 @@ importers:
         specifier: ^21.1.6
         version: 21.1.6
       '@types/markdown-it':
-        specifier: ^13.0.7
-        version: 13.0.7
+        specifier: ^14.0.0
+        version: 14.0.1
       '@types/markdown-it-attrs':
         specifier: ^4.1.3
         version: 4.1.3
@@ -1064,6 +1064,9 @@ packages:
 
   '@types/markdown-it@13.0.7':
     resolution: {integrity: sha512-U/CBi2YUUcTHBt5tjO2r5QV/x0Po6nsYwQU4Y04fBS6vfoImaiZ6f8bi3CjTCxBPQSO1LMyUqkByzi8AidyxfA==}
+
+  '@types/markdown-it@14.0.1':
+    resolution: {integrity: sha512-6WfOG3jXR78DW8L5cTYCVVGAsIFZskRHCDo5tbqa+qtKVt4oDRVH7hyIWu1SpDQJlmIoEivNQZ5h+AGAOrgOtQ==}
 
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
@@ -5704,17 +5707,22 @@ snapshots:
 
   '@types/markdown-it-attrs@4.1.3':
     dependencies:
-      '@types/markdown-it': 13.0.7
+      '@types/markdown-it': 14.0.1
 
   '@types/markdown-it-emoji@2.0.4':
     dependencies:
-      '@types/markdown-it': 13.0.7
+      '@types/markdown-it': 14.0.1
 
   '@types/markdown-it-footnote@3.0.3':
     dependencies:
-      '@types/markdown-it': 13.0.7
+      '@types/markdown-it': 14.0.1
 
   '@types/markdown-it@13.0.7':
+    dependencies:
+      '@types/linkify-it': 3.0.5
+      '@types/mdurl': 1.0.5
+
+  '@types/markdown-it@14.0.1':
     dependencies:
       '@types/linkify-it': 3.0.5
       '@types/mdurl': 1.0.5
@@ -8110,9 +8118,9 @@ snapshots:
 
   markdown-it-abbr@2.0.0: {}
 
-  markdown-it-anchor@8.6.7(@types/markdown-it@13.0.7)(markdown-it@14.0.0):
+  markdown-it-anchor@8.6.7(@types/markdown-it@14.0.1)(markdown-it@14.0.0):
     dependencies:
-      '@types/markdown-it': 13.0.7
+      '@types/markdown-it': 14.0.1
       markdown-it: 14.0.0
 
   markdown-it-attrs@4.1.6(markdown-it@14.0.0):
