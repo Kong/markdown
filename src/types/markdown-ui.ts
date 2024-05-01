@@ -8,6 +8,7 @@ export type MarkdownMode =
 | 'edit'
 | 'split'
 | 'preview'
+| 'new'
 
 /** The text format to insert/wrap selection */
 export type InlineFormat =

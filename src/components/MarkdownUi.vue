@@ -50,7 +50,7 @@
 
     <div class="markdown-panes">
       <div
-        v-if="editable && (['edit', 'split'].includes(currentMode))"
+        v-if="editable && (['edit', 'split'].includes(currentMode)) || (['new'].includes(currentMode))"
         class="markdown-editor"
         data-testid="markdown-editor"
       >
@@ -253,7 +253,7 @@ const activeTheme = computed(():Theme => props.theme ? props.theme : (preferredC
 
 // Set the currentMode when the component mounts.
 // props.editable will override the `props.mode`
-const currentMode = ref<MarkdownMode>(['edit', 'split', 'preview'].includes(props.mode) && props.editable ? props.mode : 'read')
+const currentMode = ref<MarkdownMode>(['edit', 'split', 'preview', 'new'].includes(props.mode) && props.editable ? props.mode : 'read')
 // Is fullscreen enabled
 const isFullscreen = ref<boolean>(false)
 // When true, show the HTML preview instead of the rendered markdown preview
@@ -286,6 +286,9 @@ watch(currentMode, async (mode: MarkdownMode): Promise<void> => {
       htmlPreview.value = false
       isFullscreen.value = false
       break
+    case 'new':
+      htmlPreview.value = false
+      break
   }
 
   // Emit the changed mode
@@ -315,7 +318,7 @@ const getHtmlFromMarkdown = (content: string): string => {
 }
 
 // Initialize a ref to store the KTextArea value with prop content
-const rawMarkdown = ref<string>(props.modelValue)
+const rawMarkdown = ref<string>(currentMode.value === 'new' ? '' : props.modelValue)
 // A ref to store the processed frontmatter
 const frontmatter = ref<Frontmatter | undefined>()
 // A ref to store the processed markdown output
