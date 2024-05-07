@@ -1,8 +1,5 @@
 # Kong Markdown
 
-> [!IMPORTANT]
-> This repository and the `@kong/markdown` package are currently in development on the `main` branch. Breaking changes should be expected.
-
 Kong's open-source markdown renderer and live editor.
 
 - [TODO](#todo)
@@ -21,6 +18,8 @@ Kong's open-source markdown renderer and live editor.
   - [Package Publishing](#package-publishing)
 
 ## TODO
+
+Currently, the package size is... HUGE. This is due to packaging the syntax highlighter lib along with Mermaid support. In the future, this will be optimized and/or externalized.
 
 - [ ] Optimize exports via separate bundles for syntax highlighting options
 
