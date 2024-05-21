@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Kong/markdown/compare/v1.3.6...v1.4.0) (2024-05-21)
+
+
+### Features
+
+* **markdown:** expose download, edit [khcp-11536] ([#71](https://github.com/Kong/markdown/issues/71)) ([099f380](https://github.com/Kong/markdown/commit/099f3804e86ad6f1a112ce8e393ccb3f6cb4bbae))
+
 ## [1.3.6](https://github.com/Kong/markdown/compare/v1.3.5...v1.3.6) (2024-04-23)
 
 
