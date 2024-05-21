@@ -553,6 +553,9 @@ onUnmounted(() => {
   destroySyncScroll()
 })
 
+// Exposing for Integrated Markdown Editor - Milestone 2 (Creating a New Document) work. The download and edit will be managed by the host app.
+defineExpose({ download, edit })
+
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
 const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - ${KUI_SPACE_60})`)
 const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
