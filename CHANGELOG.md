@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Kong/markdown/compare/v1.4.1...v1.5.0) (2024-05-28)
+
+
+### Features
+
+* **markdown:** update comment ([#77](https://github.com/Kong/markdown/issues/77)) ([1df2b64](https://github.com/Kong/markdown/commit/1df2b6402d03d6b966fb4c66e9a162ff792a0849))
+
 ## [1.4.1](https://github.com/Kong/markdown/compare/v1.4.0...v1.4.1) (2024-05-27)
 
 
