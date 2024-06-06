@@ -59,7 +59,7 @@ const mediaQuerySpy = ({
     matches = isPhabletWidth
   }
 
-  // @ts-ignore
+  // @ts-ignore: we don't need the missing properties
   return {
     matches,
     media: query,
@@ -231,7 +231,7 @@ describe('<MarkdownUi />', () => {
       const copiedText = ref('')
       // Stub the navigator.clipboard.writeText method
       window.navigator = {
-        // @ts-ignore
+        // @ts-ignore: we don't need the missing properties
         clipboard: {
           writeText: vi.fn(async (text: string) => {
             copiedText.value = text
