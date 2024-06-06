@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Kong/markdown/compare/v1.5.0...v1.6.0) (2024-06-06)
+
+
+### Features
+
+* **eslint:** eslint v9 and shared flat config [KHCP-11627] ([#82](https://github.com/Kong/markdown/issues/82)) ([78271d4](https://github.com/Kong/markdown/commit/78271d417d9192f7b9ad9a06872744dcc3d15565))
+
 # [1.5.0](https://github.com/Kong/markdown/compare/v1.4.1...v1.5.0) (2024-05-28)
 
 
