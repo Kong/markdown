@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Kong/markdown/compare/v1.6.0...v1.6.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* semantic release action version ([20bb779](https://github.com/Kong/markdown/commit/20bb7799b5384b568567d4a8aa612a7bd2af7fc4))
+
 # [1.6.0](https://github.com/Kong/markdown/compare/v1.5.0...v1.6.0) (2024-06-06)
 
 
