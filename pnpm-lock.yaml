@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kong/icons':
-        specifier: ^1.9.2
-        version: 1.10.0(vue@3.4.14(typescript@5.3.3))
+        specifier: ^1.13.0
+        version: 1.13.0(vue@3.4.14(typescript@5.3.3))
       '@mdit-vue/plugin-frontmatter':
         specifier: ^2.0.0
         version: 2.0.0
@@ -88,8 +88,8 @@ importers:
         specifier: ^1.5.6
         version: 1.6.0
       '@kong/design-tokens':
-        specifier: ^1.12.12
-        version: 1.12.12
+        specifier: ^1.13.2
+        version: 1.13.2
       '@kong/eslint-config-kong-ui':
         specifier: ^1.0.3
         version: 1.0.3(eslint@9.4.0)(typescript@5.3.3)
@@ -727,8 +727,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@kong/design-tokens@1.12.12':
-    resolution: {integrity: sha512-2efq8GaNUBweF5tp2hd4iQG22TfbGdDBfRgTzWvYCixdtEI0MjacLsBTl/iiQEdsekxb5dmC3Dq4qy/bWpCrnQ==}
+  '@kong/design-tokens@1.13.2':
+    resolution: {integrity: sha512-BXI7Nv+wucuG9mw0faXhBgb3ryN9pnMkHntI9HKf0h9BnBvuR8F+iLoCm/Fwo6TZ0tlO5bZTMVk1xc85lnlhBA==}
 
   '@kong/eslint-config-kong-ui@1.0.3':
     resolution: {integrity: sha512-l2Rg5TCQkyohBKKUn3efp9xEjiZv/QfCf6yC5ycaqIJRcbG0QJMc7s7RAM7MgDKz1gLpmjxptvGeYnEdhU8OQA==}
@@ -736,8 +736,8 @@ packages:
     peerDependencies:
       eslint: '>= 9.4.0'
 
-  '@kong/icons@1.10.0':
-    resolution: {integrity: sha512-iXmOuYLamQ6zo16cOrFWoVkpproT7ybvHnntIVMhC82hdbJcvuDQq6xJ7baz+C32FvDSLn3NSSjhHUFpF1CAEA==}
+  '@kong/icons@1.13.0':
+    resolution: {integrity: sha512-obKpD/dg3Ma4fbr2W1oXyvD18LMI+EMYPGeSksj69azMDRV+oVZVMlQ62t+C26TkrjQxPuI4WWOjVvbGc50IYg==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       vue: '>= 3.3.4 < 4'
@@ -4987,7 +4987,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@kong/design-tokens@1.12.12': {}
+  '@kong/design-tokens@1.13.2': {}
 
   '@kong/eslint-config-kong-ui@1.0.3(eslint@9.4.0)(typescript@5.3.3)':
     dependencies:
@@ -5009,7 +5009,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@kong/icons@1.10.0(vue@3.4.14(typescript@5.3.3))':
+  '@kong/icons@1.13.0(vue@3.4.14(typescript@5.3.3))':
     dependencies:
       vue: 3.4.14(typescript@5.3.3)
 
