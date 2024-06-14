@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/Kong/markdown/compare/v1.6.1...v1.6.2) (2024-06-14)
+
+
+### Bug Fixes
+
+* eslint config upgrade ([dadbfa8](https://github.com/Kong/markdown/commit/dadbfa868952bc85df6c7214dd158bf36273dbd7))
+
 ## [1.6.1](https://github.com/Kong/markdown/compare/v1.6.0...v1.6.1) (2024-06-07)
 
 
