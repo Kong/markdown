@@ -414,6 +414,15 @@ export default function useMarkdownActions(
   }
 
   /**
+   * Highlights text in a textarea on a given position.
+   * @returns {void}
+   */
+  const selectText = (start: number, end: number): void => {
+    const textarea = getTextarea() as HTMLTextAreaElement
+    textarea.setSelectionRange(start, end)
+  }
+
+  /**
    * Insert a markdown link at the current cursor position.
    * @returns {Promise<void>}
    */
@@ -471,7 +480,7 @@ export default function useMarkdownActions(
         // Prepare the content
         newContent = MARKDOWN_TEMPLATE_LINK
 
-        let cursorPosition = 1
+        let cursorPosition = 7
 
         // Check if we need a space before or after the template
         if (/\w+$/.test(startText)) {
@@ -489,6 +498,10 @@ export default function useMarkdownActions(
 
         // Set the cursor position
         textarea.selectionEnd = selectedText.start + cursorPosition
+
+        const urlTextLength = 3
+
+        selectText(textarea.selectionEnd, textarea.selectionEnd + urlTextLength)
       }
     } catch (err) {
       console.warn('insertLink', err)
@@ -551,7 +564,7 @@ export default function useMarkdownActions(
         }
 
         // Prepare the content
-        newContent = MARKDOWN_TEMPLATE_IMAGE.replace(/url/, '')
+        newContent = MARKDOWN_TEMPLATE_IMAGE
 
         let cursorPosition = 7
 
@@ -571,6 +584,10 @@ export default function useMarkdownActions(
 
         // Set the cursor position
         textarea.selectionEnd = selectedText.start + cursorPosition
+
+        const urlTextLength = 3
+
+        selectText(textarea.selectionEnd, textarea.selectionEnd + urlTextLength)
       }
     } catch (err) {
       console.warn('insertImage', err)
