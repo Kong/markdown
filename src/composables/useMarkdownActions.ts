@@ -471,7 +471,7 @@ export default function useMarkdownActions(
           textarea.selectionEnd = startText.length + selectedText.text.length + 6
         }
 
-        selectText(textarea.selectionStart, textarea.selectionStart + textTextLength)
+        selectText(textarea.selectionStart, textarea.selectionStart + (isUrl ? textTextLength : urlTextLength))
       } else {
         // No text is selected
 
