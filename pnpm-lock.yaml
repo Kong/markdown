@@ -103,8 +103,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(semantic-release@22.0.12(typescript@5.3.3))
       '@shikijs/markdown-it':
-        specifier: ^1.6.2
-        version: 1.6.2
+        specifier: ^1.6.3
+        version: 1.7.0
       '@types/jsdom':
         specifier: ^21.1.6
         version: 21.1.6
@@ -178,8 +178,8 @@ importers:
         specifier: ^22.0.12
         version: 22.0.12(typescript@5.3.3)
       shiki:
-        specifier: ^1.6.2
-        version: 1.6.2
+        specifier: ^1.6.3
+        version: 1.7.0
       stylelint:
         specifier: ^16.2.0
         version: 16.2.1(typescript@5.3.3)
@@ -686,6 +686,7 @@ packages:
 
   '@evilmartians/lefthook@1.6.0':
     resolution: {integrity: sha512-vmpQuxYnimUkDEn4UzJsAJ32tNJ5OwQuWG9tX+/5F6OuBFDi62guqOLiflpLBiH7WFVBTOefCQ/DJgubjE8WrA==}
+    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -966,14 +967,14 @@ packages:
     peerDependencies:
       semantic-release: '>=20.1.0'
 
-  '@shikijs/core@1.6.2':
-    resolution: {integrity: sha512-guW5JeDzZ7uwOjTfCOFZ2VtVXk5tmkMzBYbKGfXsmAH1qYOej49L5jQDcGmwd6/OgvpmWhzO2GNJkQIFnbwLPQ==}
+  '@shikijs/core@1.7.0':
+    resolution: {integrity: sha512-O6j27b7dGmJbR3mjwh/aHH8Ld+GQvA0OQsNO43wKWnqbAae3AYXrhFyScHGX8hXZD6vX2ngjzDFkZY5srtIJbQ==}
 
-  '@shikijs/markdown-it@1.6.2':
-    resolution: {integrity: sha512-VhY7XJepbcb7ORS7uOyK0E3cgt7Ov8yMxyhZLbTm09SjfGlWUyLULHXzzyutCEOLWW4LWnemK521xJiG7dC1HQ==}
+  '@shikijs/markdown-it@1.7.0':
+    resolution: {integrity: sha512-R/FdTmvynOjkiGDCIypmBIEunUVpMegk4x+C/weFQnfK5vQekBQfRZu/7sMBzhBZTncBcafhAQDK7QiNkOvwjQ==}
 
-  '@shikijs/transformers@1.6.2':
-    resolution: {integrity: sha512-ndqTWyHnxmsLkowhKWTam26opw8hg5a34y6FAUG/Xf6E49n3MM//nenKxXiWpPYkNPl1KZnYXB1k+Ia46wjOZg==}
+  '@shikijs/transformers@1.7.0':
+    resolution: {integrity: sha512-QX3TP+CS4yYLt4X4Dk7wT0MsC7yweTYHMAAKY+ay+uuR9yRdFae/h+hivny2O+YixJHfZl57xtiZfWSrHdyVhQ==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -3794,8 +3795,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.6.2:
-    resolution: {integrity: sha512-X3hSm5GzzBd/BmPmGfkueOUADLyBoZo1ojYQXhd+NU2VJn458yt4duaS0rVzC+WtqftSV7mTVvDw+OB9AHi3Eg==}
+  shiki@1.7.0:
+    resolution: {integrity: sha512-H5pMn4JA7ayx8H0qOz1k2qANq6mZVCMl1gKLK6kWIrv1s2Ial4EmD4s4jE8QB5Dw03d/oCQUxc24sotuyR5byA==}
 
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
@@ -5298,17 +5299,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@shikijs/core@1.6.2': {}
+  '@shikijs/core@1.7.0': {}
 
-  '@shikijs/markdown-it@1.6.2':
+  '@shikijs/markdown-it@1.7.0':
     dependencies:
-      '@shikijs/transformers': 1.6.2
+      '@shikijs/transformers': 1.7.0
       markdown-it: 14.1.0
-      shiki: 1.6.2
+      shiki: 1.7.0
 
-  '@shikijs/transformers@1.6.2':
+  '@shikijs/transformers@1.7.0':
     dependencies:
-      shiki: 1.6.2
+      shiki: 1.7.0
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -8368,9 +8369,9 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.6.2:
+  shiki@1.7.0:
     dependencies:
-      '@shikijs/core': 1.6.2
+      '@shikijs/core': 1.7.0
 
   siginfo@2.0.0: {}
 
