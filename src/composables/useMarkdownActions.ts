@@ -469,7 +469,7 @@ export default function useMarkdownActions(
         }
 
         // Prepare the content
-        newContent = MARKDOWN_TEMPLATE_LINK.replace(/text/, '')
+        newContent = MARKDOWN_TEMPLATE_LINK
 
         let cursorPosition = 1
 
@@ -538,8 +538,8 @@ export default function useMarkdownActions(
         if (isUrl) {
           textarea.selectionEnd = selectedText.start + 2
         } else {
-          textarea.selectionStart = startText.length + selectedText.text.length + 3
-          textarea.selectionEnd = startText.length + selectedText.text.length + 6
+          textarea.selectionStart = startText.length + selectedText.text.length + 4
+          textarea.selectionEnd = startText.length + selectedText.text.length + 7
         }
       } else {
         // No text is selected
@@ -551,9 +551,9 @@ export default function useMarkdownActions(
         }
 
         // Prepare the content
-        newContent = MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, '')
+        newContent = MARKDOWN_TEMPLATE_IMAGE.replace(/url/, '')
 
-        let cursorPosition = 4
+        let cursorPosition = 7
 
         // Check if we need a space before or after the template
         if (/\w+$/.test(startText)) {
