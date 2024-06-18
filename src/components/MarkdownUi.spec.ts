@@ -555,7 +555,7 @@ describe('<MarkdownUi />', () => {
           await waitForEmittedEvent(wrapper, eventName)
 
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
-          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '')])
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK])
         })
 
         it('wraps the selected text with the link template', async () => {
