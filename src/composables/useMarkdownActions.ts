@@ -441,6 +441,8 @@ export default function useMarkdownActions(
       const startText = rawMarkdown.value.substring(0, selectedText.start)
       const endText = rawMarkdown.value.substring(selectedText.end)
       let newContent: string = ''
+      const urlTextLength = 3
+      const textTextLength = 4
 
       // If text is selected, check the type of selected text and insert the link template around it
       if (selectedText.text.length !== 0) {
@@ -453,7 +455,7 @@ export default function useMarkdownActions(
         // Check if the selected text is a URL
         const isUrl = /^http(s)?:\/\//.test(selectedText.text)
         // Prepare the content
-        newContent = isUrl ? MARKDOWN_TEMPLATE_LINK.replace(/text/, '').replace(/url/, selectedText.text) : MARKDOWN_TEMPLATE_LINK.replace(/text/, selectedText.text)
+        newContent = isUrl ? MARKDOWN_TEMPLATE_LINK.replace(/url/, selectedText.text) : MARKDOWN_TEMPLATE_LINK.replace(/text/, selectedText.text)
 
         // Update the markdown
         rawMarkdown.value = startText + newContent + endText
@@ -468,6 +470,8 @@ export default function useMarkdownActions(
           textarea.selectionStart = startText.length + selectedText.text.length + 3
           textarea.selectionEnd = startText.length + selectedText.text.length + 6
         }
+
+        selectText(textarea.selectionStart, textarea.selectionStart + textTextLength)
       } else {
         // No text is selected
 
@@ -499,8 +503,6 @@ export default function useMarkdownActions(
         // Set the cursor position
         textarea.selectionEnd = selectedText.start + cursorPosition
 
-        const urlTextLength = 3
-
         selectText(textarea.selectionEnd, textarea.selectionEnd + urlTextLength)
       }
     } catch (err) {
@@ -527,6 +529,8 @@ export default function useMarkdownActions(
       const startText = rawMarkdown.value.substring(0, selectedText.start)
       const endText = rawMarkdown.value.substring(selectedText.end)
       let newContent: string = ''
+      const urlTextLength = 3
+      const altTextLength = 3
 
       // If text is selected, check the type of selected text and insert the link template around it
       if (selectedText.text.length !== 0) {
@@ -539,7 +543,8 @@ export default function useMarkdownActions(
         // Check if the selected text is a URL
         const isUrl = /^http(s)?:\/\//.test(selectedText.text)
         // Prepare the content
-        newContent = isUrl ? MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, '').replace(/url/, selectedText.text) : MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, selectedText.text)
+        newContent = isUrl ? MARKDOWN_TEMPLATE_IMAGE.replace(/url/, selectedText.text) : MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, selectedText.text)
+
 
         // Update the markdown
         rawMarkdown.value = startText + newContent + endText
@@ -554,6 +559,8 @@ export default function useMarkdownActions(
           textarea.selectionStart = startText.length + selectedText.text.length + 4
           textarea.selectionEnd = startText.length + selectedText.text.length + 7
         }
+
+        selectText(textarea.selectionStart, textarea.selectionStart + altTextLength)
       } else {
         // No text is selected
 
@@ -584,8 +591,6 @@ export default function useMarkdownActions(
 
         // Set the cursor position
         textarea.selectionEnd = selectedText.start + cursorPosition
-
-        const urlTextLength = 3
 
         selectText(textarea.selectionEnd, textarea.selectionEnd + urlTextLength)
       }

@@ -641,7 +641,7 @@ describe('<MarkdownUi />', () => {
           await waitForEmittedEvent(wrapper, eventName)
 
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
-          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '').replace(/url/, linkUrl)])
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/url/, linkUrl)])
         })
       })
     })
