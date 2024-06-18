@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Kong/markdown/compare/v1.6.2...v1.7.0) (2024-06-18)
+
+
+### Features
+
+* **markdown:** add image button [KHCP-12213] ([#88](https://github.com/Kong/markdown/issues/88)) ([4cbc61b](https://github.com/Kong/markdown/commit/4cbc61ba52fd37423dbce8f1afbec513e56fc34a))
+
 ## [1.6.2](https://github.com/Kong/markdown/compare/v1.6.1...v1.6.2) (2024-06-14)
 
 
