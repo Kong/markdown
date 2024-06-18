@@ -1,6 +1,19 @@
 import { reactive, nextTick } from 'vue'
 import type { Ref } from 'vue'
-import { InlineFormatWrapper, DEFAULT_CODEBLOCK_LANGUAGE, MARKDOWN_TEMPLATE_CODEBLOCK, MARKDOWN_TEMPLATE_TASK, MARKDOWN_TEMPLATE_TASK_COMPLETED, MARKDOWN_TEMPLATE_UL, MARKDOWN_TEMPLATE_OL, MARKDOWN_TEMPLATE_BLOCKQUOTE, MARKDOWN_TEMPLATE_TABLE, NEW_LINE_CHARACTER, MARKDOWN_TEMPLATE_LINK } from '@/constants'
+import {
+  InlineFormatWrapper,
+  DEFAULT_CODEBLOCK_LANGUAGE,
+  MARKDOWN_TEMPLATE_CODEBLOCK,
+  MARKDOWN_TEMPLATE_TASK,
+  MARKDOWN_TEMPLATE_TASK_COMPLETED,
+  MARKDOWN_TEMPLATE_UL,
+  MARKDOWN_TEMPLATE_OL,
+  MARKDOWN_TEMPLATE_BLOCKQUOTE,
+  MARKDOWN_TEMPLATE_TABLE,
+  NEW_LINE_CHARACTER,
+  MARKDOWN_TEMPLATE_LINK,
+  MARKDOWN_TEMPLATE_IMAGE,
+} from '@/constants'
 import type { InlineFormat, MarkdownTemplate } from '@/types'
 
 /**
@@ -483,6 +496,88 @@ export default function useMarkdownActions(
   }
 
   /**
+   * Insert a markdown image at the current cursor position.
+   * @returns {Promise<void>}
+   */
+  const insertImage = async (): Promise<void> => {
+    try {
+      const textarea = getTextarea()
+
+      if (!textarea) {
+        return
+      }
+
+      // Update the selected text object
+      getTextSelection()
+
+      // Get the text before and after the cursor
+      const startText = rawMarkdown.value.substring(0, selectedText.start)
+      const endText = rawMarkdown.value.substring(selectedText.end)
+      let newContent: string = ''
+
+      // If text is selected, check the type of selected text and insert the link template around it
+      if (selectedText.text.length !== 0) {
+        // If the user tries to click the button twice (with `url` selected) exit early
+        if (selectedText.text === 'url' && startText.endsWith('(') && endText.startsWith(')')) {
+          await focusTextarea()
+          return
+        }
+
+        // Check if the selected text is a URL
+        const isUrl = /^http(s)?:\/\//.test(selectedText.text)
+        // Prepare the content
+        newContent = isUrl ? MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, '').replace(/url/, selectedText.text) : MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, selectedText.text)
+
+        // Update the markdown
+        rawMarkdown.value = startText + newContent + endText
+
+        // Always focus back on the textarea
+        await focusTextarea()
+
+        // Set the cursor position
+        if (isUrl) {
+          textarea.selectionEnd = selectedText.start + 2
+        } else {
+          textarea.selectionStart = startText.length + selectedText.text.length + 3
+          textarea.selectionEnd = startText.length + selectedText.text.length + 6
+        }
+      } else {
+        // No text is selected
+
+        // If the user tries to click the button twice (with the cursor in between the brackets) exit early
+        if (startText.endsWith(MARKDOWN_TEMPLATE_IMAGE.split('alt')[0]) && /^\]\((.*)+\)/.test(endText)) {
+          await focusTextarea()
+          return
+        }
+
+        // Prepare the content
+        newContent = MARKDOWN_TEMPLATE_IMAGE.replace(/alt/, '')
+
+        let cursorPosition = 4
+
+        // Check if we need a space before or after the template
+        if (/\w+$/.test(startText)) {
+          newContent = ' ' + newContent
+          cursorPosition++
+        } else if (/^\w+/.test(endText)) {
+          newContent += ' '
+        }
+
+        // Update the markdown
+        rawMarkdown.value = startText + newContent + endText
+
+        // Always focus back on the textarea
+        await focusTextarea()
+
+        // Set the cursor position
+        textarea.selectionEnd = selectedText.start + cursorPosition
+      }
+    } catch (err) {
+      console.warn('insertImage', err)
+    }
+  }
+
+  /**
    * Insert a new line in the editor.
    * Conditionally addor remove inline templates if the previous line also started with one.
    * @returns {Promise<void>}
@@ -597,5 +692,6 @@ export default function useMarkdownActions(
     insertMarkdownTemplate,
     insertLink,
     insertNewLine,
+    insertImage,
   }
 }
