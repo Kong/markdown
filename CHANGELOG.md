@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Kong/markdown/compare/v1.7.0...v1.7.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* stylelint ([1690b1f](https://github.com/Kong/markdown/commit/1690b1f673aa8184d88b8eb03719e3abfee07400))
+
 # [1.7.0](https://github.com/Kong/markdown/compare/v1.6.2...v1.7.0) (2024-06-18)
 
 
