@@ -806,7 +806,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
     :deep() {
       .toolbar-button {
-         &:focus-visible {
+        &:focus-visible {
           border-color: var(--kui-color-border, $kui-color-border);
           box-shadow: none;
         }

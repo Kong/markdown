@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: [
     'stylelint-config-html',
     'stylelint-config-recommended-scss',
@@ -7,22 +7,23 @@ module.exports = {
   plugins: [
     'stylelint-order',
     '@kong/design-tokens/stylelint-plugin',
+    '@stylistic/stylelint-plugin',
   ],
   rules: {
+    // Disallow relative font units since we don't know the base font size in other apps
+    'unit-disallowed-list': ['rem', 'em'],
     'order/properties-alphabetical-order': true,
-    'unit-disallowed-list': [
-      ['rem', 'em'],
-    ],
+    '@kong/design-tokens/use-proper-token': true,
+    '@stylistic/indentation': [2, { baseIndentLevel: 0 }],
     // Only allow @kong/design-tokens or `--kong-ui-*` CSS custom properties
     'custom-property-pattern': [
-      '^(kui-).+$',
+      '^(kui).+$',
       {
         message: "Expected custom property \"%s\" to be sourced from @kong/design-tokens with prefix '--kui-'",
       },
     ],
-    '@kong/design-tokens/use-proper-token': true,
+    'custom-property-no-missing-var-function': true,
     // Disable the following rules
-    'custom-property-no-missing-var-function': null,
     'no-descending-specificity': null,
   },
 }
