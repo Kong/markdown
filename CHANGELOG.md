@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/Kong/markdown/compare/v1.7.2...v1.7.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* **deps:** upgrade shiki ([ac1bc17](https://github.com/Kong/markdown/commit/ac1bc1708887be2aaa82e456954f79e95c949e12))
+
 ## [1.7.2](https://github.com/Kong/markdown/compare/v1.7.1...v1.7.2) (2024-06-24)
 
 
