@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/Kong/markdown/compare/v1.7.3...v1.7.4) (2024-06-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.14.1 ([#92](https://github.com/Kong/markdown/issues/92)) ([adb7cd3](https://github.com/Kong/markdown/commit/adb7cd3ae8a2b874751dcf368e46d90ff8b7bf9d))
+
 ## [1.7.3](https://github.com/Kong/markdown/compare/v1.7.2...v1.7.3) (2024-06-24)
 
 
