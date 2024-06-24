@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kong/icons':
-        specifier: ^1.13.0
-        version: 1.13.0(vue@3.4.14(typescript@5.3.3))
+        specifier: ^1.14.0
+        version: 1.14.0(vue@3.4.14(typescript@5.3.3))
       '@mdit-vue/plugin-frontmatter':
         specifier: ^2.0.0
         version: 2.0.0
@@ -706,6 +706,7 @@ packages:
 
   '@evilmartians/lefthook@1.6.0':
     resolution: {integrity: sha512-vmpQuxYnimUkDEn4UzJsAJ32tNJ5OwQuWG9tX+/5F6OuBFDi62guqOLiflpLBiH7WFVBTOefCQ/DJgubjE8WrA==}
+    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -759,8 +760,8 @@ packages:
     peerDependencies:
       eslint: '>= 9.4.0'
 
-  '@kong/icons@1.13.0':
-    resolution: {integrity: sha512-obKpD/dg3Ma4fbr2W1oXyvD18LMI+EMYPGeSksj69azMDRV+oVZVMlQ62t+C26TkrjQxPuI4WWOjVvbGc50IYg==}
+  '@kong/icons@1.14.0':
+    resolution: {integrity: sha512-eNhWJ9sms1mLMe8emyVh7LxUbekNHJk8aNpqrsuZ7WL1TWErF8pkMECyvIjM8VXr+lsU6itHcZ7KyP+dPgMuPw==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       vue: '>= 3.3.4 < 4'
@@ -5084,7 +5085,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@kong/icons@1.13.0(vue@3.4.14(typescript@5.3.3))':
+  '@kong/icons@1.14.0(vue@3.4.14(typescript@5.3.3))':
     dependencies:
       vue: 3.4.14(typescript@5.3.3)
 
