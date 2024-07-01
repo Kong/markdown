@@ -91,8 +91,8 @@ importers:
         specifier: ^1.13.2
         version: 1.13.2
       '@kong/eslint-config-kong-ui':
-        specifier: ^1.1.0
-        version: 1.1.0(eslint@9.4.0)(typescript@5.3.3)
+        specifier: ^1.1.1
+        version: 1.1.1(eslint@9.4.0)(typescript@5.3.3)
       '@mdit-vue/types':
         specifier: ^2.0.0
         version: 2.0.0
@@ -754,8 +754,8 @@ packages:
   '@kong/design-tokens@1.13.2':
     resolution: {integrity: sha512-BXI7Nv+wucuG9mw0faXhBgb3ryN9pnMkHntI9HKf0h9BnBvuR8F+iLoCm/Fwo6TZ0tlO5bZTMVk1xc85lnlhBA==}
 
-  '@kong/eslint-config-kong-ui@1.1.0':
-    resolution: {integrity: sha512-PSZaL7IhVLmbojwpBPaKIfxLIBBLnYFIjjrr5Nbz0Ia4cSYFqdwkdFB3t5PnjLHWwQr0IpLgN5e2vGe1n9Hpig==}
+  '@kong/eslint-config-kong-ui@1.1.1':
+    resolution: {integrity: sha512-L66Nqif4KcWlaSX9xb9WToMh9JbcxGrRb6tF1hz36GsZZaBsk6cHdVKVXUjPA7jgtkE1aUHpzQO1IM/UMLQCQg==}
     engines: {node: '>=18.0.0 || >=20.13.1'}
     peerDependencies:
       eslint: '>= 9.4.0'
@@ -4560,7 +4560,7 @@ snapshots:
       '@babel/traverse': 7.23.9
       '@babel/types': 7.24.7
       convert-source-map: 2.0.0
-      debug: 4.3.4
+      debug: 4.3.5
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -5005,7 +5005,7 @@ snapshots:
   '@eslint/eslintrc@3.1.0':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4
+      debug: 4.3.5
       espree: 10.0.1
       globals: 14.0.0
       ignore: 5.3.1
@@ -5065,7 +5065,7 @@ snapshots:
 
   '@kong/design-tokens@1.13.2': {}
 
-  '@kong/eslint-config-kong-ui@1.1.0(eslint@9.4.0)(typescript@5.3.3)':
+  '@kong/eslint-config-kong-ui@1.1.1(eslint@9.4.0)(typescript@5.3.3)':
     dependencies:
       '@eslint/compat': 1.1.0
       '@eslint/eslintrc': 3.1.0
@@ -5878,7 +5878,7 @@ snapshots:
 
   agent-base@7.1.0:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -6225,7 +6225,7 @@ snapshots:
       handlebars: 4.7.8
       json-stringify-safe: 5.0.1
       meow: 12.1.1
-      semver: 7.5.4
+      semver: 7.6.2
       split2: 4.2.0
 
   conventional-commit-types@3.0.0: {}
@@ -6608,7 +6608,7 @@ snapshots:
       '@one-ini/wasm': 0.1.1
       commander: 10.0.1
       minimatch: 9.0.1
-      semver: 7.5.4
+      semver: 7.6.2
 
   electron-to-chromium@1.4.612: {}
 
@@ -7085,7 +7085,7 @@ snapshots:
     dependencies:
       '@sindresorhus/merge-streams': 1.0.0
       fast-glob: 3.3.2
-      ignore: 5.3.0
+      ignore: 5.3.1
       path-type: 5.0.0
       slash: 5.1.0
       unicorn-magic: 0.1.0
@@ -7158,7 +7158,7 @@ snapshots:
   http-proxy-agent@7.0.0:
     dependencies:
       agent-base: 7.1.0
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -7172,7 +7172,7 @@ snapshots:
   https-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.0
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -7580,7 +7580,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.5.4
+      semver: 7.6.2
 
   make-error@1.3.6: {}
 
@@ -7884,7 +7884,7 @@ snapshots:
 
   mlly@1.6.1:
     dependencies:
-      acorn: 8.11.3
+      acorn: 8.12.0
       pathe: 1.1.2
       pkg-types: 1.0.3
       ufo: 1.4.0
@@ -7928,7 +7928,7 @@ snapshots:
     dependencies:
       hosted-git-info: 7.0.1
       is-core-module: 2.13.1
-      semver: 7.5.4
+      semver: 7.6.2
       validate-npm-package-license: 3.0.4
 
   normalize-path@3.0.0: {}
