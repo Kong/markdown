@@ -1,3 +1,11 @@
+## [1.7.5](https://github.com/Kong/markdown/compare/v1.7.4...v1.7.5) (2024-07-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency markdown-it-anchor to v9 ([#81](https://github.com/Kong/markdown/issues/81)) ([fd11622](https://github.com/Kong/markdown/commit/fd116221db5e42fe902db187d3e90e324ef26dcd))
+* **deps:** update dependency uuid to v10 ([#91](https://github.com/Kong/markdown/issues/91)) ([42bef10](https://github.com/Kong/markdown/commit/42bef10b7dacdd10bf0f92c44bb443f43758c4db))
+
 ## [1.7.4](https://github.com/Kong/markdown/compare/v1.7.3...v1.7.4) (2024-06-24)
 
 
