@@ -88,8 +88,8 @@ importers:
         specifier: ^1.6.18
         version: 1.6.18
       '@kong/design-tokens':
-        specifier: ^1.14.0
-        version: 1.14.0
+        specifier: ^1.15.1
+        version: 1.15.1
       '@kong/eslint-config-kong-ui':
         specifier: ^1.1.1
         version: 1.1.1(eslint@9.4.0)(typescript@5.3.3)
@@ -725,8 +725,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@kong/design-tokens@1.14.0':
-    resolution: {integrity: sha512-hWBHlUeg4KFIPOQb6UOlhqal9SizH7456zswLLoEQ1oKIkT8afar0HDOQmIGpqjr5W0Gl1JlWvLOTfVf/FWVKQ==}
+  '@kong/design-tokens@1.15.1':
+    resolution: {integrity: sha512-dDgAZIF3nFENKcMHHFDZg62W/Tkrt6YRS+BF61nWOImTV/zuhpupUF4FBvrcWc/QdilI/nSMwNDYEqpOO/gMyA==}
 
   '@kong/eslint-config-kong-ui@1.1.1':
     resolution: {integrity: sha512-L66Nqif4KcWlaSX9xb9WToMh9JbcxGrRb6tF1hz36GsZZaBsk6cHdVKVXUjPA7jgtkE1aUHpzQO1IM/UMLQCQg==}
@@ -5070,7 +5070,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@kong/design-tokens@1.14.0': {}
+  '@kong/design-tokens@1.15.1': {}
 
   '@kong/eslint-config-kong-ui@1.1.1(eslint@9.4.0)(typescript@5.3.3)':
     dependencies:
