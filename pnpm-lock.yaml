@@ -217,7 +217,7 @@ importers:
         specifier: 1.3.1
         version: 1.3.1(@types/node@20.11.5)(@vitest/ui@1.6.0)(jsdom@24.1.0)(sass@1.77.6)
       vue:
-        specifier: ^3.4.30
+        specifier: ^3.4.31
         version: 3.4.31(typescript@5.3.3)
       vue-tsc:
         specifier: ^2.0.22
