@@ -220,7 +220,7 @@ importers:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.3.3)
       vue-tsc:
-        specifier: ^2.0.22
+        specifier: ^2.0.24
         version: 2.0.24(typescript@5.3.3)
 
 packages:
