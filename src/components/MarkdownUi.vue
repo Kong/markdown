@@ -577,12 +577,26 @@ const initMonacoEditor = (): void => {
 
   monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
 
+  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+    ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+    noUnusedLocals: false,
+    noUnusedParameters: false,
+    allowUnreachableCode: true,
+    allowUnusedLabels: true,
+    strict: true,
+  })
+
+  monaco.languages.register({ id: 'mdc' })
+  // Register a tokens provider for the language
+  monaco.languages.setMonarchTokensProvider('mdc', markdownLanguage)
+
   // Create Monaco editor
   monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
     value: rawMarkdown.value,
     language: 'mdc',
     theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
     tabSize: 2,
+    lineHeight: 1.6,
     wordWrap: 'on',
     insertSpaces: true, // insert spaces when pressing Tab
     autoClosingQuotes: 'always',
@@ -598,19 +612,6 @@ const initMonacoEditor = (): void => {
       enabled: false,
     },
   })
-
-  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-    ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
-    noUnusedLocals: false,
-    noUnusedParameters: false,
-    allowUnreachableCode: true,
-    allowUnusedLabels: true,
-    strict: true,
-  })
-
-  monaco.languages.register({ id: 'mdc' })
-  // Register a tokens provider for the language
-  monaco.languages.setMonarchTokensProvider('mdc', markdownLanguage)
 
   // Update code ref when editor value changes
   monacoEditor.onDidChangeModelContent(() => {

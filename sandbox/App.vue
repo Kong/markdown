@@ -47,7 +47,7 @@ const activeTheme = computed(() => preferredColorScheme.value === 'dark' ? prefe
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contentUpdated = (content: string) => {
-  console.log('content updated')
+  console.log('content updated \n', content.slice(0, 100) + '...')
 }
 
 const frontmatterUpdated = (frontmatter: Record<string, any> | undefined) => {
