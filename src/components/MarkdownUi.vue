@@ -348,12 +348,14 @@ const markdownHtml = ref<string>('')
 // A ref to store the preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
-const { toggleInlineFormatting, insertMarkdownTemplate, insertLink } = composables.useMarkdownActions(textarea, rawMarkdown)
+const { toggleInlineFormatting, insertMarkdownTemplate, insertLink, insertImage } = composables.useMarkdownActions(textarea, rawMarkdown)
 
 // When the user toggles inline formatting
 const formatSelection = (format: InlineFormat): void => {
   if (format === 'link') {
     insertLink()
+  } else if (format === 'image') {
+    insertImage()
   } else {
     toggleInlineFormatting(format)
   }
@@ -655,6 +657,9 @@ onUnmounted(() => {
   destroySyncScroll()
 })
 
+// The download and edit can be managed by the host app.
+defineExpose({ download, edit })
+
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
 const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - ${KUI_SPACE_60})`)
 const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
@@ -906,7 +911,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
     :deep() {
       .toolbar-button {
-         &:focus-visible {
+        &:focus-visible {
           border-color: var(--kui-color-border, $kui-color-border);
           box-shadow: none;
         }

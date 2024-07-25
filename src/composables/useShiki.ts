@@ -1,11 +1,11 @@
 import { fromHighlighter } from '@shikijs/markdown-it/core'
-import { getHighlighterCore } from 'shiki/core'
+import { createHighlighterCore } from 'shiki/core'
 import getWasm from 'shiki/wasm'
 import type { Theme } from '@/types'
 
 export default function useShiki() {
   const MarkdownItShiki = async (theme: Theme = 'light') => {
-    const highlighter = await getHighlighterCore({
+    const highlighter = await createHighlighterCore({
       themes: [
         import('shiki/themes/material-theme-lighter.mjs'),
         import('shiki/themes/material-theme-palenight.mjs'),

@@ -24,7 +24,9 @@
         <label
           :id="`editor-mode-options-${uniqueId}`"
           class="sr-only"
-        >Select the editor mode</label>
+        >
+          Select the editor mode
+        </label>
         <ToolbarButton
           :aria-checked="mode === 'edit'"
           :aria-labelledby="`editor-mode-options-${uniqueId}`"
@@ -184,10 +186,10 @@ import type { MarkdownMode, FormatOption, TemplateOption, InlineFormat, Markdown
 import ToolbarButton from '@/components/toolbar/ToolbarButton.vue'
 import InfoTooltip from '@/components/toolbar/InfoTooltip.vue'
 import TooltipShortcut from '@/components/toolbar/TooltipShortcut.vue'
-import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, LinkIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon } from '@kong/icons'
+import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, /* SubscriptIcon, SuperscriptIcon, MarkIcon, */ CodeIcon, LinkIcon, CodeblockIcon, TableIcon, TasklistIcon, ListUnorderedIcon, ListOrderedIcon, MarkdownIcon, HtmlIcon, BlockquoteIcon, ExpandIcon, CollapseIcon, ImageIcon } from '@kong/icons'
 import { v4 as uuidv4 } from 'uuid'
 
-const uniqueId: Ref<String> = inject(UNIQUE_ID_INJECTION_KEY, ref(uuidv4()))
+const uniqueId: Ref<string> = inject(UNIQUE_ID_INJECTION_KEY, ref(uuidv4()))
 const mode: Ref<MarkdownMode> = inject(MODE_INJECTION_KEY, ref('read'))
 const editable: Ref<boolean> = inject(EDITABLE_INJECTION_KEY, ref(false))
 const activeTheme: Ref<Theme> = inject(THEME_INJECTION_KEY, ref('light'))
@@ -249,6 +251,7 @@ const formatOptions: FormatOption[] = [
   // { label: 'Mark', action: 'mark', icon: MarkIcon }, // Hidden for now
   { label: 'Code', action: 'code', keys: ['Shift', 'C'], icon: CodeIcon },
   { label: 'Link', action: 'link', icon: LinkIcon },
+  { label: 'Image', action: 'image', icon: ImageIcon },
 ]
 
 const templateOptions: TemplateOption[] = [

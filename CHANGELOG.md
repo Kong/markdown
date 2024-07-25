@@ -1,3 +1,123 @@
+## [1.7.8](https://github.com/Kong/markdown/compare/v1.7.7...v1.7.8) (2024-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.15.1 ([#118](https://github.com/Kong/markdown/issues/118)) ([9ce1a03](https://github.com/Kong/markdown/commit/9ce1a03b8cd37925e4c60f4ed78cf0580ea0ed7e))
+
+## [1.7.7](https://github.com/Kong/markdown/compare/v1.7.6...v1.7.7) (2024-07-15)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable version ([#97](https://github.com/Kong/markdown/issues/97)) ([ad7e9fe](https://github.com/Kong/markdown/commit/ad7e9fecc77108078e19bee7e4579089fd4015cd))
+
+## [1.7.6](https://github.com/Kong/markdown/compare/v1.7.5...v1.7.6) (2024-07-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.14.2 ([#103](https://github.com/Kong/markdown/issues/103)) ([100419d](https://github.com/Kong/markdown/commit/100419d28b923e0cdace1334ab3b8eb589c5eb96))
+
+## [1.7.5](https://github.com/Kong/markdown/compare/v1.7.4...v1.7.5) (2024-07-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency markdown-it-anchor to v9 ([#81](https://github.com/Kong/markdown/issues/81)) ([fd11622](https://github.com/Kong/markdown/commit/fd116221db5e42fe902db187d3e90e324ef26dcd))
+* **deps:** update dependency uuid to v10 ([#91](https://github.com/Kong/markdown/issues/91)) ([42bef10](https://github.com/Kong/markdown/commit/42bef10b7dacdd10bf0f92c44bb443f43758c4db))
+
+## [1.7.4](https://github.com/Kong/markdown/compare/v1.7.3...v1.7.4) (2024-06-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.14.1 ([#92](https://github.com/Kong/markdown/issues/92)) ([adb7cd3](https://github.com/Kong/markdown/commit/adb7cd3ae8a2b874751dcf368e46d90ff8b7bf9d))
+
+## [1.7.3](https://github.com/Kong/markdown/compare/v1.7.2...v1.7.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* **deps:** upgrade shiki ([ac1bc17](https://github.com/Kong/markdown/commit/ac1bc1708887be2aaa82e456954f79e95c949e12))
+
+## [1.7.2](https://github.com/Kong/markdown/compare/v1.7.1...v1.7.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.14.0 ([#90](https://github.com/Kong/markdown/issues/90)) ([7334d72](https://github.com/Kong/markdown/commit/7334d72995282904fe5828f531efb54cbe00e58e))
+
+## [1.7.1](https://github.com/Kong/markdown/compare/v1.7.0...v1.7.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* stylelint ([1690b1f](https://github.com/Kong/markdown/commit/1690b1f673aa8184d88b8eb03719e3abfee07400))
+
+# [1.7.0](https://github.com/Kong/markdown/compare/v1.6.2...v1.7.0) (2024-06-18)
+
+
+### Features
+
+* **markdown:** add image button [KHCP-12213] ([#88](https://github.com/Kong/markdown/issues/88)) ([4cbc61b](https://github.com/Kong/markdown/commit/4cbc61ba52fd37423dbce8f1afbec513e56fc34a))
+
+## [1.6.2](https://github.com/Kong/markdown/compare/v1.6.1...v1.6.2) (2024-06-14)
+
+
+### Bug Fixes
+
+* eslint config upgrade ([dadbfa8](https://github.com/Kong/markdown/commit/dadbfa868952bc85df6c7214dd158bf36273dbd7))
+
+## [1.6.1](https://github.com/Kong/markdown/compare/v1.6.0...v1.6.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* semantic release action version ([20bb779](https://github.com/Kong/markdown/commit/20bb7799b5384b568567d4a8aa612a7bd2af7fc4))
+
+# [1.6.0](https://github.com/Kong/markdown/compare/v1.5.0...v1.6.0) (2024-06-06)
+
+
+### Features
+
+* **eslint:** eslint v9 and shared flat config [KHCP-11627] ([#82](https://github.com/Kong/markdown/issues/82)) ([78271d4](https://github.com/Kong/markdown/commit/78271d417d9192f7b9ad9a06872744dcc3d15565))
+
+# [1.5.0](https://github.com/Kong/markdown/compare/v1.4.1...v1.5.0) (2024-05-28)
+
+
+### Features
+
+* **markdown:** update comment ([#77](https://github.com/Kong/markdown/issues/77)) ([1df2b64](https://github.com/Kong/markdown/commit/1df2b6402d03d6b966fb4c66e9a162ff792a0849))
+
+## [1.4.1](https://github.com/Kong/markdown/compare/v1.4.0...v1.4.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.9.2 ([#79](https://github.com/Kong/markdown/issues/79)) ([0907450](https://github.com/Kong/markdown/commit/0907450ad385e6a68b4c985daade63ee1899f368))
+
+# [1.4.0](https://github.com/Kong/markdown/compare/v1.3.6...v1.4.0) (2024-05-21)
+
+
+### Features
+
+* **markdown:** expose download, edit [khcp-11536] ([#71](https://github.com/Kong/markdown/issues/71)) ([099f380](https://github.com/Kong/markdown/commit/099f3804e86ad6f1a112ce8e393ccb3f6cb4bbae))
+
+## [1.3.6](https://github.com/Kong/markdown/compare/v1.3.5...v1.3.6) (2024-04-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.9.1 ([#69](https://github.com/Kong/markdown/issues/69)) ([b1ce2af](https://github.com/Kong/markdown/commit/b1ce2af2d6fc6f7cb212276fa8f95cea58eb8fed))
+
+## [1.3.5](https://github.com/Kong/markdown/compare/v1.3.4...v1.3.5) (2024-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.9.0 ([#64](https://github.com/Kong/markdown/issues/64)) ([9eb252e](https://github.com/Kong/markdown/commit/9eb252e7848bbc343d7cba50a7294dccc9e20eed))
+
 ## [1.3.4](https://github.com/Kong/markdown/compare/v1.3.3...v1.3.4) (2024-04-04)
 
 
