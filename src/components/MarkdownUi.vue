@@ -175,15 +175,6 @@ import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOIN
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 import type { MarkdownItEnv } from '@mdit-vue/types'
-// Monaco Editor
-import * as monaco from 'monaco-editor'
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-// import { language as markdownLanguage } from '../mdc.tmLanguage'
-import { language as markdownLanguage } from '@nuxtlabs/monarch-mdc'
 
 const props = defineProps({
   /** The markdown content */
@@ -253,7 +244,6 @@ const emit = defineEmits<{
 
 // Initialize template refs
 const textarea = ref<HTMLTextAreaElement | null>(null)
-let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
 const markdownComponent = ref<HTMLDivElement | null>(null)
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
@@ -349,6 +339,19 @@ const markdownHtml = ref<string>('')
 const markdownPreviewHtml = ref<string>('')
 
 const { toggleInlineFormatting, insertMarkdownTemplate, insertLink, insertImage } = composables.useMarkdownActions(textarea, rawMarkdown)
+
+const { monacoEditor, init: initMonacoEditor } = composables.useMonaco({
+  textareaId: textareaId,
+  content: rawMarkdown,
+  onChange: (editor) => {
+    const event: TextAreaInputEvent = {
+      target: {
+        value: editor!.getValue(),
+      },
+    }
+    onContentEdit(event)
+  },
+})
 
 // When the user toggles inline formatting
 const formatSelection = (format: InlineFormat): void => {
@@ -552,79 +555,6 @@ const copyCodeBlock = async (e: any): Promise<void> => {
 
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textarea, rawMarkdown, tabSize, emulateInputEvent)
-
-const initMonacoEditor = (): void => {
-  if (monacoEditor) {
-    monacoEditor.dispose()
-  }
-
-  // @ts-ignore
-  self.MonacoEnvironment = {
-    getWorker(_: any, label: string) {
-      if (label === 'json') {
-        return new JsonWorker()
-      }
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return new CssWorker()
-      }
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return new HtmlWorker()
-      }
-      if (label === 'typescript' || label === 'javascript') {
-        return new TsWorker()
-      }
-      return new EditorWorker()
-    },
-  }
-
-  monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
-
-  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-    ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
-    noUnusedLocals: false,
-    noUnusedParameters: false,
-    allowUnreachableCode: true,
-    allowUnusedLabels: true,
-    strict: true,
-  })
-
-  monaco.languages.register({ id: 'mdc' })
-  // Register a tokens provider for the language
-  monaco.languages.setMonarchTokensProvider('mdc', markdownLanguage)
-
-  // Create Monaco editor
-  monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
-    value: rawMarkdown.value,
-    language: 'mdc',
-    theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
-    tabSize: 2,
-    lineHeight: 1.6,
-    wordWrap: 'on',
-    insertSpaces: true, // insert spaces when pressing Tab
-    autoClosingQuotes: 'always',
-    detectIndentation: false,
-    renderWhitespace: 'boundary',
-    trimAutoWhitespace: true,
-    folding: false,
-    glyphMargin: false,
-    lineNumbersMinChars: 3,
-    overviewRulerLanes: 0,
-    automaticLayout: true,
-    minimap: {
-      enabled: false,
-    },
-  })
-
-  // Update code ref when editor value changes
-  monacoEditor.onDidChangeModelContent(() => {
-    const event: TextAreaInputEvent = {
-      target: {
-        value: monacoEditor!.getValue(),
-      },
-    }
-    onContentEdit(event)
-  })
-}
 
 onMounted(async () => {
   // Initialize markdown-it
