@@ -21,7 +21,9 @@
         v-for="key in keys"
         :key="key"
         class="keyboard-button"
-      >{{ key }}</kbd>
+      >
+        {{ key }}
+      </kbd>
     </div>
   </div>
 </template>
@@ -39,7 +41,9 @@ defineProps({
     type: Array as PropType<string[]>,
     default: () => [],
     validator: (keys: string[]): boolean => {
-      if (!keys?.length) { return true }
+      if (!keys?.length) {
+        return true
+      }
       return keys.every((k: any) => typeof k === 'string')
     },
   },

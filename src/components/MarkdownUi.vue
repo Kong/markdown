@@ -150,7 +150,7 @@
           </div>
           <MarkdownContent
             :class="{ 'html-preview': htmlPreview }"
-            :content="htmlPreview ? markdownPreviewHtml : markdownHtml"
+            :content="rawMarkdown"
           />
         </div>
       </div>
@@ -175,7 +175,6 @@ import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOIN
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
 import type { MarkdownItEnv } from '@mdit-vue/types'
-import * as monaco from 'monaco-editor'
 
 const props = defineProps({
   /** The markdown content */
@@ -245,7 +244,6 @@ const emit = defineEmits<{
 
 // Initialize template refs
 const textarea = ref<HTMLTextAreaElement | null>(null)
-let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
 const markdownComponent = ref<HTMLDivElement | null>(null)
 
 const { init: initMarkdownIt, md } = composables.useMarkdownIt()
@@ -340,12 +338,27 @@ const markdownHtml = ref<string>('')
 // A ref to store the preview HTML (if user enables it in the toolbar)
 const markdownPreviewHtml = ref<string>('')
 
-const { toggleInlineFormatting, insertMarkdownTemplate, insertLink } = composables.useMarkdownActions(textarea, rawMarkdown)
+const { toggleInlineFormatting, insertMarkdownTemplate, insertLink, insertImage } = composables.useMarkdownActions(textarea, rawMarkdown)
+
+const { monacoEditor, init: initMonacoEditor } = composables.useMonaco({
+  textareaId: textareaId,
+  content: rawMarkdown,
+  onChange: (editor) => {
+    const event: TextAreaInputEvent = {
+      target: {
+        value: editor!.getValue(),
+      },
+    }
+    onContentEdit(event)
+  },
+})
 
 // When the user toggles inline formatting
 const formatSelection = (format: InlineFormat): void => {
   if (format === 'link') {
     insertLink()
+  } else if (format === 'image') {
+    insertImage()
   } else {
     toggleInlineFormatting(format)
   }
@@ -543,26 +556,6 @@ const copyCodeBlock = async (e: any): Promise<void> => {
 // Initialize keyboard shortcuts; they will only fire in edit mode when the textarea is active
 composables.useKeyboardShortcuts(textarea, rawMarkdown, tabSize, emulateInputEvent)
 
-const initMonacoEditor = (): void => {
-  // Create Monaco editor
-  monacoEditor = monaco.editor.create(document.getElementById(textareaId.value)!, {
-    value: rawMarkdown.value,
-    language: 'markdown',
-    theme: 'vs-dark', // 'vs' (default), 'vs-dark', 'hc-black'
-  })
-
-  // Update code ref when editor value changes
-  monacoEditor.onDidChangeModelContent(() => {
-    const event: TextAreaInputEvent = {
-      target: {
-        value: monacoEditor!.getValue(),
-      },
-    }
-    onContentEdit(event)
-    console.log('changed', event)
-  })
-}
-
 onMounted(async () => {
   // Initialize markdown-it
   await initMarkdownIt(activeTheme.value)
@@ -593,6 +586,9 @@ onUnmounted(() => {
   // Remove scrolling event listeners
   destroySyncScroll()
 })
+
+// The download and edit can be managed by the host app.
+defineExpose({ download, edit })
 
 // Calculate the max height of the `.markdown-panes` when fullscreen is true. 100vh, minus the toolbar height, minus 10px padding.
 const fullscreenMarkdownPanesHeight = computed((): string => `calc(100vh - ${TOOLBAR_HEIGHT} - ${KUI_SPACE_60})`)
@@ -845,7 +841,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
     :deep() {
       .toolbar-button {
-         &:focus-visible {
+        &:focus-visible {
           border-color: var(--kui-color-border, $kui-color-border);
           box-shadow: none;
         }

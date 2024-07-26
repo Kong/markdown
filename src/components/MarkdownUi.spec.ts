@@ -59,7 +59,7 @@ const mediaQuerySpy = ({
     matches = isPhabletWidth
   }
 
-  // @ts-ignore
+  // @ts-ignore: we don't need the missing properties
   return {
     matches,
     media: query,
@@ -231,7 +231,7 @@ describe('<MarkdownUi />', () => {
       const copiedText = ref('')
       // Stub the navigator.clipboard.writeText method
       window.navigator = {
-        // @ts-ignore
+        // @ts-ignore: we don't need the missing properties
         clipboard: {
           writeText: vi.fn(async (text: string) => {
             copiedText.value = text
@@ -555,7 +555,7 @@ describe('<MarkdownUi />', () => {
           await waitForEmittedEvent(wrapper, eventName)
 
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
-          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '')])
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK])
         })
 
         it('wraps the selected text with the link template', async () => {
@@ -641,7 +641,7 @@ describe('<MarkdownUi />', () => {
           await waitForEmittedEvent(wrapper, eventName)
 
           expect(wrapper.emitted(eventName) || []).toHaveLength(1)
-          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/text/, '').replace(/url/, linkUrl)])
+          expect(wrapper.emitted(eventName)![0][0]).toContain([MARKDOWN_TEMPLATE_LINK.replace(/url/, linkUrl)])
         })
       })
     })

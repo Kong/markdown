@@ -21,7 +21,7 @@ export default function useSyncScroll(scrollableClass: Ref<string>) {
 
     Array.from([...document.querySelectorAll(`.${scrollableClass.value}`)]).filter((item) => item !== scrolledEle).forEach((ele: Element) => {
       ele.removeEventListener('scroll', handleScroll)
-      // @ts-ignore
+      // @ts-ignore: type is actually Element
       syncScroll(scrolledEle, ele)
       window.requestAnimationFrame(() => {
         ele.addEventListener('scroll', handleScroll)

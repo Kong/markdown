@@ -20,6 +20,7 @@ export type InlineFormat =
   | 'mark'
   | 'code'
   | 'link'
+  | 'image'
 
 export interface FormatOption {
   label: string
