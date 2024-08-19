@@ -81,7 +81,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
     "@evilmartians/lefthook": "^1.7.1",
-    "@kong/design-tokens": "^1.15.3",
+    "@kong/design-tokens": "^1.17.2",
     "@kong/eslint-config-kong-ui": "^1.1.1",
     "@mdit-vue/types": "^2.1.0",
     "@semantic-release/changelog": "^6.0.3",
