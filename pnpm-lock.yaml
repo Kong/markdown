@@ -103,8 +103,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(semantic-release@24.0.0(typescript@5.5.3))
       '@shikijs/markdown-it':
-        specifier: ^1.14.1
-        version: 1.14.1
+        specifier: ^1.15.1
+        version: 1.16.3
       '@stylistic/stylelint-plugin':
         specifier: ^2.1.2
         version: 2.1.2(stylelint@16.7.0(typescript@5.5.3))
@@ -181,8 +181,8 @@ importers:
         specifier: ^24.0.0
         version: 24.0.0(typescript@5.5.3)
       shiki:
-        specifier: ^1.14.1
-        version: 1.14.1
+        specifier: ^1.15.1
+        version: 1.16.3
       stylelint:
         specifier: ^16.6.1
         version: 16.7.0(typescript@5.5.3)
@@ -1004,14 +1004,17 @@ packages:
     peerDependencies:
       semantic-release: '>=20.1.0'
 
-  '@shikijs/core@1.14.1':
-    resolution: {integrity: sha512-KyHIIpKNaT20FtFPFjCQB5WVSTpLR/n+jQXhWHWVUMm9MaOaG9BGOG0MSyt7yA4+Lm+4c9rTc03tt3nYzeYSfw==}
+  '@shikijs/core@1.16.3':
+    resolution: {integrity: sha512-yETIvrETCeC39gSPIiSADmjri9FwKmxz0QvONMtTIUYlKZe90CJkvcjPksayC2VQOtzOJonEiULUa8v8crUQvA==}
 
-  '@shikijs/markdown-it@1.14.1':
-    resolution: {integrity: sha512-bb7IHIKLqKMf8ufjdRmsw2wfvX6k9e1DJCfqWEj6RMP59aFohX3emhXIoY8M8uxVfwMTi5ik9QAXGBg6DDnG+A==}
+  '@shikijs/markdown-it@1.16.3':
+    resolution: {integrity: sha512-QXGZqT9JoTmWGkwe3iJWBkHuZAFvqbV+ZB1mwJdTTZxz7M1qrKPGzzC1Uc+NfzqwYDs5RGqIVvCodeNSFkTOEA==}
 
-  '@shikijs/transformers@1.14.1':
-    resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
+  '@shikijs/transformers@1.16.3':
+    resolution: {integrity: sha512-bu4IcpUWmch4NvIWQgyMk2r9sH1XNZjUFgu56d3TPD1wLmBB/krctzVYgmurQ45X4dBEpNZdNvdG3v5B27taSw==}
+
+  '@shikijs/vscode-textmate@9.2.2':
+    resolution: {integrity: sha512-TMp15K+GGYrWlZM8+Lnj9EaHEFmOen0WJBrfa17hF7taDOYthuPPV0GWzfd/9iMij0akS/8Yw2ikquH7uVi/fg==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -3419,6 +3422,9 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
+  oniguruma-to-js@0.3.3:
+    resolution: {integrity: sha512-m90/WEhgs8g4BxG37+Nu3YrMfJDs2YXtYtIllhsEPR+wP3+K4EZk6dDUvy2v2K4MNFDDOYKL4/yqYPXDqyozTQ==}
+
   open@10.1.0:
     resolution: {integrity: sha512-mnkeQ1qP5Ue2wd+aivTD3NHd/lZ96Lu0jgf0pwktLPtx6cTZiH7tyeGRRHs0zX0rbrahXPnXlUnbeXyaBBuIaw==}
     engines: {node: '>=18'}
@@ -3714,6 +3720,9 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  regex@4.3.2:
+    resolution: {integrity: sha512-kK/AA3A9K6q2js89+VMymcboLOlF5lZRCYJv3gzszXFHBr6kO6qLGzbm+UIugBEV8SMMKCTR59txoY6ctRHYVw==}
+
   registry-auth-token@5.0.2:
     resolution: {integrity: sha512-o/3ikDxtXaA59BmZuZrJZDJv8NMDGSj+6j6XaeBmHw8eY1i1qd9+6H+LjVvQXx3HN6aRCGa1cUdJ9RaJZUugnQ==}
     engines: {node: '>=14'}
@@ -3867,8 +3876,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.14.1:
-    resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
+  shiki@1.16.3:
+    resolution: {integrity: sha512-GypUE+fEd06FqDs63LSAVlmq7WsahhPQU62cgZxGF+TJT5LjD2k7HTxXj4/CKOVuMM3+wWQ1t4Y5oooeJFRRBQ==}
 
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
@@ -5424,19 +5433,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@shikijs/core@1.14.1':
+  '@shikijs/core@1.16.3':
     dependencies:
+      '@shikijs/vscode-textmate': 9.2.2
       '@types/hast': 3.0.4
+      oniguruma-to-js: 0.3.3
+      regex: 4.3.2
 
-  '@shikijs/markdown-it@1.14.1':
+  '@shikijs/markdown-it@1.16.3':
     dependencies:
-      '@shikijs/transformers': 1.14.1
+      '@shikijs/transformers': 1.16.3
       markdown-it: 14.1.0
-      shiki: 1.14.1
+      shiki: 1.16.3
 
-  '@shikijs/transformers@1.14.1':
+  '@shikijs/transformers@1.16.3':
     dependencies:
-      shiki: 1.14.1
+      shiki: 1.16.3
+
+  '@shikijs/vscode-textmate@9.2.2': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -8044,6 +8058,8 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
+  oniguruma-to-js@0.3.3: {}
+
   open@10.1.0:
     dependencies:
       default-browser: 5.2.1
@@ -8319,6 +8335,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  regex@4.3.2: {}
+
   registry-auth-token@5.0.2:
     dependencies:
       '@pnpm/npm-conf': 2.2.2
@@ -8486,9 +8504,10 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.14.1:
+  shiki@1.16.3:
     dependencies:
-      '@shikijs/core': 1.14.1
+      '@shikijs/core': 1.16.3
+      '@shikijs/vscode-textmate': 9.2.2
       '@types/hast': 3.0.4
 
   siginfo@2.0.0: {}
