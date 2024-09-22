@@ -1,3 +1,10 @@
+## [1.7.9](https://github.com/Kong/markdown/compare/v1.7.8...v1.7.9) (2024-09-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mermaid to v11 ([#133](https://github.com/Kong/markdown/issues/133)) ([63715a4](https://github.com/Kong/markdown/commit/63715a4689fb7b88447869e57f6895f6dc1df051))
+
 ## [1.7.8](https://github.com/Kong/markdown/compare/v1.7.7...v1.7.8) (2024-07-22)
 
 
