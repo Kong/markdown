@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kong/icons':
-        specifier: ^1.15.1
-        version: 1.15.1(vue@3.4.31(typescript@5.5.3))
+        specifier: ^1.15.2
+        version: 1.15.2(vue@3.4.31(typescript@5.5.3))
       '@mdit-vue/plugin-frontmatter':
         specifier: ^2.1.3
         version: 2.1.3
@@ -804,9 +804,9 @@ packages:
     peerDependencies:
       eslint: '>= 9.4.0'
 
-  '@kong/icons@1.15.1':
-    resolution: {integrity: sha512-L6uiLGWhcsyn+jLOKY162pTybqTm4wvPQs7JEqRJfjcPX7v4K2CacieKMcFy6RHlDhyiSUwhQYNwvYGGZXKQ7A==}
-    engines: {node: '>=18.17.0'}
+  '@kong/icons@1.15.2':
+    resolution: {integrity: sha512-PB0I1tLybeuxZGUFcUK0zwnFj2FdoAakC1l+kobh0x56BLb/YaNixRUimaTd950hBWhFf3+X6uwamE9dfVIS7A==}
+    engines: {node: '>=18.17.0', pnpm: '>=9.7.0'}
     peerDependencies:
       vue: '>= 3.3.4 < 4'
 
@@ -5455,7 +5455,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@kong/icons@1.15.1(vue@3.4.31(typescript@5.5.3))':
+  '@kong/icons@1.15.2(vue@3.4.31(typescript@5.5.3))':
     dependencies:
       vue: 3.4.31(typescript@5.5.3)
 
