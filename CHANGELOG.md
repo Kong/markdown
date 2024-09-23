@@ -1,3 +1,10 @@
+## [1.7.10](https://github.com/Kong/markdown/compare/v1.7.9...v1.7.10) (2024-09-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v11 ([#131](https://github.com/Kong/markdown/issues/131)) ([db6046d](https://github.com/Kong/markdown/commit/db6046df0832e5ebafed66c891ec9ca66b1d8cc7))
+
 ## [1.7.9](https://github.com/Kong/markdown/compare/v1.7.8...v1.7.9) (2024-09-22)
 
 
