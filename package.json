@@ -110,7 +110,7 @@
     "postcss-html": "^1.7.0",
     "rimraf": "^5.0.10",
     "rollup-plugin-visualizer": "^5.12.0",
-    "sass": "^1.79.2",
+    "sass": "^1.79.3",
     "semantic-release": "^24.1.1",
     "shiki": "^1.18.0",
     "stylelint": "^16.9.0",
@@ -121,10 +121,10 @@
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.6.2",
-    "vite": "^5.4.6",
+    "vite": "^5.4.7",
     "vite-plugin-vue-devtools": "^7.4.5",
     "vitest": "2.1.1",
-    "vue": "^3.5.6",
+    "vue": "^3.5.7",
     "vue-tsc": "^2.1.6"
   },
   "repository": {
