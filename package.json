@@ -80,7 +80,7 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
-    "@evilmartians/lefthook": "^1.7.16",
+    "@evilmartians/lefthook": "^1.7.17",
     "@kong/design-tokens": "^1.17.2",
     "@kong/eslint-config-kong-ui": "^1.1.1",
     "@mdit-vue/types": "^2.1.0",
@@ -101,7 +101,7 @@
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.20",
     "c8": "^10.1.2",
-    "commitizen": "^4.3.0",
+    "commitizen": "^4.3.1",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.11.1",
@@ -124,7 +124,7 @@
     "vite": "^5.4.8",
     "vite-plugin-vue-devtools": "^7.4.6",
     "vitest": "2.1.1",
-    "vue": "^3.5.8",
+    "vue": "^3.5.9",
     "vue-tsc": "^2.1.6"
   },
   "repository": {
