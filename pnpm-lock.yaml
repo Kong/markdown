@@ -66,7 +66,7 @@ importers:
         specifier: ^0.17.1
         version: 0.17.1
       mermaid:
-        specifier: ^11.3.0
+        specifier: ^11.4.0
         version: 11.4.0
       uuid:
         specifier: ^10.0.0
@@ -124,7 +124,7 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^20.17.3
+        specifier: ^20.17.4
         version: 20.17.6
       '@types/uuid':
         specifier: ^10.0.0
@@ -211,7 +211,7 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@20.17.6)(sass@1.80.6)
       vite-plugin-vue-devtools:
-        specifier: ^7.5.6
+        specifier: ^7.6.1
         version: 7.6.2(rollup@4.22.5)(vite@5.4.10(@types/node@20.17.6)(sass@1.80.6))(vue@3.5.12(typescript@5.6.3))
       vitest:
         specifier: 2.1.4
@@ -220,7 +220,7 @@ importers:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
       vue-tsc:
-        specifier: ^2.1.8
+        specifier: ^2.1.10
         version: 2.1.10(typescript@5.6.3)
 
 packages:
@@ -5058,7 +5058,7 @@ snapshots:
   '@antfu/install-pkg@0.4.1':
     dependencies:
       package-manager-detector: 0.2.0
-      tinyexec: 0.3.0
+      tinyexec: 0.3.1
 
   '@antfu/utils@0.7.10': {}
 
@@ -10023,7 +10023,7 @@ snapshots:
       '@vue/babel-plugin-jsx': 1.2.1(@babel/core@7.23.9)
       '@vue/compiler-dom': 3.5.12
       kolorist: 1.8.0
-      magic-string: 0.30.11
+      magic-string: 0.30.12
       vite: 5.4.10(@types/node@20.17.6)(sass@1.80.6)
     transitivePeerDependencies:
       - supports-color
