@@ -1,3 +1,10 @@
+## [1.7.21](https://github.com/Kong/markdown/compare/v1.7.20...v1.7.21) (2024-12-10)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable version ([#210](https://github.com/Kong/markdown/issues/210)) ([68cb586](https://github.com/Kong/markdown/commit/68cb586e00b7b722a09aab41bb21efae5f6a70f7))
+
 ## [1.7.20](https://github.com/Kong/markdown/compare/v1.7.19...v1.7.20) (2024-12-09)
 
 
