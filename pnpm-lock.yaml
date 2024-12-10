@@ -124,7 +124,7 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^20.17.8
+        specifier: ^20.17.9
         version: 20.17.9
       '@types/uuid':
         specifier: ^10.0.0
