@@ -62,7 +62,7 @@
     "markdown-it": "^14.1.0",
     "markdown-it-abbr": "^2.0.0",
     "markdown-it-anchor": "^9.2.0",
-    "markdown-it-attrs": "^4.2.0",
+    "markdown-it-attrs": "^4.3.0",
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-emoji": "^3.0.0",
     "markdown-it-footnote": "^4.0.0",
@@ -80,7 +80,7 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
-    "@evilmartians/lefthook": "^1.8.5",
+    "@evilmartians/lefthook": "^1.9.0",
     "@kong/design-tokens": "^1.17.2",
     "@kong/eslint-config-kong-ui": "^1.1.2",
     "@mdit-vue/types": "^2.1.0",
@@ -113,14 +113,14 @@
     "sass": "^1.82.0",
     "semantic-release": "^24.2.0",
     "shiki": "^1.24.0",
-    "stylelint": "^16.10.0",
+    "stylelint": "^16.11.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-order": "^6.0.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vite-plugin-vue-devtools": "^7.6.7",
     "vitest": "2.1.8",
@@ -181,7 +181,7 @@
   },
   "volta": {
     "node": "20.18.1",
-    "pnpm": "9.14.4"
+    "pnpm": "9.15.0"
   },
   "config": {
     "commitizen": {
