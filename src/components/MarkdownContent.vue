@@ -33,8 +33,6 @@ watch(() => props.content, (content: string): void => {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/mixins";
-
 // Computed component variables
 $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
 

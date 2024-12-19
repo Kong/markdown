@@ -1,3 +1,6 @@
+// Add to the global Sass namespace
+@use "@kong/design-tokens/tokens/scss/variables" as *;
+
 @mixin toolbar-button {
   align-items: center;
   background-color: var(--kui-color-background-transparent, $kui-color-background-transparent);

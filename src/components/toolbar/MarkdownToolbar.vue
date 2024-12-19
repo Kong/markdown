@@ -270,8 +270,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/mixins";
-
 .markdown-ui-toolbar {
   align-items: center;
   background-color: var(--kui-color-background-neutral-weakest, $kui-color-background-neutral-weakest);

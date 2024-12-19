@@ -24,6 +24,8 @@
       "import": "./dist/kong-markdown.es.js",
       "require": "./dist/kong-markdown.umd.js"
     },
+    "./dist/style.css": "./dist/markdown.css",
+    "./style.css": "./dist/markdown.css",
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
   },
