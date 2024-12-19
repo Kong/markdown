@@ -1,3 +1,11 @@
+## [1.7.22](https://github.com/Kong/markdown/compare/v1.7.21...v1.7.22) (2024-12-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v12 ([#218](https://github.com/Kong/markdown/issues/218)) ([111de78](https://github.com/Kong/markdown/commit/111de78e3a4165e12e42bef15de04a39e1d12f49))
+* **deps:** update dependency uuid to v11 ([#188](https://github.com/Kong/markdown/issues/188)) ([8790505](https://github.com/Kong/markdown/commit/8790505949e4dcc1b071e3082cfa4ebd225e4718))
+
 ## [1.7.21](https://github.com/Kong/markdown/compare/v1.7.20...v1.7.21) (2024-12-10)
 
 
