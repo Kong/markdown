@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import vue from '@vitejs/plugin-vue'
-import path, { join } from 'path'
+import { fileURLToPath } from 'url'
+import path, { dirname, join } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
 
 // Include the rollup-plugin-visualizer if the BUILD_VISUALIZER env var is set to "true"
 const buildVisualizerPlugin = process.env.BUILD_VISUALIZER
@@ -31,8 +34,12 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         // Inject the @kong/design-tokens SCSS variables to make them available for all components.
-        // This is not needed in host applications.
-        additionalData: '@use "sass:color";@import "@kong/design-tokens/tokens/scss/variables";',
+        additionalData: `
+        @use "sass:color";
+        // Add to the global Sass namespace
+        @use "@kong/design-tokens/tokens/scss/variables" as *;
+        @use "${join(currentDir, './src/assets/_mixins.scss')}" as *;
+        `,
       },
     },
   },

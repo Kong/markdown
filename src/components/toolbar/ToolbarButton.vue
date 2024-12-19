@@ -26,8 +26,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/mixins";
-
 .toolbar-button {
   @include toolbar-button;
 

@@ -24,6 +24,8 @@
       "import": "./dist/kong-markdown.es.js",
       "require": "./dist/kong-markdown.umd.js"
     },
+    "./dist/style.css": "./dist/markdown.css",
+    "./style.css": "./dist/markdown.css",
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
   },
@@ -121,7 +123,7 @@
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.6.3",
-    "vite": "^5.4.11",
+    "vite": "^6.0.2",
     "vite-plugin-vue-devtools": "^7.6.7",
     "vitest": "2.1.8",
     "vue": "^3.5.13",
