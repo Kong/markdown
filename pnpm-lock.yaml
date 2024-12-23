@@ -103,7 +103,7 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(semantic-release@24.2.0(typescript@5.6.3))
       '@shikijs/markdown-it':
-        specifier: ^1.24.0
+        specifier: ^1.24.2
         version: 1.24.2
       '@stylistic/stylelint-plugin':
         specifier: ^3.1.1
@@ -181,7 +181,7 @@ importers:
         specifier: ^24.2.0
         version: 24.2.0(typescript@5.6.3)
       shiki:
-        specifier: ^1.24.0
+        specifier: ^1.24.2
         version: 1.24.2
       stylelint:
         specifier: ^16.10.0
