@@ -75,7 +75,7 @@
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-textual-uml": "^0.17.1",
     "mermaid": "^11.4.1",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.4"
   },
   "devDependencies": {
     "@babel/types": "^7.26.3",
