@@ -1,3 +1,10 @@
+## [1.7.24](https://github.com/Kong/markdown/compare/v1.7.23...v1.7.24) (2025-01-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to ^11.0.4 ([#250](https://github.com/Kong/markdown/issues/250)) ([25a6f39](https://github.com/Kong/markdown/commit/25a6f393f23ff7a209919b476f18e854eb001c6a))
+
 ## [1.7.23](https://github.com/Kong/markdown/compare/v1.7.22...v1.7.23) (2025-01-20)
 
 
