@@ -25,6 +25,8 @@ export default {
     'custom-property-no-missing-var-function': true,
     'rule-empty-line-before': ['always', { ignore: ['after-comment', 'first-nested'] }],
     '@stylistic/block-opening-brace-space-before': 'always',
+    '@stylistic/declaration-colon-space-after': 'always',
+    '@stylistic/media-feature-colon-space-after': 'always',
     // Disable the following rules
     'no-descending-specificity': null,
   },
