@@ -1,3 +1,10 @@
+## [1.7.25](https://github.com/Kong/markdown/compare/v1.7.24...v1.7.25) (2025-01-23)
+
+
+### Bug Fixes
+
+* **stylelint:** add spacing rules ([6779d87](https://github.com/Kong/markdown/commit/6779d87b1a8af3e075073e1b6a00e80ec3740b5a))
+
 ## [1.7.24](https://github.com/Kong/markdown/compare/v1.7.23...v1.7.24) (2025-01-21)
 
 
