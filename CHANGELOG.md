@@ -1,3 +1,10 @@
+## [1.7.28](https://github.com/Kong/markdown/compare/v1.7.27...v1.7.28) (2025-02-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.21.1 ([#260](https://github.com/Kong/markdown/issues/260)) ([df0c09b](https://github.com/Kong/markdown/commit/df0c09b6a7886408c8b33053637ad4007f98bdd7))
+
 ## [1.7.27](https://github.com/Kong/markdown/compare/v1.7.26...v1.7.27) (2025-02-09)
 
 
