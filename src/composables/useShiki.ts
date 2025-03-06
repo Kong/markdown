@@ -200,7 +200,15 @@ export default function useShiki() {
     })
   }
 
+  const disposeHighlighter = () => {
+    if (highlighter) {
+      highlighter.dispose()
+      highlighter = undefined
+    }
+  }
+
   return {
     MarkdownItShiki,
+    disposeHighlighter,
   }
 }

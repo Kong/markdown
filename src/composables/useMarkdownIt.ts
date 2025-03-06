@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import useShiki from '@/composables/useShiki'
 import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
 import type { Theme } from '@/types'
@@ -26,6 +26,8 @@ import { Buffer } from 'buffer'
 const md = ref()
 
 export default function useMarkdownIt() {
+  const { disposeHighlighter } = useShiki()
+
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
   const init = async (theme: Theme = 'light'): Promise<void> => {
     const { MarkdownItShiki } = useShiki()
@@ -140,6 +142,10 @@ export default function useMarkdownIt() {
       `
     }
   }
+
+  onUnmounted(() => {
+    disposeHighlighter()
+  })
 
   return {
     md,
