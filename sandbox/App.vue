@@ -89,7 +89,13 @@ onBeforeMount(async () => {
   // Store the original content in case the user cancels
   originalContent.value = markdownContent
   // Copy the content for editing
-  editorContent.value = originalContent.value
+  editorContent.value = '', originalContent.value
+
+  // Set up an interval to append content every 5 seconds
+  setInterval(() => {
+    editorContent.value += '\n\nThis is **markdown** from: ' + new Date().toLocaleTimeString()
+    console.log('add content')
+  }, 5000)
 })
 </script>
 
