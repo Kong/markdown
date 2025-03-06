@@ -1,3 +1,10 @@
+## [1.7.29](https://github.com/Kong/markdown/compare/v1.7.28...v1.7.29) (2025-03-06)
+
+
+### Bug Fixes
+
+* memory issues ([#268](https://github.com/Kong/markdown/issues/268)) ([1625ec2](https://github.com/Kong/markdown/commit/1625ec2055186be890d0bc5c6c714fda6c20cdb8))
+
 ## [1.7.28](https://github.com/Kong/markdown/compare/v1.7.27...v1.7.28) (2025-02-18)
 
 
