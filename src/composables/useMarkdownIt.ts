@@ -89,8 +89,7 @@ export default function useMarkdownIt() {
     md.value.renderer.rules.table_open = () => '<div class="markdown-ui-table-wrapper"><table class="markdown-ui-table">' + NEW_LINE_CHARACTER
     md.value.renderer.rules.table_close = () => '</table></div>' + NEW_LINE_CHARACTER
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const getDefaultRenderer = (original: any): Function => {
+    const getDefaultRenderer = (original: any) => {
       return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
