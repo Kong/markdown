@@ -1,3 +1,10 @@
+## [1.7.32](https://github.com/Kong/markdown/compare/v1.7.31...v1.7.32) (2025-06-24)
+
+
+### Bug Fixes
+
+* **lint:** update and run eslint config ([7b278dd](https://github.com/Kong/markdown/commit/7b278ddc89b621c1ac1814f8b9041173f056e6cc))
+
 ## [1.7.31](https://github.com/Kong/markdown/compare/v1.7.30...v1.7.31) (2025-06-24)
 
 
