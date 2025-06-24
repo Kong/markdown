@@ -21,6 +21,7 @@
   "typings": "dist/types",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/kong-markdown.es.js",
       "require": "./dist/kong-markdown.umd.js"
     },
