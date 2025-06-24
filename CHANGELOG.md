@@ -1,3 +1,12 @@
+## [1.7.31](https://github.com/Kong/markdown/compare/v1.7.30...v1.7.31) (2025-06-24)
+
+
+### Bug Fixes
+
+* pnpm approve builds ([587b887](https://github.com/Kong/markdown/commit/587b8874d22a5b27b74782108b670f0039f70cc8))
+* pnpm approve builds ([133af0c](https://github.com/Kong/markdown/commit/133af0ca08be7a794b35ff998636179494a5c898))
+* pnpm config ([35df74f](https://github.com/Kong/markdown/commit/35df74f28b79bd0d170cf8d72487358f088812d7))
+
 ## [1.7.30](https://github.com/Kong/markdown/compare/v1.7.29...v1.7.30) (2025-03-20)
 
 
