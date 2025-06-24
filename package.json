@@ -130,6 +130,12 @@
     "vue": "^3.5.13",
     "vue-tsc": "^2.1.10"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@evilmartians/lefthook",
+      "esbuild"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kong/markdown.git"
