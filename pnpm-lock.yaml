@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kong/icons':
-        specifier: ^1.21.2
-        version: 1.21.2(vue@3.5.13(typescript@5.6.3))
+        specifier: ^1.33.0
+        version: 1.33.0(vue@3.5.13(typescript@5.6.3))
       '@mdit-vue/plugin-frontmatter':
         specifier: ^2.1.3
         version: 2.1.3
@@ -787,6 +787,7 @@ packages:
 
   '@evilmartians/lefthook@1.8.5':
     resolution: {integrity: sha512-TuAL6W+bj2DqYxqm5JnFi3s7RnjpU/IUxxHFZWUHNytZ+HDQfkceogo+1DlSBFXFva2V21CSaDkeWJJHOmmECw==}
+    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -858,8 +859,8 @@ packages:
     peerDependencies:
       eslint: '>= 9.23.0'
 
-  '@kong/icons@1.21.2':
-    resolution: {integrity: sha512-gTqtvJ/G4KoR0WGctb7CChJTAOmDAwG2nG8Oz66Yyu6/GYlR25PDwVDanWcWmpbOl0zvjrIgEPunndYNK/QIeQ==}
+  '@kong/icons@1.33.0':
+    resolution: {integrity: sha512-uPnzg1WkJs6z22tftFfoo1/VG2fzeDssx+ubc1sX1K7bzbGwAQXR3VLnw4W8g8JoMrNpqo+FP3dm8/8ynkb7GA==}
     engines: {node: '>=18.17.0', pnpm: '>=9.14.4 || >=10.1.0'}
     peerDependencies:
       vue: '>= 3.3.4 < 4'
@@ -4405,7 +4406,7 @@ packages:
   right-pad@1.0.1:
     resolution: {integrity: sha512-bYBjgxmkvTAfgIYy328fmkwhp39v8lwVgWhhrzxPV3yHtcSqyYKe9/XOhvW48UFjATg3VuJbpsp5822ACNvkmw==}
     engines: {node: '>= 0.10'}
-    deprecated: Please use String.prototype.padEnd() over this package.
+    deprecated: Use String.prototype.padEnd() instead
 
   rimraf@5.0.10:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
@@ -6009,7 +6010,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@kong/icons@1.21.2(vue@3.5.13(typescript@5.6.3))':
+  '@kong/icons@1.33.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       vue: 3.5.13(typescript@5.6.3)
 
