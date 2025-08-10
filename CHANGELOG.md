@@ -1,3 +1,10 @@
+## [1.7.34](https://github.com/Kong/markdown/compare/v1.7.33...v1.7.34) (2025-08-10)
+
+
+### Bug Fixes
+
+* **deps:** update all [@kong](https://github.com/kong) scoped dependencies ([#272](https://github.com/Kong/markdown/issues/272)) ([7a5fc36](https://github.com/Kong/markdown/commit/7a5fc36fe3945e276e7a911b01622efcaf641eaf))
+
 ## [1.7.33](https://github.com/Kong/markdown/compare/v1.7.32...v1.7.33) (2025-07-15)
 
 
