@@ -4,13 +4,15 @@ on:
     types:
       - closed
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   remove-pr-preview-comment:
     name: Remove PR preview comment from PR
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
