@@ -1,3 +1,188 @@
+## [1.7.34](https://github.com/Kong/markdown/compare/v1.7.33...v1.7.34) (2025-08-10)
+
+
+### Bug Fixes
+
+* **deps:** update all [@kong](https://github.com/kong) scoped dependencies ([#272](https://github.com/Kong/markdown/issues/272)) ([7a5fc36](https://github.com/Kong/markdown/commit/7a5fc36fe3945e276e7a911b01622efcaf641eaf))
+
+## [1.7.33](https://github.com/Kong/markdown/compare/v1.7.32...v1.7.33) (2025-07-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.33.0 ([#274](https://github.com/Kong/markdown/issues/274)) ([6564a3e](https://github.com/Kong/markdown/commit/6564a3e5e5c84e1a03f99d978d320b0588d75bde))
+
+## [1.7.32](https://github.com/Kong/markdown/compare/v1.7.31...v1.7.32) (2025-06-24)
+
+
+### Bug Fixes
+
+* **lint:** update and run eslint config ([7b278dd](https://github.com/Kong/markdown/commit/7b278ddc89b621c1ac1814f8b9041173f056e6cc))
+
+## [1.7.31](https://github.com/Kong/markdown/compare/v1.7.30...v1.7.31) (2025-06-24)
+
+
+### Bug Fixes
+
+* pnpm approve builds ([587b887](https://github.com/Kong/markdown/commit/587b8874d22a5b27b74782108b670f0039f70cc8))
+* pnpm approve builds ([133af0c](https://github.com/Kong/markdown/commit/133af0ca08be7a794b35ff998636179494a5c898))
+* pnpm config ([35df74f](https://github.com/Kong/markdown/commit/35df74f28b79bd0d170cf8d72487358f088812d7))
+
+## [1.7.30](https://github.com/Kong/markdown/compare/v1.7.29...v1.7.30) (2025-03-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.21.2 ([#266](https://github.com/Kong/markdown/issues/266)) ([f236f79](https://github.com/Kong/markdown/commit/f236f79752519bfca38652dd693bea6cb29bfa97))
+
+## [1.7.29](https://github.com/Kong/markdown/compare/v1.7.28...v1.7.29) (2025-03-06)
+
+
+### Bug Fixes
+
+* memory issues ([#268](https://github.com/Kong/markdown/issues/268)) ([1625ec2](https://github.com/Kong/markdown/commit/1625ec2055186be890d0bc5c6c714fda6c20cdb8))
+
+## [1.7.28](https://github.com/Kong/markdown/compare/v1.7.27...v1.7.28) (2025-02-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.21.1 ([#260](https://github.com/Kong/markdown/issues/260)) ([df0c09b](https://github.com/Kong/markdown/commit/df0c09b6a7886408c8b33053637ad4007f98bdd7))
+
+## [1.7.27](https://github.com/Kong/markdown/compare/v1.7.26...v1.7.27) (2025-02-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.20.4 ([#255](https://github.com/Kong/markdown/issues/255)) ([e2edf0d](https://github.com/Kong/markdown/commit/e2edf0dcc82374552ac1c1d0b56887e39acfc375))
+
+## [1.7.26](https://github.com/Kong/markdown/compare/v1.7.25...v1.7.26) (2025-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable version ([#252](https://github.com/Kong/markdown/issues/252)) ([5eb6b16](https://github.com/Kong/markdown/commit/5eb6b1678c16d246e2863d49a5375646b6e94d1b))
+
+## [1.7.25](https://github.com/Kong/markdown/compare/v1.7.24...v1.7.25) (2025-01-23)
+
+
+### Bug Fixes
+
+* **stylelint:** add spacing rules ([6779d87](https://github.com/Kong/markdown/commit/6779d87b1a8af3e075073e1b6a00e80ec3740b5a))
+
+## [1.7.24](https://github.com/Kong/markdown/compare/v1.7.23...v1.7.24) (2025-01-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to ^11.0.4 ([#250](https://github.com/Kong/markdown/issues/250)) ([25a6f39](https://github.com/Kong/markdown/commit/25a6f393f23ff7a209919b476f18e854eb001c6a))
+
+## [1.7.23](https://github.com/Kong/markdown/compare/v1.7.22...v1.7.23) (2025-01-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.20.2 ([#248](https://github.com/Kong/markdown/issues/248)) ([5a18732](https://github.com/Kong/markdown/commit/5a187327751a7774d7b16298871cb40609d9f055))
+
+## [1.7.22](https://github.com/Kong/markdown/compare/v1.7.21...v1.7.22) (2024-12-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v12 ([#218](https://github.com/Kong/markdown/issues/218)) ([111de78](https://github.com/Kong/markdown/commit/111de78e3a4165e12e42bef15de04a39e1d12f49))
+* **deps:** update dependency uuid to v11 ([#188](https://github.com/Kong/markdown/issues/188)) ([8790505](https://github.com/Kong/markdown/commit/8790505949e4dcc1b071e3082cfa4ebd225e4718))
+
+## [1.7.21](https://github.com/Kong/markdown/compare/v1.7.20...v1.7.21) (2024-12-10)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable version ([#210](https://github.com/Kong/markdown/issues/210)) ([68cb586](https://github.com/Kong/markdown/commit/68cb586e00b7b722a09aab41bb21efae5f6a70f7))
+
+## [1.7.20](https://github.com/Kong/markdown/compare/v1.7.19...v1.7.20) (2024-12-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.20.1 ([#209](https://github.com/Kong/markdown/issues/209)) ([cc5d05c](https://github.com/Kong/markdown/commit/cc5d05cdde9c06f15f0d908ef782500c873cd310))
+
+## [1.7.19](https://github.com/Kong/markdown/compare/v1.7.18...v1.7.19) (2024-12-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to ^11.3.0 ([#206](https://github.com/Kong/markdown/issues/206)) ([d34521e](https://github.com/Kong/markdown/commit/d34521e993d0ce8a785e225c74d23328524ce21c))
+
+## [1.7.18](https://github.com/Kong/markdown/compare/v1.7.17...v1.7.18) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.20.0 ([#194](https://github.com/Kong/markdown/issues/194)) ([db3a535](https://github.com/Kong/markdown/commit/db3a5352e5bb9e3b832a24e7d2308888e359bb0b))
+
+## [1.7.17](https://github.com/Kong/markdown/compare/v1.7.16...v1.7.17) (2024-11-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to ^11.2.0 ([#187](https://github.com/Kong/markdown/issues/187)) ([bf00e71](https://github.com/Kong/markdown/commit/bf00e7178e2890046a1c808d754e778ae926c6bf))
+
+## [1.7.16](https://github.com/Kong/markdown/compare/v1.7.15...v1.7.16) (2024-11-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.19.1 ([#185](https://github.com/Kong/markdown/issues/185)) ([036281d](https://github.com/Kong/markdown/commit/036281d6efb65b495adb7283edf725cf83e71718))
+
+## [1.7.15](https://github.com/Kong/markdown/compare/v1.7.14...v1.7.15) (2024-11-04)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable version ([#161](https://github.com/Kong/markdown/issues/161)) ([6dfbc08](https://github.com/Kong/markdown/commit/6dfbc08833601b693024831c45eb388c0ef4028b))
+
+## [1.7.14](https://github.com/Kong/markdown/compare/v1.7.13...v1.7.14) (2024-11-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.18.2 ([#176](https://github.com/Kong/markdown/issues/176)) ([012294f](https://github.com/Kong/markdown/commit/012294fe47aed61d9fd80d76510b8beaa4699278))
+
+## [1.7.13](https://github.com/Kong/markdown/compare/v1.7.12...v1.7.13) (2024-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.18.1 ([#145](https://github.com/Kong/markdown/issues/145)) ([c1bd7ef](https://github.com/Kong/markdown/commit/c1bd7ef56714538bc030359fe928e3d9129c68d6))
+
+## [1.7.12](https://github.com/Kong/markdown/compare/v1.7.11...v1.7.12) (2024-09-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.18.0 ([#144](https://github.com/Kong/markdown/issues/144)) ([156c013](https://github.com/Kong/markdown/commit/156c013d8df833178502945dae04ebda82b8649c))
+
+## [1.7.11](https://github.com/Kong/markdown/compare/v1.7.10...v1.7.11) (2024-09-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.15.2 ([#140](https://github.com/Kong/markdown/issues/140)) ([258486a](https://github.com/Kong/markdown/commit/258486ad3bacc4f3c13b6148971bb2cfe34dba67))
+
+## [1.7.10](https://github.com/Kong/markdown/compare/v1.7.9...v1.7.10) (2024-09-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v11 ([#131](https://github.com/Kong/markdown/issues/131)) ([db6046d](https://github.com/Kong/markdown/commit/db6046df0832e5ebafed66c891ec9ca66b1d8cc7))
+
+## [1.7.9](https://github.com/Kong/markdown/compare/v1.7.8...v1.7.9) (2024-09-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mermaid to v11 ([#133](https://github.com/Kong/markdown/issues/133)) ([63715a4](https://github.com/Kong/markdown/commit/63715a4689fb7b88447869e57f6895f6dc1df051))
+
 ## [1.7.8](https://github.com/Kong/markdown/compare/v1.7.7...v1.7.8) (2024-07-22)
 
 

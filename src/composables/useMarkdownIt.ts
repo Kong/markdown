@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import useShiki from '@/composables/useShiki'
 import { NEW_LINE_CHARACTER, COPY_ICON_SVG, HEADER_LINK_ICON_SVG } from '@/constants'
 import type { Theme } from '@/types'
@@ -26,6 +26,8 @@ import { Buffer } from 'buffer'
 const md = ref()
 
 export default function useMarkdownIt() {
+  const { disposeHighlighter } = useShiki()
+
   /** Initialize markdown-it - ideally called in the `onBeforeMount` hook */
   const init = async (theme: Theme = 'light'): Promise<void> => {
     const { MarkdownItShiki } = useShiki()
@@ -87,8 +89,7 @@ export default function useMarkdownIt() {
     md.value.renderer.rules.table_open = () => '<div class="markdown-ui-table-wrapper"><table class="markdown-ui-table">' + NEW_LINE_CHARACTER
     md.value.renderer.rules.table_close = () => '</table></div>' + NEW_LINE_CHARACTER
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const getDefaultRenderer = (original: any): Function => {
+    const getDefaultRenderer = (original: any) => {
       return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
@@ -140,6 +141,10 @@ export default function useMarkdownIt() {
       `
     }
   }
+
+  onUnmounted(() => {
+    disposeHighlighter()
+  })
 
   return {
     md,

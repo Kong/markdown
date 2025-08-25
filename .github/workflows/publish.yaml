@@ -5,20 +5,6 @@ on:
     branches:
       - main
 
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - labeled
-    branches:
-      - main
-
-permissions:
-  id-token: write
-  contents: read
-  actions: read
-
 jobs:
   run-tests:
     name: Tests
@@ -30,17 +16,8 @@ jobs:
       runs-on: ubuntu-latest
       timeout-minutes: 20
       steps:
-
-        - name: Remove preview consumption comment
-          if: github.event_name == 'pull_request'
-          uses: marocchino/sticky-pull-request-comment@v2
-          with:
-            header: pr_preview_consumption
-            delete: true
-            GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
-
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           with:
             fetch-depth: 0
             token: ${{ secrets.KONGPONENTS_BOT_PAT }}
@@ -50,6 +27,12 @@ jobs:
             git config user.email "konnectx-engineers+kongponents-bot@konghq.com"
             git config user.name "Kong UI Bot"
 
+        - name: Create .npmrc
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
+          # Reference the env variable NPM_TOKEN here, not the secret
+          run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+
         - name: Setup PNPM with Dependencies
           uses: ./.github/actions/setup-pnpm-with-dependencies/
 
@@ -57,72 +40,12 @@ jobs:
           # Since we lint in the Tests job, we can just build here
           run: pnpm run build
 
-
-        - name: Publish Package Preview
-          id: package-preview
-          # Do not run for `alpha` or `beta` branches
-          if: github.event_name == 'pull_request' && (github.actor != 'renovate[bot]' || contains(github.event.pull_request.labels.*.name, 'create preview package')) && !contains(github.head_ref || github.ref_name, 'alpha') && !contains(github.head_ref || github.ref_name, 'beta')
-          run: |
-            git config user.email "konnectx-engineers+kongponents-bot@konghq.com"
-            git config user.name "Kong UI Bot"
-
-            preid="pr.${{ github.event.pull_request.number }}.$(git rev-parse --short ${{ github.event.pull_request.head.sha }})"
-            tag="pr-${{ github.event.pull_request.number }}"
-            echo "preid=${preid}"
-
-            # Use yarn to bump the version for the prerelease
-            pnpm version prerelease --preid ${preid} --no-git-tag-version --yes --amend
-
-            package_version=$(jq -r ".version" package.json)
-            package=@kong/markdown@"${package_version}"
-
-            npm show "${package}" >/dev/null 2>&1 && npm_show_status=0 || npm_show_status=1
-            if [ $npm_show_status -eq 0 ]; then
-              echo "Package ${package} is already published. Skipping publishing."
-              exit 0
-            fi
-
-            npm_instructions=""
-
-            pkg=$(pnpm publish --no-git-checks --access public --report-summary --tag "${tag}" | grep "+ "| sed 's/+ //')
-
-            if [[ -z "${pkg}" ]]; then
-              echo "Error publishing package"
-              exit -1
-            fi
-
-            npm_instructions="@$(echo ${pkg}|cut -d'@' -f2)@${tag}"
-
-            echo "npm_instructions<<EOF" >> $GITHUB_OUTPUT
-            echo -e "$npm_instructions" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-
-        - name: Provide preview link info
-          if: ${{ steps.package-preview.outputs.npm_instructions != '' }}
-          uses: marocchino/sticky-pull-request-comment@v2
-          with:
-            header: pr_preview_consumption
-            message: |
-              ### Install the preview package from this PR
-
-              ```sh
-              ${{ steps.package-preview.outputs.npm_instructions }}
-              ```
-            GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
-
         - name: Semantic Release
-          uses: cycjimmy/semantic-release-action@v4
-          if: github.event_name == 'push'
+          uses: cycjimmy/semantic-release-action@16ca923e6ccbb50770c415a0ccd43709a8c5f7a4 # v4.2.2
           env:
             # Since branch protections are on (pushing commits) you need to use a bot PAT
             GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
-
-        # as of now cycjimmy/semantic-release-action is not publishing  to npmjs as
-        # trusted publishing is not yet supported, so we want to do a publish as separate step
-        - name: Publish to npm
-          if: github.event_name == 'push'
-          run: |
-            npm publish
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
 
   deploy-github-pages:
     name: Deploy GitHub Pages
@@ -145,7 +68,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup PNPM with Dependencies
         uses: ./.github/actions/setup-pnpm-with-dependencies/
@@ -159,14 +82,14 @@ jobs:
         run: pnpm run build:sandbox
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           # Upload sandbox/dist directory
           path: './sandbox/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

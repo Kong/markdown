@@ -51,8 +51,8 @@ const waitForEmittedEvent = async (wrapper: any, emit: string): Promise<void> =>
 const mediaQuerySpy = ({
   isPhabletWidth = true,
 }: {
-  isPhabletWidth?: boolean,
-  theme?: Theme,
+  isPhabletWidth?: boolean
+  theme?: Theme
 }) => vi.spyOn(global.window, 'matchMedia').mockImplementation((query: string): MediaQueryList => {
   let matches = false
   if (query.includes(`min-width: ${KUI_BREAKPOINT_PHABLET}`)) {
