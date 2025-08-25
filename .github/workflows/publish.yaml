@@ -40,7 +40,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
 
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           with:
             fetch-depth: 0
             token: ${{ secrets.KONGPONENTS_BOT_PAT }}
@@ -111,7 +111,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
 
         - name: Semantic Release
-          uses: cycjimmy/semantic-release-action@v4
+          uses: cycjimmy/semantic-release-action@16ca923e6ccbb50770c415a0ccd43709a8c5f7a4 # v4.2.2
           if: github.event_name == 'push'
           env:
             # Since branch protections are on (pushing commits) you need to use a bot PAT
@@ -145,7 +145,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup PNPM with Dependencies
         uses: ./.github/actions/setup-pnpm-with-dependencies/
@@ -159,14 +159,14 @@ jobs:
         run: pnpm run build:sandbox
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           # Upload sandbox/dist directory
           path: './sandbox/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
