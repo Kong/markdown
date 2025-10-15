@@ -18,8 +18,8 @@
       "automerge": true,
       "groupName": "all shiki dependencies",
       "groupSlug": "all-shiki-dependencies",
-      "matchPackagePatterns": [
-        "^(.*)?shiki"
+      "matchPackageNames": [
+        "/^(.*)?shiki/"
       ]
     }
   ]
