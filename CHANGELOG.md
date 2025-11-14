@@ -1,3 +1,10 @@
+## [1.7.35](https://github.com/Kong/markdown/compare/v1.7.34...v1.7.35) (2025-11-14)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable versions ([#294](https://github.com/Kong/markdown/issues/294)) ([e43975c](https://github.com/Kong/markdown/commit/e43975c2b729e06348bc80bbb45ce15f7e39988f))
+
 ## [1.7.34](https://github.com/Kong/markdown/compare/v1.7.33...v1.7.34) (2025-08-10)
 
 
