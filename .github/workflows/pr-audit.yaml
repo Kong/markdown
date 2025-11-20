@@ -15,7 +15,7 @@ jobs:
     name: Audit
     permissions:
       contents: read
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN_PRIVATE_READ }}
