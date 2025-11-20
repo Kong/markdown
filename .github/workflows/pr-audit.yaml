@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN_PRIVATE_READ }}
       GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
 
     steps:
