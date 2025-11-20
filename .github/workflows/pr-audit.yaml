@@ -13,6 +13,8 @@ on:
 jobs:
   pr-audit:
     name: Audit
+    permissions:
+      contents: read
     runs-on: ${{ vars.RUNS_ON }}
     timeout-minutes: 10
     env:
