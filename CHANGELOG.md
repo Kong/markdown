@@ -1,3 +1,10 @@
+## [1.7.36](https://github.com/Kong/markdown/compare/v1.7.35...v1.7.36) (2025-11-25)
+
+
+### Bug Fixes
+
+* back to publishing using semantic-release [KHCP-17673] ([#307](https://github.com/Kong/markdown/issues/307)) ([6e3b7d3](https://github.com/Kong/markdown/commit/6e3b7d3fa3da6e687904f0a25503198f8843fd44))
+
 ## [1.7.35](https://github.com/Kong/markdown/compare/v1.7.34...v1.7.35) (2025-11-14)
 
 
