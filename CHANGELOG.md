@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Kong/markdown/compare/v1.7.36...v1.8.0) (2025-11-26)
+
+
+### Features
+
+* adopt PR audit [KHCP-18541] ([#306](https://github.com/Kong/markdown/issues/306)) ([8576d49](https://github.com/Kong/markdown/commit/8576d49db625e969d56fbd0f78c7dac47208bc14))
+
 ## [1.7.36](https://github.com/Kong/markdown/compare/v1.7.35...v1.7.36) (2025-11-25)
 
 
