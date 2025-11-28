@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/Kong/markdown/compare/v1.8.0...v1.8.1) (2025-11-28)
+
+
+### Bug Fixes
+
+* trigger pr-audit on PR labeling ([#310](https://github.com/Kong/markdown/issues/310)) ([80c2018](https://github.com/Kong/markdown/commit/80c201893fb5c7aa0316c0d98ce44c1544c4ff62))
+
 # [1.8.0](https://github.com/Kong/markdown/compare/v1.7.36...v1.8.0) (2025-11-26)
 
 
