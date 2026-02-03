@@ -195,7 +195,7 @@
   },
   "volta": {
     "node": "24.6.0",
-    "pnpm": "10.27.0"
+    "pnpm": "10.28.2"
   },
   "config": {
     "commitizen": {
