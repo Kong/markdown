@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Kong/markdown/compare/v1.8.1...v1.9.0) (2026-02-03)
+
+
+### Features
+
+* export MarkdownContent ([#318](https://github.com/Kong/markdown/issues/318)) ([2db309e](https://github.com/Kong/markdown/commit/2db309ef0e24042417a04e733aad7edbee6bf387))
+
 ## [1.8.1](https://github.com/Kong/markdown/compare/v1.8.0...v1.8.1) (2025-11-28)
 
 

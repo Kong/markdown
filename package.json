@@ -1,6 +1,6 @@
 {
   "name": "@kong/markdown",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "Kong's open-source markdown renderer and live editor",
   "keywords": [
     "markdown",
@@ -56,7 +56,7 @@
     "vue": ">= 3.3.13 < 4"
   },
   "dependencies": {
-    "@kong/icons": "^1.33.2",
+    "@kong/icons": "^1.42.0",
     "@mdit-vue/plugin-frontmatter": "^2.1.4",
     "@sindresorhus/slugify": "^2.2.1",
     "@vueuse/core": "^12.0.0",
@@ -84,8 +84,8 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
     "@evilmartians/lefthook": "^1.8.5",
-    "@kong/design-tokens": "^1.17.6",
-    "@kong/eslint-config-kong-ui": "^1.3.0",
+    "@kong/design-tokens": "^1.18.2",
+    "@kong/eslint-config-kong-ui": "^1.6.0",
     "@mdit-vue/types": "^2.1.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -116,10 +116,10 @@
     "sass": "^1.83.4",
     "semantic-release": "^25.0.2",
     "shiki": "^1.29.2",
-    "stylelint": "^16.10.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-order": "^6.0.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",

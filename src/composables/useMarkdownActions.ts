@@ -337,7 +337,7 @@ export default function useMarkdownActions(
           }
           // needsNewLine not needed here
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_TASK
           break
         case 'unordered-list':
@@ -348,7 +348,7 @@ export default function useMarkdownActions(
           }
           // needsNewLine not needed here
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_UL
           break
         case 'ordered-list':
@@ -359,7 +359,7 @@ export default function useMarkdownActions(
           }
           // needsNewLine not needed here
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_OL
           break
         case 'blockquote':
@@ -370,17 +370,17 @@ export default function useMarkdownActions(
           }
           // needsNewLine not needed here
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_BLOCKQUOTE
           break
         case 'codeblock':
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_CODEBLOCK
           break
         case 'table':
           markdownTemplate =
-          needsNewLine +
+            needsNewLine +
           MARKDOWN_TEMPLATE_TABLE
           break
       }
