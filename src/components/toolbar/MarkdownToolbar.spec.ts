@@ -18,7 +18,7 @@ const setProvideData = (
   [HTML_PREVIEW_INJECTION_KEY]: ref(htmlPreview),
 })
 
-const formatOptions: Partial<FormatOption>[] = [
+const formatOptions: Array<Partial<FormatOption>> = [
   { label: 'Bold', action: 'bold', keys: ['B'] },
   { label: 'Italic', action: 'italic', keys: ['I'] },
   { label: 'Underline', action: 'underline', keys: ['U'] },
@@ -28,7 +28,7 @@ const formatOptions: Partial<FormatOption>[] = [
   { label: 'Image', action: 'image' },
 ]
 
-const templateOptions: Partial<TemplateOption>[] = [
+const templateOptions: Array<Partial<TemplateOption>> = [
   { label: 'Unordered List', action: 'unordered-list' },
   { label: 'Ordered List', action: 'ordered-list' },
   { label: 'Tasklist', action: 'task' },
