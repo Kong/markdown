@@ -90,7 +90,7 @@ export default function useMarkdownIt() {
     md.value.renderer.rules.table_close = () => '</table></div>' + NEW_LINE_CHARACTER
 
     const getDefaultRenderer = (original: any) => {
-      return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
+      return original || function(tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
     }
@@ -98,7 +98,7 @@ export default function useMarkdownIt() {
     // Configure custom external links
     const defaultLinkRenderer = getDefaultRenderer(md.value.renderer.rules.link_open)
     const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
-    md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+    md.value.renderer.rules.link_open = (tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
         const aIndex = tokens[idx].attrIndex(attribute)
         const value = externalAnchorAttributes[attribute]
@@ -115,7 +115,7 @@ export default function useMarkdownIt() {
 
     // Configure custom code blocks
     const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
-    md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+    md.value.renderer.rules.fence = (tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       const content: string = tokens[idx].content
         // Strip out double-quote characters
         .replace(/"/g, '&quot;')
