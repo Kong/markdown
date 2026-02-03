@@ -476,7 +476,7 @@ export default function useMarkdownActions(
         // No text is selected
 
         // If the user tries to click the button twice (with the cursor in between the brackets) exit early
-        if (startText.endsWith(MARKDOWN_TEMPLATE_LINK.split('text')[0]) && /^\]\((.*)+\)/.test(endText)) {
+        if (startText.endsWith(MARKDOWN_TEMPLATE_LINK.split('text')[0]!) && /^\]\((.*)+\)/.test(endText)) {
           await focusTextarea()
           return
         }
@@ -565,7 +565,7 @@ export default function useMarkdownActions(
         // No text is selected
 
         // If the user tries to click the button twice (with the cursor in between the brackets) exit early
-        if (startText.endsWith(MARKDOWN_TEMPLATE_IMAGE.split('alt')[0]) && /^\]\((.*)+\)/.test(endText)) {
+        if (startText.endsWith(MARKDOWN_TEMPLATE_IMAGE.split('alt')[0]!) && /^\]\((.*)+\)/.test(endText)) {
           await focusTextarea()
           return
         }
@@ -654,7 +654,7 @@ export default function useMarkdownActions(
                 removeNewLineTemplate = true
               } else {
                 // Add a new line appended with the same template with indentation, if applicable
-                newLineContent += lastLine.split(listNumber + numberSuffix)[0] + newLineNumber + numberSuffix
+                newLineContent += lastLine.split(listNumber + numberSuffix)[0]! + newLineNumber + numberSuffix
               }
             }
             // We found a match, so exit the loop

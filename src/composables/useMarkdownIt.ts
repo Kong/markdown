@@ -100,9 +100,9 @@ export default function useMarkdownIt() {
     const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
     md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
-        const aIndex = tokens[idx].attrIndex(attribute)
+        const aIndex = tokens[idx]?.attrIndex(attribute)
         const value = externalAnchorAttributes[attribute]
-        if (tokens[idx].attrs?.length && String(tokens[idx].attrs[0] || '').includes('http')) {
+        if (tokens[idx]?.attrs?.length && String(tokens[idx]?.attrs[0] || '').includes('http')) {
           if (aIndex < 0) {
             tokens[idx].attrPush([attribute, value]) // add new attribute
           } else {
@@ -116,7 +116,7 @@ export default function useMarkdownIt() {
     // Configure custom code blocks
     const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
     md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
-      const content: string = tokens[idx].content
+      const content: string = tokens[idx]?.content
         // Strip out double-quote characters
         .replace(/"/g, '&quot;')
         // Strip out single-quote characters
