@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/Kong/markdown/compare/v1.9.2...v1.9.3) (2026-02-04)
+
+
+### Bug Fixes
+
+* **deps:** update vue tsc ([#319](https://github.com/Kong/markdown/issues/319)) ([1fd34ae](https://github.com/Kong/markdown/commit/1fd34ae0bb220afd6cb4ca3d63910e52340a8e3b))
+
 ## [1.9.2](https://github.com/Kong/markdown/compare/v1.9.1...v1.9.2) (2026-02-04)
 
 
