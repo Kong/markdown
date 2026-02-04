@@ -90,8 +90,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(@types/node@22.12.0)(typescript@5.6.3)
       '@evilmartians/lefthook':
-        specifier: ^1.8.5
-        version: 1.8.5
+        specifier: ^2.0.16
+        version: 2.1.0
       '@kong/design-tokens':
         specifier: ^1.18.2
         version: 1.18.2
@@ -837,8 +837,8 @@ packages:
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@evilmartians/lefthook@1.8.5':
-    resolution: {integrity: sha512-TuAL6W+bj2DqYxqm5JnFi3s7RnjpU/IUxxHFZWUHNytZ+HDQfkceogo+1DlSBFXFva2V21CSaDkeWJJHOmmECw==}
+  '@evilmartians/lefthook@2.1.0':
+    resolution: {integrity: sha512-/Uk/WgGuiPl8/sv3iL96KPCKWDrBFiqQY0uRzm+m3zwoonGHQhBU7UC8dmyZbUK3NXXQz4lVldZK1z57qSHzUA==}
     cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
@@ -6270,7 +6270,7 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
-  '@evilmartians/lefthook@1.8.5': {}
+  '@evilmartians/lefthook@2.1.0': {}
 
   '@fastify/busboy@2.1.1': {}
 
