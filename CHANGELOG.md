@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/Kong/markdown/compare/v1.9.1...v1.9.2) (2026-02-04)
+
+
+### Bug Fixes
+
+* **deps:** pnpm audit ([#322](https://github.com/Kong/markdown/issues/322)) ([e617c44](https://github.com/Kong/markdown/commit/e617c442ef066568d2019ba6c0d7b1e23d0edc0e))
+
 ## [1.9.1](https://github.com/Kong/markdown/compare/v1.9.0...v1.9.1) (2026-02-03)
 
 
