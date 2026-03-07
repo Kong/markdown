@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/Kong/markdown/compare/v1.9.3...v1.9.4) (2026-03-07)
+
+
+### Bug Fixes
+
+* **deps:** update non-major [@kong](https://github.com/kong) dependencies with stable versions ([#330](https://github.com/Kong/markdown/issues/330)) ([73e4e31](https://github.com/Kong/markdown/commit/73e4e3177fce11da62470c4787e4d2b5b9a32bb7))
+
 ## [1.9.3](https://github.com/Kong/markdown/compare/v1.9.2...v1.9.3) (2026-02-04)
 
 
