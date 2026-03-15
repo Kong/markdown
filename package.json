@@ -86,7 +86,7 @@
     "@evilmartians/lefthook": "^2.1.3",
     "@kong/design-tokens": "^1.20.0",
     "@kong/eslint-config-kong-ui": "^1.6.1",
-    "@mdit-vue/types": "^2.1.4",
+    "@mdit-vue/types": "^3.0.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@shikijs/markdown-it": "^1.29.2",
