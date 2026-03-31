@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/Kong/markdown/compare/v1.9.4...v1.9.5) (2026-03-31)
+
+
+### Bug Fixes
+
+* **pnpm:** enforce vulnerability protections ([#338](https://github.com/Kong/markdown/issues/338)) ([2cee3c7](https://github.com/Kong/markdown/commit/2cee3c71973ed0f1dbcd570df6649fe1c40a3bac))
+
 ## [1.9.4](https://github.com/Kong/markdown/compare/v1.9.3...v1.9.4) (2026-03-07)
 
 
