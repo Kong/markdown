@@ -1,3 +1,10 @@
+## [1.9.6](https://github.com/Kong/markdown/compare/v1.9.5...v1.9.6) (2026-04-09)
+
+
+### Bug Fixes
+
+* **mermaid:** resolve xss vulnerability with dompurify [KHCP-20321] ([#355](https://github.com/Kong/markdown/issues/355)) ([ee6d324](https://github.com/Kong/markdown/commit/ee6d324c91504533a6ee766069323de0dbe99ad6))
+
 ## [1.9.5](https://github.com/Kong/markdown/compare/v1.9.4...v1.9.5) (2026-03-31)
 
 
