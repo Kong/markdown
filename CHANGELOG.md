@@ -1,3 +1,10 @@
+## [1.9.7](https://github.com/Kong/markdown/compare/v1.9.6...v1.9.7) (2026-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade mermaid ([#357](https://github.com/Kong/markdown/issues/357)) ([2bde878](https://github.com/Kong/markdown/commit/2bde87899e8a7c05021c0dadc136439cb07230d6))
+
 ## [1.9.6](https://github.com/Kong/markdown/compare/v1.9.5...v1.9.6) (2026-04-09)
 
 
