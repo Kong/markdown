@@ -162,6 +162,7 @@ import { useMediaQuery, useEventListener, usePreferredColorScheme } from '@vueus
 import { v4 as uuidv4 } from 'uuid'
 import type { MarkdownMode, InlineFormat, MarkdownTemplate, TextAreaInputEvent, Theme, Frontmatter, EmitUpdatePayload } from '@/types'
 import formatHtml from 'html-format'
+import DOMPurify from 'dompurify'
 import { KUI_FONT_FAMILY_TEXT, KUI_FONT_FAMILY_CODE, KUI_SPACE_60, KUI_BREAKPOINT_PHABLET, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { EditIcon, DownloadIcon } from '@kong/icons'
 import MermaidJs from 'mermaid'
@@ -310,8 +311,20 @@ const getHtmlFromMarkdown = (content: string): string => {
   // Update the frontmatter
   frontmatter.value = env.frontmatter
 
-  // Return the rendered content
-  return rendered
+  /** Sanitize before the HTML is set via v-html.
+   * By default DOMPurify strips all event handlers (onerror, onclick, …) and
+   * `javascript:` URIs while keeping standard attributes (class, style, href,
+   * src, aria-*, data-*, tabindex, etc.).
+   * ADD_TAGS: <pre> is already in DOMPurify's default allowlist; listed
+   *   explicitly so it's clear mermaid's `<pre class="mermaid">` must survive.
+   * ADD_ATTR: data-copytext is a custom attribute added to code-block copy
+   *   buttons in useMarkdownIt.ts. `data-*` are allowed by default but we call
+   *   it out so the dependency is obvious.
+   */
+  return DOMPurify.sanitize(rendered, {
+    ADD_TAGS: ['pre'],
+    ADD_ATTR: ['data-copytext'],
+  })
 }
 
 // Initialize a ref to store the KTextArea value with prop content
@@ -490,6 +503,10 @@ const initializeMermaid = (): void => {
       fontFamily: KUI_FONT_FAMILY_TEXT,
       altFontFamily: KUI_FONT_FAMILY_CODE,
       theme: activeTheme.value === 'light' ? 'default' : 'base',
+      // Sanitize the SVG mermaid renders so any XSS that slips through is stripped before it reaches the DOM.
+      dompurifyConfig: {
+        USE_PROFILES: { svg: true, svgFilters: true },
+      },
     })
   }
 }
