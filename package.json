@@ -76,7 +76,7 @@
     "markdown-it-sup": "^2.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-textual-uml": "^0.17.1",
-    "mermaid": "^11.4.1",
+    "mermaid": "^11.14.0",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
