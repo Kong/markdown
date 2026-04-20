@@ -123,7 +123,17 @@ export default function useMarkdownIt() {
         .replace(/'/g, '&apos;')
         // Remove a trailing new line character, if it exists
         .replace(/\n$/, '')
-      const originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+
+      // Shiki throws when a fenced code block specifies an unknown or unloaded language
+      // (e.g. ```this is will break). Catch the error and fall back to a plain <pre><code>
+      // block so that rendering continues for the rest of the document.
+      let originalContent: string
+      try {
+        originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+      } catch {
+        const escaped = md.value.utils.escapeHtml(tokens[idx]?.content)
+        originalContent = `<pre><code>${escaped}</code></pre>`
+      }
 
       if (content.length === 0) {
         return originalContent
