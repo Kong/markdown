@@ -1,3 +1,10 @@
+## [1.9.8](https://github.com/Kong/markdown/compare/v1.9.7...v1.9.8) (2026-04-28)
+
+
+### Bug Fixes
+
+* handle unknown language errors in code block rendering [KHCP-20402] ([#359](https://github.com/Kong/markdown/issues/359)) ([eeb3fe8](https://github.com/Kong/markdown/commit/eeb3fe809e419b8b5a9c578317e858661a4b1107))
+
 ## [1.9.7](https://github.com/Kong/markdown/compare/v1.9.6...v1.9.7) (2026-04-09)
 
 
