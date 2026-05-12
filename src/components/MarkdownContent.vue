@@ -46,10 +46,10 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
   font-weight: var(--kui-font-weight-regular, $kui-font-weight-regular);
   line-height: var(--kui-line-height-40, $kui-line-height-40);
   margin: 0;
+  overflow-wrap: break-word;
   padding: var(--kui-space-40, $kui-space-40) var(--kui-space-70, $kui-space-70);
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
-  word-wrap: break-word;
 
   &.mode-read {
     // Remove padding in read mode
@@ -217,9 +217,9 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       border-radius: var(--kui-border-radius-20, $kui-border-radius-20);
       color: var(--kui-color-text, $kui-color-text);
       font-size: var(--kui-font-size-30, $kui-font-size-30);
+      overflow-wrap: break-word;
       padding: var(--kui-space-10, $kui-space-10) var(--kui-space-20, $kui-space-20);
       white-space: break-spaces;
-      word-wrap: break-word;
     }
 
     pre {
@@ -231,12 +231,12 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       margin: var(--kui-space-0, $kui-space-0);
       margin-bottom: var(--kui-space-70, $kui-space-70);
       overflow-wrap: break-word;
+      overflow-wrap: normal;
       overflow-x: auto;
       padding: var(--kui-space-70, $kui-space-70);
       white-space: pre;
       word-break: normal;
       word-spacing: normal;
-      word-wrap: normal;
     }
 
     // Styles for fenced code block copy button in `src/composables/useMarkdownIt.ts`
