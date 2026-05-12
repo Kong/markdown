@@ -12,6 +12,7 @@
       "dom.iterable"
     ],
     "outDir": "dist",
+    "rootDir": "src",
     "declaration": true,
     "declarationDir": "dist/types",
     "types": [
