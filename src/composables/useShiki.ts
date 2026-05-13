@@ -1,6 +1,7 @@
 import { fromHighlighter } from '@shikijs/markdown-it/core'
 import { createHighlighterCore } from 'shiki/core'
 import type { HighlighterCore } from 'shiki/core'
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import getWasm from 'shiki/wasm'
 import type { Theme } from '@/types'
 
@@ -191,7 +192,7 @@ export default function useShiki() {
           // import('shiki/langs/zenscript.mjs'),
           // import('shiki/langs/zig.mjs'),
         ],
-        loadWasm: getWasm,
+        engine: createOnigurumaEngine(getWasm),
       })
     }
 
