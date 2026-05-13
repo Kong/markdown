@@ -53,20 +53,30 @@ const mediaQuerySpy = ({
 }: {
   isPhabletWidth?: boolean
   theme?: Theme
-}) => vi.spyOn(global.window, 'matchMedia').mockImplementation((query: string): MediaQueryList => {
-  let matches = false
-  if (query.includes(`min-width: ${KUI_BREAKPOINT_PHABLET}`)) {
-    matches = isPhabletWidth
+}) => {
+  // Define matchMedia on window if it doesn't exist (jsdom doesn't provide it)
+  if (!global.window.matchMedia) {
+    global.window.matchMedia = (() => ({})) as any
   }
 
-  // @ts-ignore: we don't need the missing properties
-  return {
-    matches,
-    media: query,
-    addListener: () => {}, // Mocking addListener method
-    removeListener: () => {}, // Mocking removeListener method
-  }
-})
+  return vi.spyOn(global.window, 'matchMedia').mockImplementation((query: string): MediaQueryList => {
+    let matches = false
+    if (query.includes(`min-width: ${KUI_BREAKPOINT_PHABLET}`)) {
+      matches = isPhabletWidth
+    }
+
+    // @ts-ignore: we don't need the missing properties
+    return {
+      matches,
+      media: query,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }
+  })
+}
 
 describe('<MarkdownUi />', () => {
   beforeEach(() => {
