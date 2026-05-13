@@ -61,7 +61,7 @@
     "@sindresorhus/slugify": "^3.0.0",
     "@vueuse/core": "^14.3.0",
     "buffer": "^6.0.3",
-    "dompurify": "^3.4.2",
+    "dompurify": "^3.4.3",
     "html-format": "^1.1.7",
     "markdown-it": "^14.1.1",
     "markdown-it-abbr": "^2.0.0",
@@ -128,7 +128,7 @@
     "vite-plugin-vue-devtools": "^8.1.1",
     "vitest": "^4.1.6",
     "vue": "^3.5.34",
-    "vue-tsc": "^3.2.7"
+    "vue-tsc": "^3.2.9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
