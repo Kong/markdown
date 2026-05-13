@@ -124,12 +124,12 @@
     "stylelint-order": "^6.0.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^6.4.1",
     "vite-plugin-vue-devtools": "^7.6.8",
     "vitest": "3.0.9",
     "vue": "^3.5.29",
-    "vue-tsc": "^2.2.12"
+    "vue-tsc": "^3.2.7"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -141,7 +141,8 @@
       "cross-spawn@>=7.0.0 <7.0.5": ">=7.0.6",
       "glob@>=10.2.0 <10.5.0": ">=10.5.0",
       "@modelcontextprotocol/sdk@>=1.10.0 <=1.25.3": ">=1.26.0",
-      "handlebars": ">=4.7.9"
+      "handlebars": ">=4.7.9",
+      "typescript-eslint": "^8.59.3"
     }
   },
   "repository": {

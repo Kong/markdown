@@ -6,13 +6,13 @@
     "jsx": "preserve",
     "importHelpers": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "lib": [
       "esnext",
       "dom",
       "dom.iterable"
     ],
     "outDir": "dist",
+    "rootDir": "src",
     "declaration": true,
     "declarationDir": "dist/types",
     "types": [
@@ -21,7 +21,7 @@
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     },
   },
