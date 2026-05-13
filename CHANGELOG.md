@@ -1,3 +1,10 @@
+## [1.9.9](https://github.com/Kong/markdown/compare/v1.9.8...v1.9.9) (2026-05-13)
+
+
+### Bug Fixes
+
+* update dependencies ([#371](https://github.com/Kong/markdown/issues/371)) ([df16f46](https://github.com/Kong/markdown/commit/df16f468590f103b81dd3a946df2798077708fce))
+
 ## [1.9.8](https://github.com/Kong/markdown/compare/v1.9.7...v1.9.8) (2026-04-28)
 
 
