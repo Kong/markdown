@@ -53,20 +53,30 @@ const mediaQuerySpy = ({
 }: {
   isPhabletWidth?: boolean
   theme?: Theme
-}) => vi.spyOn(global.window, 'matchMedia').mockImplementation((query: string): MediaQueryList => {
-  let matches = false
-  if (query.includes(`min-width: ${KUI_BREAKPOINT_PHABLET}`)) {
-    matches = isPhabletWidth
+}) => {
+  // Define matchMedia on window if it doesn't exist (jsdom doesn't provide it)
+  if (!global.window.matchMedia) {
+    global.window.matchMedia = (() => ({})) as any
   }
 
-  // @ts-ignore: we don't need the missing properties
-  return {
-    matches,
-    media: query,
-    addListener: () => {}, // Mocking addListener method
-    removeListener: () => {}, // Mocking removeListener method
-  }
-})
+  return vi.spyOn(global.window, 'matchMedia').mockImplementation((query: string): MediaQueryList => {
+    let matches = false
+    if (query.includes(`min-width: ${KUI_BREAKPOINT_PHABLET}`)) {
+      matches = isPhabletWidth
+    }
+
+    // @ts-ignore: we don't need the missing properties
+    return {
+      matches,
+      media: query,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }
+  })
+}
 
 describe('<MarkdownUi />', () => {
   beforeEach(() => {
@@ -223,6 +233,71 @@ describe('<MarkdownUi />', () => {
         expect(wrapper.findTestId('markdown-editor-textarea').exists()).toBe(false)
         expect(wrapper.findTestId('edit').exists()).toBe(false)
       })
+    })
+  })
+
+  describe('code block rendering', () => {
+    it('should render a fenced code block with a known language', async () => {
+      const codeContent = 'const x: number = 42'
+      const wrapper = mount(MarkdownUi, {
+        props: {
+          mode: 'read',
+          editable: false,
+          modelValue: '```typescript\n' + codeContent + '\n```',
+        },
+      })
+
+      await waitForMarkdownRender(wrapper)
+
+      expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+      // The code block should render with syntax highlighting (Shiki wraps in <pre> with a class)
+      expect(wrapper.findTestId('markdown-content').find('pre').exists()).toBe(true)
+      expect(wrapper.findTestId('markdown-content').find('code').exists()).toBe(true)
+      expect(wrapper.findTestId('markdown-content').text()).toContain(codeContent)
+      // Copy button should be present
+      expect(wrapper.findTestId('copy-code-button').exists()).toBe(true)
+    })
+
+    it('should render a fenced code block with an unknown language without crashing', async () => {
+      const codeContent = 'some code content'
+      const wrapper = mount(MarkdownUi, {
+        props: {
+          mode: 'read',
+          editable: false,
+          modelValue: '```unknownlanguage\n' + codeContent + '\n```',
+        },
+      })
+
+      await waitForMarkdownRender(wrapper)
+
+      expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+      // Should fall back to a plain <pre><code> block
+      expect(wrapper.findTestId('markdown-content').find('pre').exists()).toBe(true)
+      expect(wrapper.findTestId('markdown-content').find('code').exists()).toBe(true)
+      expect(wrapper.findTestId('markdown-content').text()).toContain(codeContent)
+    })
+
+    it('should render the rest of the document when a code block has an unknown language', async () => {
+      const paragraphBefore = 'Content before the code block'
+      const paragraphAfter = 'Content after the code block'
+      const codeContent = 'broken code'
+      const markdown = `${paragraphBefore}\n\n\`\`\`notareallanguage\n${codeContent}\n\`\`\`\n\n${paragraphAfter}`
+
+      const wrapper = mount(MarkdownUi, {
+        props: {
+          mode: 'read',
+          editable: false,
+          modelValue: markdown,
+        },
+      })
+
+      await waitForMarkdownRender(wrapper)
+
+      expect(wrapper.findTestId('markdown-content').isVisible()).toBe(true)
+      // Both surrounding paragraphs should still render
+      expect(wrapper.findTestId('markdown-content').text()).toContain(paragraphBefore)
+      expect(wrapper.findTestId('markdown-content').text()).toContain(paragraphAfter)
+      expect(wrapper.findTestId('markdown-content').text()).toContain(codeContent)
     })
   })
 

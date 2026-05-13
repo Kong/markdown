@@ -12,7 +12,7 @@ const setProvideData = (
   { mode?: MarkdownMode },
 ) => ({
   // Bind the Symbol() as dynamic keys <https://test-utils.vuejs.org/api/#global-provide>
-  [MODE_INJECTION_KEY]: ref(mode), // Note: split mode will be automatically switched to edit basd on the viewport
+  [MODE_INJECTION_KEY]: ref(mode), // Note: split mode will be automatically switched to edit based on the viewport
 })
 
 describe('<MarkdownContent />', () => {

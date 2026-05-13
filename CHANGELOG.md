@@ -1,3 +1,108 @@
+## [1.9.8](https://github.com/Kong/markdown/compare/v1.9.7...v1.9.8) (2026-04-28)
+
+
+### Bug Fixes
+
+* handle unknown language errors in code block rendering [KHCP-20402] ([#359](https://github.com/Kong/markdown/issues/359)) ([eeb3fe8](https://github.com/Kong/markdown/commit/eeb3fe809e419b8b5a9c578317e858661a4b1107))
+
+## [1.9.7](https://github.com/Kong/markdown/compare/v1.9.6...v1.9.7) (2026-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade mermaid ([#357](https://github.com/Kong/markdown/issues/357)) ([2bde878](https://github.com/Kong/markdown/commit/2bde87899e8a7c05021c0dadc136439cb07230d6))
+
+## [1.9.6](https://github.com/Kong/markdown/compare/v1.9.5...v1.9.6) (2026-04-09)
+
+
+### Bug Fixes
+
+* **mermaid:** resolve xss vulnerability with dompurify [KHCP-20321] ([#355](https://github.com/Kong/markdown/issues/355)) ([ee6d324](https://github.com/Kong/markdown/commit/ee6d324c91504533a6ee766069323de0dbe99ad6))
+
+## [1.9.5](https://github.com/Kong/markdown/compare/v1.9.4...v1.9.5) (2026-03-31)
+
+
+### Bug Fixes
+
+* **pnpm:** enforce vulnerability protections ([#338](https://github.com/Kong/markdown/issues/338)) ([2cee3c7](https://github.com/Kong/markdown/commit/2cee3c71973ed0f1dbcd570df6649fe1c40a3bac))
+
+## [1.9.4](https://github.com/Kong/markdown/compare/v1.9.3...v1.9.4) (2026-03-07)
+
+
+### Bug Fixes
+
+* **deps:** update non-major [@kong](https://github.com/kong) dependencies with stable versions ([#330](https://github.com/Kong/markdown/issues/330)) ([73e4e31](https://github.com/Kong/markdown/commit/73e4e3177fce11da62470c4787e4d2b5b9a32bb7))
+
+## [1.9.3](https://github.com/Kong/markdown/compare/v1.9.2...v1.9.3) (2026-02-04)
+
+
+### Bug Fixes
+
+* **deps:** update vue tsc ([#319](https://github.com/Kong/markdown/issues/319)) ([1fd34ae](https://github.com/Kong/markdown/commit/1fd34ae0bb220afd6cb4ca3d63910e52340a8e3b))
+
+## [1.9.2](https://github.com/Kong/markdown/compare/v1.9.1...v1.9.2) (2026-02-04)
+
+
+### Bug Fixes
+
+* **deps:** pnpm audit ([#322](https://github.com/Kong/markdown/issues/322)) ([e617c44](https://github.com/Kong/markdown/commit/e617c442ef066568d2019ba6c0d7b1e23d0edc0e))
+
+## [1.9.1](https://github.com/Kong/markdown/compare/v1.9.0...v1.9.1) (2026-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update non-major [@kong](https://github.com/kong) dependencies with stable versions (minor) ([#303](https://github.com/Kong/markdown/issues/303)) ([dc9df07](https://github.com/Kong/markdown/commit/dc9df0730148af40f651c0e5c6622420eba1b1fa))
+
+# [1.9.0](https://github.com/Kong/markdown/compare/v1.8.1...v1.9.0) (2026-02-03)
+
+
+### Features
+
+* export MarkdownContent ([#318](https://github.com/Kong/markdown/issues/318)) ([2db309e](https://github.com/Kong/markdown/commit/2db309ef0e24042417a04e733aad7edbee6bf387))
+
+## [1.8.1](https://github.com/Kong/markdown/compare/v1.8.0...v1.8.1) (2025-11-28)
+
+
+### Bug Fixes
+
+* trigger pr-audit on PR labeling ([#310](https://github.com/Kong/markdown/issues/310)) ([80c2018](https://github.com/Kong/markdown/commit/80c201893fb5c7aa0316c0d98ce44c1544c4ff62))
+
+# [1.8.0](https://github.com/Kong/markdown/compare/v1.7.36...v1.8.0) (2025-11-26)
+
+
+### Features
+
+* adopt PR audit [KHCP-18541] ([#306](https://github.com/Kong/markdown/issues/306)) ([8576d49](https://github.com/Kong/markdown/commit/8576d49db625e969d56fbd0f78c7dac47208bc14))
+
+## [1.7.36](https://github.com/Kong/markdown/compare/v1.7.35...v1.7.36) (2025-11-25)
+
+
+### Bug Fixes
+
+* back to publishing using semantic-release [KHCP-17673] ([#307](https://github.com/Kong/markdown/issues/307)) ([6e3b7d3](https://github.com/Kong/markdown/commit/6e3b7d3fa3da6e687904f0a25503198f8843fd44))
+
+## [1.7.35](https://github.com/Kong/markdown/compare/v1.7.34...v1.7.35) (2025-11-14)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies with stable versions ([#294](https://github.com/Kong/markdown/issues/294)) ([e43975c](https://github.com/Kong/markdown/commit/e43975c2b729e06348bc80bbb45ce15f7e39988f))
+
+## [1.7.34](https://github.com/Kong/markdown/compare/v1.7.33...v1.7.34) (2025-08-10)
+
+
+### Bug Fixes
+
+* **deps:** update all [@kong](https://github.com/kong) scoped dependencies ([#272](https://github.com/Kong/markdown/issues/272)) ([7a5fc36](https://github.com/Kong/markdown/commit/7a5fc36fe3945e276e7a911b01622efcaf641eaf))
+
+## [1.7.33](https://github.com/Kong/markdown/compare/v1.7.32...v1.7.33) (2025-07-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @kong/icons to ^1.33.0 ([#274](https://github.com/Kong/markdown/issues/274)) ([6564a3e](https://github.com/Kong/markdown/commit/6564a3e5e5c84e1a03f99d978d320b0588d75bde))
+
 ## [1.7.32](https://github.com/Kong/markdown/compare/v1.7.31...v1.7.32) (2025-06-24)
 
 

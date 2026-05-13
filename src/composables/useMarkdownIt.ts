@@ -90,7 +90,7 @@ export default function useMarkdownIt() {
     md.value.renderer.rules.table_close = () => '</table></div>' + NEW_LINE_CHARACTER
 
     const getDefaultRenderer = (original: any) => {
-      return original || function(tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
+      return original || function(tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) {
         return self.renderToken(tokens, idx, options)
       }
     }
@@ -98,11 +98,11 @@ export default function useMarkdownIt() {
     // Configure custom external links
     const defaultLinkRenderer = getDefaultRenderer(md.value.renderer.rules.link_open)
     const externalAnchorAttributes: Record<string, string> = { target: '_blank' }
-    md.value.renderer.rules.link_open = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+    md.value.renderer.rules.link_open = (tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
       Object.keys(externalAnchorAttributes).forEach((attribute: string) => {
-        const aIndex = tokens[idx].attrIndex(attribute)
+        const aIndex = tokens[idx]?.attrIndex(attribute)
         const value = externalAnchorAttributes[attribute]
-        if (tokens[idx].attrs?.length && String(tokens[idx].attrs[0] || '').includes('http')) {
+        if (tokens[idx]?.attrs?.length && String(tokens[idx]?.attrs[0] || '').includes('http')) {
           if (aIndex < 0) {
             tokens[idx].attrPush([attribute, value]) // add new attribute
           } else {
@@ -115,15 +115,25 @@ export default function useMarkdownIt() {
 
     // Configure custom code blocks
     const defaultCodeblockRenderer = getDefaultRenderer(md.value.renderer.rules.fence)
-    md.value.renderer.rules.fence = (tokens: Record<string, any>[], idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
-      const content: string = tokens[idx].content
+    md.value.renderer.rules.fence = (tokens: Array<Record<string, any>>, idx: number, options: Record<string, any>, env: any, self: Record<string, any>) => {
+      const content: string = tokens[idx]?.content
         // Strip out double-quote characters
         .replace(/"/g, '&quot;')
         // Strip out single-quote characters
         .replace(/'/g, '&apos;')
         // Remove a trailing new line character, if it exists
         .replace(/\n$/, '')
-      const originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+
+      // Shiki throws when a fenced code block specifies an unknown or unloaded language
+      // (e.g. ```this is will break). Catch the error and fall back to a plain <pre><code>
+      // block so that rendering continues for the rest of the document.
+      let originalContent: string
+      try {
+        originalContent = defaultCodeblockRenderer(tokens, idx, options, env, self)
+      } catch {
+        const escaped = md.value.utils.escapeHtml(tokens[idx]?.content)
+        originalContent = `<pre><code>${escaped}</code></pre>`
+      }
 
       if (content.length === 0) {
         return originalContent

@@ -22,13 +22,13 @@ export const NEW_LINE_CHARACTER = '\n'
 
 /** The markdown template for a codeblock */
 export const MARKDOWN_TEMPLATE_CODEBLOCK =
-'```' + DEFAULT_CODEBLOCK_LANGUAGE + NEW_LINE_CHARACTER +
+  '```' + DEFAULT_CODEBLOCK_LANGUAGE + NEW_LINE_CHARACTER +
 NEW_LINE_CHARACTER +
 '```'
 
 /** The markdown template for a table */
 export const MARKDOWN_TEMPLATE_TABLE =
-'| Header | Header | Header |' + NEW_LINE_CHARACTER +
+  '| Header | Header | Header |' + NEW_LINE_CHARACTER +
 '| :--- | :--- | :--- |' + NEW_LINE_CHARACTER +
 '| Cell | Cell | Cell |'
 
