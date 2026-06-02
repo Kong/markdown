@@ -90,7 +90,7 @@
             <component
               :is="option.icon"
               class="button-icon"
-              :size="KUI_ICON_SIZE_40"
+              :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
             />
           </ToolbarButton>
         </InfoTooltip>
@@ -113,7 +113,7 @@
             <component
               :is="option.icon"
               class="button-icon"
-              :size="KUI_ICON_SIZE_40"
+              :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
             />
           </ToolbarButton>
         </InfoTooltip>
@@ -133,7 +133,7 @@
           <component
             :is="fullscreen ? CollapseIcon : ExpandIcon"
             class="button-icon"
-            :size="KUI_ICON_SIZE_40"
+            :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
           />
         </ToolbarButton>
       </InfoTooltip>
@@ -153,7 +153,7 @@
           <component
             :is="htmlPreview ? MarkdownIcon : HtmlIcon"
             class="button-icon"
-            :size="KUI_ICON_SIZE_40"
+            :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
           />
         </ToolbarButton>
       </InfoTooltip>

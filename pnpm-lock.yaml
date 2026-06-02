@@ -99,8 +99,8 @@ importers:
         specifier: ^2.1.6
         version: 2.1.6
       '@kong/design-tokens':
-        specifier: ^1.21.0
-        version: 1.21.0
+        specifier: ^1.23.0
+        version: 1.23.0(eslint@10.3.0(jiti@2.6.1))(vue-eslint-parser@10.4.0(eslint@10.3.0(jiti@2.6.1)))
       '@kong/eslint-config-kong-ui':
         specifier: ^1.6.2
         version: 1.6.2(@typescript-eslint/parser@8.59.3(eslint@10.3.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.3.0(jiti@2.6.1))(typescript@6.0.3)
@@ -701,9 +701,17 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@kong/design-tokens@1.21.0':
-    resolution: {integrity: sha512-Koo5HU2b54zGsR4FdupQOLsVHPFp3X+NhxUMI7wxZh2FkgA+AIHQy2SrAeI921rLRenlXLWlTYaI7X7P+TrExg==}
+  '@kong/design-tokens@1.23.0':
+    resolution: {integrity: sha512-DKBmwvBb4FEb/L+Og3YziJSNr9fF67V2wit/ZIiSt+vldUT/Rc14H6nQf5yr/bxVJTqxaEL2Z5mN7tvDNKftdw==}
     engines: {node: '>=20.19.5', pnpm: '>=10.28.2'}
+    peerDependencies:
+      eslint: ^9.0.0
+      vue-eslint-parser: '>=10.2.0'
+    peerDependenciesMeta:
+      eslint:
+        optional: true
+      vue-eslint-parser:
+        optional: true
 
   '@kong/eslint-config-kong-ui@1.6.2':
     resolution: {integrity: sha512-e1ExwzkIYStLyY5W0UkWumUJMVNliCph1BS+4IM9HOll7BarKMdu4yyQQWbNVkkgvtq5cl09Lm31EZ8BfYJyLQ==}
@@ -5593,7 +5601,10 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@kong/design-tokens@1.21.0': {}
+  '@kong/design-tokens@1.23.0(eslint@10.3.0(jiti@2.6.1))(vue-eslint-parser@10.4.0(eslint@10.3.0(jiti@2.6.1)))':
+    optionalDependencies:
+      eslint: 10.3.0(jiti@2.6.1)
+      vue-eslint-parser: 10.4.0(eslint@10.3.0(jiti@2.6.1))
 
   '@kong/eslint-config-kong-ui@1.6.2(@typescript-eslint/parser@8.59.3(eslint@10.3.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.3.0(jiti@2.6.1))(typescript@6.0.3)':
     dependencies:

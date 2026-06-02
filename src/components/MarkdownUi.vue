@@ -107,7 +107,7 @@
                   >
                     <DownloadIcon
                       decorative
-                      :size="KUI_ICON_SIZE_30"
+                      :size="`var(--kui-icon-size-30, ${KUI_ICON_SIZE_30})`"
                     />
                     <span class="content-button-text">Download</span>
                   </ToolbarButton>
@@ -131,7 +131,7 @@
                   >
                     <EditIcon
                       decorative
-                      :size="KUI_ICON_SIZE_30"
+                      :size="`var(--kui-icon-size-30, ${KUI_ICON_SIZE_30})`"
                     />
                     <span class="content-button-text">Edit</span>
                   </ToolbarButton>
