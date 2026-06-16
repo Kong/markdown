@@ -14,6 +14,7 @@ export default {
     'unit-disallowed-list': ['rem', 'em'],
     'order/properties-alphabetical-order': true,
     '@kong/stylelint-plugin-design-tokens/use-proper-token': true,
+    '@kong/stylelint-plugin-design-tokens/token-var-usage': true,
     '@stylistic/indentation': [2, { baseIndentLevel: 0 }],
     // Only allow @kong/design-tokens CSS custom properties
     'custom-property-pattern': [

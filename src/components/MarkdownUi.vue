@@ -658,7 +658,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
       padding-right: var(--kui-space-50, $kui-space-50);
 
       .markdown-preview {
-        border: $kui-border-width-10 solid $kui-color-border;
+        border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
         border-radius: var(--kui-border-radius-40, $kui-border-radius-40);
         // Hide the preview in edit mode on small screens
         display: none;
@@ -735,7 +735,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
   .markdown-html-preview {
     :deep(pre) {
-      font-family: $kui-font-family-code;
+      font-family: var(--kui-font-family-code, $kui-font-family-code);
       overflow-wrap: break-word;
       white-space: pre-wrap;
     }
@@ -809,7 +809,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
     .markdown-preview,
     textarea.markdown-editor-textarea {
-      background-color: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+      background-color: var(--kui-color-background-neutral-stronger, color.adjust(var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest), $lightness: 5%));
     }
 
     textarea.markdown-editor-textarea {
@@ -834,7 +834,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
           color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
           &:hover:not(:disabled):not(:focus):not(:active) {
-            background-color: var(--kui-color-background-transparent, $kui-color-background-neutral-strong);
+            background-color: var(--kui-color-background-transparent, var(--kui-color-background-neutral-strong, $kui-color-background-neutral-strong));
             border-color: var(--kui-color-border, $kui-color-border);
             color: var(--kui-color-text-inverse, $kui-color-text-inverse);
           }
@@ -844,7 +844,7 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
           }
 
           &:active {
-            background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral);
+            background-color: var(--kui-color-background-neutral-strongest, var(--kui-color-background-neutral, $kui-color-background-neutral));
           }
         }
 

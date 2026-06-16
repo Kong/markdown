@@ -302,14 +302,14 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
   // Dark theme styles
   &.theme-dark {
     :deep() {
-      background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
+      background: var(--kui-color-background-neutral-stronger, color.adjust(var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest), $lightness: 5%));
       color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
       a {
-        color: color.adjust($color: $kui-color-text-primary, $lightness: 20%);
+        color: color.adjust($color: var(--kui-color-text-primary, $kui-color-text-primary), $lightness: 20%);
 
         &:hover {
-          color: color.adjust($color: $kui-color-text-primary, $lightness: 10%);
+          color: color.adjust($color: var(--kui-color-text-primary, $kui-color-text-primary), $lightness: 10%);
         }
 
         &.header-anchor {
