@@ -6,14 +6,14 @@ export default {
   ],
   plugins: [
     'stylelint-order',
-    '@kong/design-tokens/stylelint-plugin',
+    '@kong/stylelint-plugin-design-tokens',
     '@stylistic/stylelint-plugin',
   ],
   rules: {
     // Disallow relative font units since we don't know the base font size in other apps
     'unit-disallowed-list': ['rem', 'em'],
     'order/properties-alphabetical-order': true,
-    '@kong/design-tokens/use-proper-token': true,
+    '@kong/stylelint-plugin-design-tokens/use-proper-token': true,
     '@stylistic/indentation': [2, { baseIndentLevel: 0 }],
     // Only allow @kong/design-tokens CSS custom properties
     'custom-property-pattern': [

@@ -363,7 +363,7 @@ onMounted(() => {
   // Dark theme styles
   &.theme-dark {
     background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
-    /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
+    /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/use-proper-token */
     border-bottom-color: var(--kui-color-background-neutral, $kui-color-background-neutral);
 
     .toolbar-divider {
