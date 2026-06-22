@@ -809,7 +809,8 @@ const markdownPanesMaxHeight = computed((): string => `${props.maxHeight}px`)
 
     .markdown-preview,
     textarea.markdown-editor-textarea {
-      background-color: var(--kui-color-background-neutral-stronger, color.adjust(var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest), $lightness: 5%));
+      /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
+      background-color: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
     }
 
     textarea.markdown-editor-textarea {
