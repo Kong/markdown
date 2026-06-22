@@ -307,10 +307,12 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
       color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
       a {
-        color: color.adjust($color: var(--kui-color-text-primary, $kui-color-text-primary), $lightness: 20%);
+        /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
+        color: color.adjust($color: $kui-color-text-primary, $lightness: 20%);
 
         &:hover {
-          color: color.adjust($color: var(--kui-color-text-primary, $kui-color-text-primary), $lightness: 10%);
+          /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
+          color: color.adjust($color: $kui-color-text-primary, $lightness: 10%);
         }
 
         &.header-anchor {
