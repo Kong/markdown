@@ -98,6 +98,7 @@ onBeforeMount(async () => {
 html,
 body {
   &:has(.sandbox-container.dark) {
+    /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
     background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
   }
 }
@@ -105,19 +106,22 @@ body {
 
 <style lang="scss" scoped>
 .sandbox-container {
-  background: $kui-color-background;
-  color: $kui-color-text;
-  font-family: $kui-font-family-text;
+  background: var(--kui-color-background, $kui-color-background);
+  color: var(--kui-color-text, $kui-color-text);
+  font-family: var(--kui-font-family-text, $kui-font-family-text);
   padding: var(--kui-space-70, $kui-space-70);
 
   &.dark {
+    /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
     background: color.adjust($kui-color-background-neutral-strongest, $lightness: 5%);
-    color: $kui-color-text-inverse;
+    color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
     a {
+      /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
       color: color.adjust($color: $kui-color-text-primary, $lightness: 20%);
 
       &:hover {
+        /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
         color: color.adjust($color: $kui-color-text-primary, $lightness: 10%);
       }
 
@@ -130,33 +134,33 @@ body {
 
 .page-header {
   align-items: baseline;
-  gap: $kui-space-70;
-  margin-bottom: $kui-space-70;
+  gap: var(--kui-space-70, $kui-space-70);
+  margin-bottom: var(--kui-space-70, $kui-space-70);
 
   @media (min-width: $kui-breakpoint-mobile) {
     display: flex;
   }
 
   h1 {
-    margin-bottom: $kui-space-20;
-    margin-top: $kui-space-0;
+    margin-bottom: var(--kui-space-20, $kui-space-20);
+    margin-top: var(--kui-space-0, $kui-space-0);
 
     @media (min-width: $kui-breakpoint-mobile) {
-      margin-bottom: $kui-space-0;
+      margin-bottom: var(--kui-space-0, $kui-space-0);
     }
   }
 
   a {
-    color: $kui-color-text-primary;
+    color: var(--kui-color-text-primary, $kui-color-text-primary);
     display: inline-block;
     text-decoration: none;
 
     &:hover {
-      color: $kui-color-text-primary-stronger;
+      color: var(--kui-color-text-primary-stronger, $kui-color-text-primary-stronger);
     }
 
     &:active {
-      color: $kui-color-text-primary-strongest;
+      color: var(--kui-color-text-primary-strongest, $kui-color-text-primary-strongest);
     }
   }
 }
@@ -166,8 +170,8 @@ button {
 }
 
 hr {
-  background: $kui-color-background-disabled;
-  margin: $kui-space-70 $kui-space-0;
+  background: var(--kui-color-background-disabled, $kui-color-background-disabled);
+  margin: var(--kui-space-70, $kui-space-70) var(--kui-space-0, $kui-space-0);
   width: 100%;
 }
 </style>
