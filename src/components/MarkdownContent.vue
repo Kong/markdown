@@ -302,7 +302,8 @@ $header-anchor-offset-top: calc(var(--kui-space-80, $kui-space-80) + 2px);
   // Dark theme styles
   &.theme-dark {
     :deep() {
-      background: var(--kui-color-background-neutral-stronger, color.adjust(var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest), $lightness: 5%));
+      /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/token-var-usage */
+      background: var(--kui-color-background-neutral-stronger, color.adjust($kui-color-background-neutral-strongest, $lightness: 5%));
       color: var(--kui-color-text-inverse, $kui-color-text-inverse);
 
       a {
