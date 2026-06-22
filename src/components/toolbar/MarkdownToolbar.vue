@@ -90,7 +90,7 @@
             <component
               :is="option.icon"
               class="button-icon"
-              :size="KUI_ICON_SIZE_40"
+              :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
             />
           </ToolbarButton>
         </InfoTooltip>
@@ -113,7 +113,7 @@
             <component
               :is="option.icon"
               class="button-icon"
-              :size="KUI_ICON_SIZE_40"
+              :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
             />
           </ToolbarButton>
         </InfoTooltip>
@@ -133,7 +133,7 @@
           <component
             :is="fullscreen ? CollapseIcon : ExpandIcon"
             class="button-icon"
-            :size="KUI_ICON_SIZE_40"
+            :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
           />
         </ToolbarButton>
       </InfoTooltip>
@@ -153,7 +153,7 @@
           <component
             :is="htmlPreview ? MarkdownIcon : HtmlIcon"
             class="button-icon"
-            :size="KUI_ICON_SIZE_40"
+            :size="`var(--kui-icon-size-40, ${KUI_ICON_SIZE_40})`"
           />
         </ToolbarButton>
       </InfoTooltip>
@@ -304,19 +304,19 @@ onMounted(() => {
       border: var(--kui-border-width-10, $kui-border-width-10) solid var(--kui-color-border, $kui-color-border);
 
       &.edit {
-        border-bottom-right-radius: $kui-border-radius-0;
-        border-top-right-radius: $kui-border-radius-0;
+        border-bottom-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+        border-top-right-radius: var(--kui-border-radius-0, $kui-border-radius-0);
       }
 
       &.split {
         border-left: 0;
-        border-radius: $kui-border-radius-0;
+        border-radius: var(--kui-border-radius-0, $kui-border-radius-0);
         border-right: 0;
       }
 
       &.preview {
-        border-bottom-left-radius: $kui-border-radius-0;
-        border-top-left-radius: $kui-border-radius-0;
+        border-bottom-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
+        border-top-left-radius: var(--kui-border-radius-0, $kui-border-radius-0);
       }
 
       &.active,
@@ -363,7 +363,7 @@ onMounted(() => {
   // Dark theme styles
   &.theme-dark {
     background-color: var(--kui-color-background-neutral-strongest, $kui-color-background-neutral-strongest);
-    /* stylelint-disable-next-line @kong/design-tokens/use-proper-token */
+    /* stylelint-disable-next-line @kong/stylelint-plugin-design-tokens/use-proper-token */
     border-bottom-color: var(--kui-color-background-neutral, $kui-color-background-neutral);
 
     .toolbar-divider {
