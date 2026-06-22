@@ -1,3 +1,11 @@
+## [1.9.10](https://github.com/Kong/markdown/compare/v1.9.9...v1.9.10) (2026-06-22)
+
+
+### Bug Fixes
+
+* token var usage ignore for color.adjust ([#384](https://github.com/Kong/markdown/issues/384)) ([79b689b](https://github.com/Kong/markdown/commit/79b689b2196b61d2636fd689486982853881dbd1))
+* **tokens:** enforce token css var usage ([#379](https://github.com/Kong/markdown/issues/379)) ([fed2fb4](https://github.com/Kong/markdown/commit/fed2fb421788028b9a1d36b0db24700b7766c3bb))
+
 ## [1.9.9](https://github.com/Kong/markdown/compare/v1.9.8...v1.9.9) (2026-05-13)
 
 
