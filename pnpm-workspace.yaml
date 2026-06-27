@@ -4,5 +4,7 @@ minimumReleaseAgeExclude:
   - '@kong/*'
   - '@kong-ui/*'
   - '@kong-ui-public/*'
+  # Renovate security update: pnpm@11.5.3
+  - pnpm@11.5.3
 # When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases
 trustPolicy: no-downgrade
