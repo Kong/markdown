@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Kong/markdown/compare/v1.9.10...v1.10.0) (2026-07-08)
+
+
+### Features
+
+* update themes ([#386](https://github.com/Kong/markdown/issues/386)) ([2ad9cfa](https://github.com/Kong/markdown/commit/2ad9cfa5978195b08aa4adaa4129fb4452bcf3fa))
+
 ## [1.9.10](https://github.com/Kong/markdown/compare/v1.9.9...v1.9.10) (2026-06-22)
 
 
