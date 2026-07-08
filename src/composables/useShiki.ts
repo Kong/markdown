@@ -13,8 +13,8 @@ export default function useShiki() {
     if (!highlighter) {
       highlighter = await createHighlighterCore({
         themes: [
-          import('shiki/themes/material-theme-lighter.mjs'),
-          import('shiki/themes/material-theme-palenight.mjs'),
+          import('shiki/themes/catppuccin-latte.mjs'),
+          import('shiki/themes/material-theme-darker.mjs'),
         ],
         // TODO: For now, I'm including all languages but this bumps up the package size ~6MB
         langs: [
@@ -197,7 +197,7 @@ export default function useShiki() {
     }
 
     return fromHighlighter(highlighter as any, {
-      theme: theme === 'light' ? 'material-theme-lighter' : 'material-theme-palenight',
+      theme: theme === 'light' ? 'catppuccin-latte' : 'material-theme-darker',
     })
   }
 
