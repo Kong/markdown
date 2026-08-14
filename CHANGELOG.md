@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/Kong/markdown/compare/v1.10.0...v1.10.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* bumping pr-audit action [KHCP-21463] ([#390](https://github.com/Kong/markdown/issues/390)) ([6b235d7](https://github.com/Kong/markdown/commit/6b235d7a20463aa1ce137d45cbe58648a6c81d54))
+
 # [1.10.0](https://github.com/Kong/markdown/compare/v1.9.10...v1.10.0) (2026-07-08)
 
 
