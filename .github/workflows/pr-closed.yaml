@@ -21,4 +21,4 @@ jobs:
         with:
           header: pr_preview_consumption
           delete: true
-          GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
