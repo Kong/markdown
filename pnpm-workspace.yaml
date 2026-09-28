@@ -17,3 +17,5 @@ trustPolicyExclude:
   - chokidar@4.0.3
   # Renovate security update: pnpm@10.34.5
   - pnpm@10.34.5
+  - semver@6.3.1
+
