@@ -20,10 +20,11 @@ jobs:
     name: Audit
     permissions:
       contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      GITHUB_TOKEN: ${{ secrets.KONGPONENTS_BOT_PAT }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
 
@@ -37,6 +38,6 @@ jobs:
 
       - name: PR Audit
         if: github.actor != 'renovate[bot]'
-        uses: Kong/public-shared-actions/pr-previews/audit@cbbbf31a69c4f38d1803ededb69acb2a86836f85
+        uses: Kong/public-shared-actions/pr-previews/audit@43112b0f261fbe0ba7551cba05fba936a7532b58
         with:
           renovate-pr-author: renovate[bot]

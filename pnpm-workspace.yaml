@@ -10,3 +10,12 @@ minimumReleaseAgeExclude:
   - pnpm@10.34.5
 # When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  # chokidar@4.0.3 (transitive via sass@1.99.0) lacks the provenance attestation
+  # of earlier chokidar releases and trips the no-downgrade takeover heuristic;
+  # version is already locked and audited, so it is exempted explicitly.
+  - chokidar@4.0.3
+  # Renovate security update: pnpm@10.34.5
+  - pnpm@10.34.5
+  - semver@6.3.1
+
