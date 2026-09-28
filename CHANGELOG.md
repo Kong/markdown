@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/Kong/markdown/compare/v1.10.2...v1.10.3) (2026-09-28)
+
+
+### Bug Fixes
+
+* switching ci from pat to app token [KHCP-2195] ([#394](https://github.com/Kong/markdown/issues/394)) ([089b376](https://github.com/Kong/markdown/commit/089b376c08feedd09a379a16a11ec6358d5f6a9f))
+
 ## [1.10.2](https://github.com/Kong/markdown/compare/v1.10.1...v1.10.2) (2026-09-28)
 
 
